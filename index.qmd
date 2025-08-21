@@ -65,5 +65,6 @@ geometry: "left=2.54cm,right=2.54cm,top=2.54cm,bottom=2.54cm"
 papersize: letter
 colorlinks: true
 lang: es
-# bibliography: ""
+bibliography: "input/bib/book-ocs.bib"
 ---
+
