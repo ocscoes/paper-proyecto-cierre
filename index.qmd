@@ -17,9 +17,9 @@ author:
       - ref: 3
     attributes:
       corresponding: true
-  - name: Gabriel Cortés
+  - name: Gabriel Cortés Paredes
     email: gabriel.cortes@uchile.cl
-    # orcid: 0000-0002-9348-8361
+    orcid: 0009-0003-4064-2737
     affiliations:
       - ref: 2
   - name: Andreas Laffert
@@ -67,4 +67,7 @@ colorlinks: true
 lang: es
 bibliography: "input/bib/book-ocs.bib"
 ---
+
+
+{{< include secciones/01-intro.qmd >}}
 

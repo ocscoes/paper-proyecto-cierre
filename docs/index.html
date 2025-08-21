@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Juan Carlos Castillo">
-<meta name="author" content="Gabriel Cortés">
+<meta name="author" content="Gabriel Cortés Paredes">
 <meta name="author" content="Andreas Laffert">
 <meta name="author" content="Kevin Carrasco">
 <meta name="author" content="Tomás Urzúa">
@@ -26,7 +26,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="index_files/libs/clipboard/clipboard.min.js"></script>
@@ -75,7 +95,7 @@ ul.task-list li input[type="checkbox"] {
           </p>
       </div>
     <div class="quarto-title-meta-contents">
-    <p class="author">Gabriel Cortés <a href="mailto:gabriel.cortes@uchile.cl" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+    <p class="author">Gabriel Cortés Paredes <a href="mailto:gabriel.cortes@uchile.cl" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0009-0003-4064-2737" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
   </div>
   <div class="quarto-title-meta-contents">
         <p class="affiliation">
@@ -135,9 +155,50 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="introducción" class="level1">
+<h1>Introducción</h1>
+<p>En América Latina, los últimos años han estado marcadas por episodios de inestabilidad política, desigualdades persistentes y bajo crecimiento económico, y ciclos de conflictividad social <span class="citation" data-cites="undp_trapped_2023 salazar-xirinachs_repensar_2023">(<a href="#ref-undp_trapped_2023" role="doc-biblioref">United Nations Development Programme 2023</a>; <a href="#ref-salazar-xirinachs_repensar_2023" role="doc-biblioref">Salazar-Xirinachs 2023</a>)</span> . De tal modo, las tensiones sociales parecen haber aumentado en la región, reflejando una falta de confianza en las instituciones democráticas y un descontento generalizado con la corrupción y la desigualdad. En este contexto, la cohesión social ha escalado en la agenda pública y académica, con diagnósticos recientes tanto de organismos internacionales como de gobiernos nacionales que advierten sobre sus tensiones y desafíos para la gobernabilidad democrática y el desarrollo inclusivo <span class="citation" data-cites="undp_trapped_2023 salazar-xirinachs_repensar_2023 castillo_cohesion_2022 mideso_informe_2020">(<a href="#ref-undp_trapped_2023" role="doc-biblioref">United Nations Development Programme 2023</a>; <a href="#ref-salazar-xirinachs_repensar_2023" role="doc-biblioref">Salazar-Xirinachs 2023</a>; <a href="#ref-castillo_cohesion_2022" role="doc-biblioref">Castillo, Espinoza, y Barozet 2022</a>; <a href="#ref-mideso_informe_2020" role="doc-biblioref">Ministerio de Desarrollo Social y Familia 2020</a>)</span>.</p>
+<p>Sin embargo, pese a su uso generalizado y cotidiano en la discusión pública, definir cohesión social teórica y operacionalmente sigue siendo un desafío. La literatura oscila entre estudios focalizados en a una o varias dimensiones específicas de la cohesión social <span class="citation" data-cites="ariely_does_2013 castillo_cohesion_2022 castillo_social_2023">(<a href="#ref-ariely_does_2013" role="doc-biblioref">Ariely 2013</a>; <a href="#ref-castillo_cohesion_2022" role="doc-biblioref">Castillo, Espinoza, y Barozet 2022</a>; <a href="#ref-castillo_social_2023" role="doc-biblioref">Castillo et&nbsp;al. 2023</a>)</span> a esfuerzos por sintetizar el fenómeno en índices comprehensivos <span class="citation" data-cites="langer_conceptualising_2016 delhey_happier_2016 delhey_social_2018 dragolov_social_2013 janmaat_social_2010">(<a href="#ref-langer_conceptualising_2016" role="doc-biblioref">Langer et&nbsp;al. 2016</a>; <a href="#ref-delhey_happier_2016" role="doc-biblioref">Delhey y Dragolov 2016</a>; <a href="#ref-delhey_social_2018" role="doc-biblioref">Delhey et&nbsp;al. 2018</a>; <a href="#ref-dragolov_social_2013" role="doc-biblioref">Dragolov et&nbsp;al. 2013</a>; <a href="#ref-janmaat_social_2010" role="doc-biblioref">Janmaat 2010</a>)</span>. Esta heterogeneidad conceptual y metodológica dificulta la comparación entre países, así como la detección de transformaciones a lo largo del tiempo.</p>
+<p>Por lo demás, la mayoría de estas definiciones se han puesto a prueba principalmente en países europeos o de altos ingresos <span class="citation" data-cites="ariely_does_2013 delhey_happier_2016">(<a href="#ref-ariely_does_2013" role="doc-biblioref">Ariely 2013</a>; <a href="#ref-delhey_happier_2016" role="doc-biblioref">Delhey y Dragolov 2016</a>)</span>, con solo menciones parciales a América Latina <span class="citation" data-cites="janmaat_social_2010">(<a href="#ref-janmaat_social_2010" role="doc-biblioref">Janmaat 2010</a>)</span>. Esta limitación se mantiene pese a que la evidencia apunta a que las diferencias nacionales y regionales en los contextos culturales, históricos e institucionales moldean la cohesión de las sociedades y los factores que la determinan <span class="citation" data-cites="janmaat_social_2010 delhey_happier_2016">(<a href="#ref-janmaat_social_2010" role="doc-biblioref">Janmaat 2010</a>; <a href="#ref-delhey_happier_2016" role="doc-biblioref">Delhey y Dragolov 2016</a>)</span>. De tal modo, pese a la percepción generalizada de que la cohesión social es un fenómeno en tensión en las sociedades latinoamericanas, existe evidencia empírica de las diferencias entre países, las tendencias en el tiempo y los factores que explican estos cambios.</p>
+<p>Este artículo busca cubrir esas brechas proponiendo y validando un modelo de medición que permita un análisis comparativo, longitudinal y multinivel de la cohesión social en América Latina. En concreto, buscamos avanzar en: (i) una operacionalización clara y validada que integre dimensiones claves a partir de la literatura existente y los datos disponibles para la región; (ii) la estimación de trayectorias regionales y nacionales durante las últimas dos décadas; y (iii) la identificación de factores asociados a estos cambios mediante la aplicación de modelos de regresión multinivel. Con esto, se espera aportar evidencia robusta sobre los cambios en la región en las últimas dos décadas, aportando a la discusión académica y política sobre los desafíos y oportunidades de la cohesión social en América Latina.</p>
 
+</section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referencias</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-ariely_does_2013" class="csl-entry" role="listitem">
+Ariely, Gal. 2013. <span>«Does <span>Diversity Erode Social Cohesion</span>? <span>Conceptual</span> and <span>Methodological Issues</span>»</span>. <em>Political Studies</em> 62 (3): 573-95. <a href="https://doi.org/10.1111/1467-9248.12068">https://doi.org/10.1111/1467-9248.12068</a>.
+</div>
+<div id="ref-castillo_social_2023" class="csl-entry" role="listitem">
+Castillo, Juan Carlos, Macarena Bonhomme, Daniel Miranda, y Julio Iturra. 2023. <span>«Social Cohesion and Attitudinal Changes toward Migration: <span>A</span> Longitudinal Perspective amid the <span>COVID-19</span> Pandemic»</span>. <em>Frontiers in Sociology</em> 7 (enero): 1009567. <a href="https://doi.org/10.3389/fsoc.2022.1009567">https://doi.org/10.3389/fsoc.2022.1009567</a>.
+</div>
+<div id="ref-castillo_cohesion_2022" class="csl-entry" role="listitem">
+Castillo, Juan Carlos, Vicente Espinoza, y Emmanuelle Barozet. 2022. <span>«<span>Cohesi<span>ó</span>n social en Chile en tiempos de cambio: indicadores, perfiles y factores asociados</span>»</span>.
+</div>
+<div id="ref-delhey_social_2018" class="csl-entry" role="listitem">
+Delhey, Jan, Klaus Boehnke, Georgi Dragolov, Zsófia S. Ignácz, Mandi Larsen, Jan Lorenz, y Michael Koch. 2018. <span>«Social <span>Cohesion</span> and <span>Its Correlates</span>: A <span>Comparison</span> of <span>Western</span> and <span>Asian Societies</span>»</span>. <em>Comparative Sociology</em> 17 (3-4): 426-55. <a href="https://doi.org/10.1163/15691330-12341468">https://doi.org/10.1163/15691330-12341468</a>.
+</div>
+<div id="ref-delhey_happier_2016" class="csl-entry" role="listitem">
+Delhey, Jan, y Georgi Dragolov. 2016. <span>«Happier <span>Together</span>. <span>Social Cohesion</span> and <span>Subjective Well-Being</span> in <span>Europe</span>: <span>HAPPIER TOGETHER-COHESION AND SWB</span>»</span>. <em>International Journal of Psychology</em> 51 (3): 163-76. <a href="https://doi.org/10.1002/ijop.12149">https://doi.org/10.1002/ijop.12149</a>.
+</div>
+<div id="ref-dragolov_social_2013" class="csl-entry" role="listitem">
+Dragolov, Georgi, Zsófia Ignácz, Jan Lorenz, Jan Delhey, y Klaus Boehnke. 2013. <span>«Social <span>Cohesion Radar Measuring Common Ground</span>: <span>An International Comparison</span> of <span>Social Cohesion Methods Report</span>»</span>.
+</div>
+<div id="ref-janmaat_social_2010" class="csl-entry" role="listitem">
+Janmaat, Jan Germen. 2010. <span>«Social <span>Cohesion</span> as a <span>Real-life Phenomenon</span>: <span>Assessing</span> the <span>Explanatory Power</span> of the <span>Universalist</span> and <span>Particularist Perspectives</span>»</span>. <em>Social Indicators Research</em> 100 (1): 61-83. <a href="https://doi.org/10.1007/s11205-010-9604-9">https://doi.org/10.1007/s11205-010-9604-9</a>.
+</div>
+<div id="ref-langer_conceptualising_2016" class="csl-entry" role="listitem">
+Langer, Arnim, Frances Stewart, Kristien Smedts, y Leila Demarest. 2016. <span>«Conceptualising and <span>Measuring Social Cohesion</span> in <span>Africa</span>: <span>Towards</span> a <span>Perceptions-Based Index</span>»</span>. <em>Social Indicators Research</em> 131 (1): 321-43. <a href="https://doi.org/10.1007/s11205-016-1250-4">https://doi.org/10.1007/s11205-016-1250-4</a>.
+</div>
+<div id="ref-mideso_informe_2020" class="csl-entry" role="listitem">
+Ministerio de Desarrollo Social y Familia. 2020. <span>«Informe <span>Final Consejo Asesor</span> Para La <span>Cohesi<span>ó</span>n Social</span>. <span>Diagn<span>ó</span>stico</span> Para Una Aproximaci<span>ó</span>n a La Cohesi<span>ó</span>n Social En <span>Chile</span> y Recomendaciones Para Fortalecer El Aporte de La Pol<span>í</span>tica Social»</span>.
+</div>
+<div id="ref-salazar-xirinachs_repensar_2023" class="csl-entry" role="listitem">
+Salazar-Xirinachs, José Manuel. 2023. <span>«<span>Repensar, reimaginar, transformar: los <span>“qu<span>é</span>”</span> y los <span>“c<span>ó</span>mo”</span> para avanzar hacia un modelo de desarrollo m<span>á</span>s productivo, inclusivo y sostenible</span>»</span>. <em>Revista de la CEPAL</em> 2023 (141): 11-43. <a href="https://doi.org/10.18356/16820908-2023-141-2">https://doi.org/10.18356/16820908-2023-141-2</a>.
+</div>
+<div id="ref-undp_trapped_2023" class="csl-entry" role="listitem">
+United Nations Development Programme. 2023. <em>Trapped: <span>High Inequality</span> and <span>Low Growth</span> in <span>Latin America</span> and the <span>Caribbean</span>: <span>Regional Human Development Report</span> 2021</em>. United Nations. <a href="https://doi.org/10.18356/9789210057844">https://doi.org/10.18356/9789210057844</a>.
+</div>
+</div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
