@@ -4,5 +4,8 @@
   },
   "secciones/01-intro.qmd": {
     "01-intro.html": "cfc42871"
+  },
+  "secciones/02-antecedentes.qmd": {
+    "02-antecedentes.html": "e4068281"
   }
 }

@@ -1,0 +1,27 @@
+# ¿Qué es la cohesión social?
+
+A pesar de que sus orígenes teóricos se pueden rastrear a los inicios de la teoría social, y de uso extendido en la discusión pública, definir la cohesión social no es una tarea fácil [@chan_reconsidering_2006]. En la intersección de aspectos teóricos que ponen énfasis en la pregunta por la cooperación y la integración social, y aspectos normativos que buscan dar respuestas a cómo las sociedades se mantienen juntas pese a crisis y tensiones recurrentes, la cohesión social ha sido definida de maneras múltiples y con una gran variedad de alcances, objetivos e indicadores [@chan_reconsidering_2006; @castillo_conceptos_2021]. 
+
+Con todo, es posible distinguir algunos elementos comunes que comparten la mayoría de las definiciones [@castillo_conceptos_2021] tales como:
+
+- Es un atributo del colectivo, no de los individuos.
+- Es un constructo multidimensional
+- Es una cualidad de las relaciones sociales que permite alcanzar fines compartidos. 
+- Dado que los sujetos tiene un objetivo común, son capaces cooperar para lograr estos objetivos. 
+
+Una definición robusta de cohesión social debe integrar estos elementos. A la vez, debe ser una definición mínima e intuitiva, que permita su operacionalización y medición, así como la comparación en contextos diversos y posibilite la discusión e espacios públicos [@chan_reconsidering_2006].
+
+De tal modo, en este artículo partiremos de la definición propuesta por Chan, To y Chan [-@chan_reconsidering_2006, p.90], para quienes la cohesión social
+
+> is a state of aﬀairs concerning both the vertical and
+the horizontal interactions among members of society as characterized
+by a set of attitudes and norms that includes trust, a sense of belonging
+and the willingness to participate and help, as well as their behavioural
+manifestations.
+
+De la definición, pues, se desprenden dos dimensiones principales. En primer lugar, la cohesión social tiene **una dimensión horizontal**. Con esto nos referimos a las interacciones cotidianas entre los miembros de una sociedad. Contiene aspectos subjetivos (tales como el sentido de pertenencia y la confianza interpersonal), como aspecto objetivos, como las redes sociales y las condiciones materiales que facilitan o dificultan estas interacciones. 
+
+En segundo lugar, la cohesión social tiene **una dimensión vertical**, que se refiere a las relaciones entre los individuos y las instituciones sociales y políticas. Esta dimensión incluye aspectos como la confianza en las instituciones, la legitimidad del sistema político y la participación cívica.
+
+# Factores relacionados con la cohesión social
+
