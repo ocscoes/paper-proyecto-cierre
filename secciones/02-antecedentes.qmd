@@ -1,8 +1,8 @@
 # ¿Qué es la cohesión social?
 
-A pesar de que sus orígenes teóricos se pueden rastrear a los inicios de la teoría social, y de uso extendido en la discusión pública, definir la cohesión social no es una tarea fácil [@chan_reconsidering_2006]. En la intersección de aspectos teóricos que ponen énfasis en la pregunta por la cooperación y la integración social, y aspectos normativos que buscan dar respuestas a cómo las sociedades se mantienen juntas pese a crisis y tensiones recurrentes, la cohesión social ha sido definida de maneras múltiples y con una gran variedad de alcances, objetivos e indicadores [@chan_reconsidering_2006; @castillo_conceptos_2021]. 
+Aunque sus raíces teóricas se remontan a los inicios de la teoría social -- y su uso extendido en la discusión pública - definir cohesión social sigue siendo una tarea difícil [@chan_reconsidering_2006]. Situada en la intersección entre enfoques teóricos y descriptivos que enfatizan las cooperación y la integración, y consideraciones normativas acerca de cómo la sociedades se mantienen unidad ante crisis, tensiones y transformaciones, la cohesión social se ha definido de múltiples maneras, reflejando diversas perspectivas, alcances e indicadores [@chan_reconsidering_2006; @castillo_conceptos_2021].
 
-Con todo, es posible distinguir algunos elementos comunes que comparten la mayoría de las definiciones [@castillo_conceptos_2021] tales como:
+Con todo, la mayoría de las definiciones comparten algunos elementos en común [@castillo_conceptos_2021]:
 
 - Es un atributo del colectivo, no de los individuos.
 - Es un constructo multidimensional
@@ -24,4 +24,22 @@ De la definición, pues, se desprenden dos dimensiones principales. En primer lu
 En segundo lugar, la cohesión social tiene **una dimensión vertical**, que se refiere a las relaciones entre los individuos y las instituciones sociales y políticas. Esta dimensión incluye aspectos como la confianza en las instituciones, la legitimidad del sistema político y la participación cívica.
 
 # Factores relacionados con la cohesión social
+
+## Factores socioeconómicos
+
+Un primer grupo de factores que se ha encontrado guardan relación con la cohesión cohesión social son las condiciones económicas de las sociedades.
+
+En primer lugar, la prosperidad económica, a menudo medida a través del PIB per cápita, se ha asociado con mayores niveles de cohesión social. Esta asociación se ha encontrando en diversos contextos culturales [@janmaat_social_2010], aunque parece atenuarse en algunas sociedades asiáticas de altos ingresos [@delhey_social_2018]. Estos hallazgos van en línea con las perspectivas universalistas o modernistas de la cohesión social, para quienes la cohesión es un fenómeno estrechamente relacionado con distintas etapas del desarrollo socioeconómico [@janmaat_social_2010]. 
+
+Por otro lado, la desigualdad económica se ha asociado generalmente con menores niveles de cohesión social [@delhey_social_2018; @janmaat_social_2010]. Nuevamente, sin embargo, la asociación se atenúa en sociedades asiáticas, donde niveles medios de desigualdad están asociados con mayores niveles de cohesión [@janmaat_social_2010]. No hay evidencia sobre como los niveles de desigualdad en América Latina se relacionan con la cohesión social, la región más desigual del mundo. Con todo, las demandas de mayor igualdad, redistribución y trato justo, que se han traducido en protestas masivas en varios países de la región, sugieren que la desigualdad económica es un factor relevante para la cohesión social en América Latina. Tomando esto en consideración, planteamos las siguientes hipótesis. 
+
+> h1a: Existe una asociación positiva y significativa entre cohesión social y prosperidad económica. Los países con mayor desarrollo económico tendrán mayores niveles de cohesión social. 
+
+> h1b: Existe una asociación negativa y significativa entre cohesión social y desigualdad económica. Los países con mayor desigualdad económica tendrán menores niveles de cohesión social.
+
+> h1c: Los efectos del crecimiento económico sobre la cohesión social serán menores en países con mayor desigualdad económica
+
+## Factores culturales
+
+## Factores institucionales
 
