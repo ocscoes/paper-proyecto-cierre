@@ -1,6 +1,7 @@
 {
   "index.qmd": {
-    "index.html": "4933da6d"
+    "index.html": "4933da6d",
+    "index.tex": "0ffce51f"
   },
   "secciones/01-intro.qmd": {
     "01-intro.html": "cfc42871"
