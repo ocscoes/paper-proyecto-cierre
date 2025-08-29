@@ -59,7 +59,40 @@ div.csl-indent {
 <script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="index_files/libs/bootstrap/bootstrap-3191381c4c17e28008a5a3314c983673.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="index_files/libs/kePrint-0.0.1/kePrint.js"></script>
 
+<link href="index_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -217,11 +250,406 @@ div.csl-indent {
 <li><p><strong>H4</strong>: Existe una asociación positiva y significativa entre cohesión social y calidad de la gobernanza.</p></li>
 <li><p><strong>H5</strong>: Existe una asociación negativa y significativa entre cohesión social y el porcentaje de población migrante en el país.</p></li>
 </ul>
+</section>
+</section>
+<section id="metodología" class="level1">
+<h1>Metodología</h1>
+<section id="datos" class="level2">
+<h2 class="anchored" data-anchor-id="datos">Datos</h2>
+<p>La principal fuente de datos para este estudio es la <em>AmericasBarometer</em> del <em>Latin American Public Opinion Project</em> (LAPOP Lab), también conocida como Encuesta LAPOP. La encuesta tiene por objetivo recolectar datos la opinión pública sobre democracia y gobernanza en el continente americano. El diseño de la encuesta es probalístico y representativo de la población adulta de cada país <span class="citation" data-cites="lapoplab_americasbarometer_2023">(<a href="#ref-lapoplab_americasbarometer_2023" role="doc-biblioref">LAPOP LAb 2023</a>)</span>.</p>
+<p>La encuesta se ha realizado de manera regular desde el año 2004. A la fecha, se han realizado 9 olas que han incluido entre 11 a 23 países. El cuestionario se administra a través de encuestas cara a cara, con la excepción de Canadá y Estados Unidos.</p>
+<p>Complementariamente, se utilizaron indicadores del estudio Latinobarómetro. El estudio declara como objetivo el investigar el desarrollo de la democracia, la economía y la sociedad a partir de indicadores de opinión pública que miden actitudes, valores y comportamientos de la población. Se basa en muestras nacionales de 18 países de América Latina, representativas de la población mayor de 18 años de los respectivos países.</p>
+<p>Como criterio, se incluyeron en este estudio únicamente los países de la región que tengan disponible datos para los indicadores principales del estudio en al menos 5 puntos en el tiempo. De tal manera, esta investigación incluye a 23 de las 33 naciones independientes de América Latina y el Caribe. Como se resumen en <a href="#tbl-paises" class="quarto-xref">Tabla&nbsp;1</a>, 11 países tienen datos para todas las olas, y otros 7 tienen datos para 8 olas.</p>
+<div class="cell">
+<div id="tbl-paises" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-paises-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;1: Disponibilidad de datos por olas y países
+</figcaption>
+<div aria-describedby="tbl-paises-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table do-not-create-environment cell caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">País</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Nº de olas</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Olas disponibles</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bolivia</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Colombia</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Costa Rica</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dominican Republic</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ecuador</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">El Salvador</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guatemala</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Honduras</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mexico</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nicaragua</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Panama</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Argentina</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Brazil</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chile</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Jamaica</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Paraguay</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Peru</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Uruguay</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Haiti</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">2006; 2008; 2010; 2012; 2014; 2016; 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guyana</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">2006; 2008; 2010; 2012; 2014; 2016</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trinidad &amp; Tobago</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">2006; 2008; 2010; 2012; 2014; 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Venezuela</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">2006; 2008; 2010; 2012; 2014; 2016</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belize</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">2008; 2010; 2012; 2014; 2022</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Para datos contexuales de los países, se recurrió a diversas fuentes de datos que incluyen:</p>
+<ol type="1">
+<li><p>Los datos abiertos del Banco Mundial. Incluye diversos indicadores sobre desarrollo social y económico de la mayoría de los países del mundo. El portal es de datos es accesible en: <a href="https://datos.bancomundial.org/">https://datos.bancomundial.org/</a>.</p></li>
+<li><p><em>The Worlwide Governance Indicators</em> del Banco Mundial. Se trata de una encuesta a expertos que recopila datos primeros sobre diveros indicadores de gobernanza, cubriendo múltiple países con información actualizada entre 1996 y 2003. Los datos son accesibles en: <a href="https://www.worldbank.org/en/publication/worldwide-governance-indicators">https://www.worldbank.org/en/publication/worldwide-governance-indicators</a>.</p></li>
+<li><p><em>The V-Dem Dataset</em> que recoge un conjunto multidimensional de datos que busca medir la calidad de la democracia alrededor del mundo. La base de datos es accesible mediante el paquete de R <code>vdemdata</code> <span class="citation" data-cites="maerz_vdemdata_2025">(<a href="#ref-maerz_vdemdata_2025" role="doc-biblioref">Maerz et&nbsp;al. 2025</a>)</span></p></li>
+</ol>
+</section>
+<section id="variables" class="level2">
+<h2 class="anchored" data-anchor-id="variables">Variables</h2>
+<section id="variables-dependientes" class="level3">
+<h3 class="anchored" data-anchor-id="variables-dependientes">Variables Dependientes</h3>
+<p>Se construyó un <strong>índice de Cohesión Social</strong> (<span class="math inline">\(\alpha\)</span> = 0.74) que se compone de dos dimensiones que, a su vez, son índices sumativos construidos a partir de indicadores de LAPOP y Latinobarometro. El detalle de la construcción de los índices se pueden encontrar aquí: <a href="https://ocscoes.github.io/medicion-cohesion-LA/">https://ocscoes.github.io/medicion-cohesion-LA/</a>.</p>
+<p>El <strong>Índice de Cohesión Horizontal</strong> (<span class="math inline">\(\alpha\)</span> = 0.7) se compone de dos subdimensiones, <em>Seguridad Urbana</em> y <em>Confianza Interpersonal</em>. Seguridad urbana integra indicadores de seguridad objetiva y seguridad subjetiva. Confianza Interpersonal, en tanto, es un único indicador sobre que tan confiuable son las personas en general. Aunque conceptualmente se entiende que el sentido de pertenencia es un componente importante para la cohesión horizontal, ni LAPOP ni Latinobarómetro cuentan con un indicador que permita medir ese fenómeno de manera adecuada. Por otro lado, si bien se esperaba que la participación comunitaria fuera parte del índice, un análisis factorial exploratorio indicó que no forma parte del mismo concepto latente que las otras dos subsimensiones.</p>
+<p>El <strong>Índice de Cohesión Vertical</strong> (<span class="math inline">\(\alpha\)</span> = 0.66) se compone de tres dimensiones: <em>Confianza en instituciones</em>, <em>Actitudes hacia la democracia</em> y <em>Justicia Distributiva</em>. Confianza en las instituciones integra indicadores relativos a la confianza de los ciudadananos en el congreso, en el poder judicial y en los partidos políticos. Actitudes hacia la democracia se compone de dos indicadores sobre apoyo al sistema democrático y la satisfacción con el funcionamiento de la democracia en su país. Por último, Justicia distributiva se compone de un único indicador sobre la importancia de que el Estado redistribuya los ingresos en el país. La <a href="#tbl-indicadores" class="quarto-xref">Tabla&nbsp;2</a> describe los indicadores seleccionados, así como los índices de cohesión general, horizontal y vertical.</p>
+<div class="cell">
+<div id="tbl-indicadores" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-indicadores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;2: Resumen indicadores de Cohesión Social
+</figcaption>
+<div aria-describedby="tbl-indicadores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="container st-container"><div style="max-height:500px;overflow-y:scroll;margin:10px 2px">
+  
+<table class="table table-striped table-bordered st-table st-table-striped st-table-bordered st-multiline do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Variable</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Stats / Values</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Freqs (% of Valid)</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Graph</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Valid</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Missing</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Confianza Interpersonal [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 5.9 (0.7)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3.3 ≤ 6 ≤ 8.3</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 0.9 (0.1)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">200 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfpCB0UChJ95bYHAAAAmUlEQVRo3u3ZTQqAIBCGYa9QN0hvoPe/W6SzGKEgR4ms91u4MHxQAn+dI5Yst+JztsvvTVhIR8DAwMDAwL6HrWXFHIRlJYGBgYGBgYGB/QaTzdQgLLePc2Bl4H4MVsoIBgYGNgvm1ezfjQXFgIGBgYFVt5XdmG75EHbyPmnHStV7sWqwgumDQhMWFOkF03/IgElV3bPOOGLJDs8u14wq+iuFAAAAAElFTkSuQmCC" class="img-fluid figure-img" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">204 (81.0%)</td>
+<td style="text-align: center;">48 (19.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Seguridad Pública [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 6.9 (0.7)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">4.7 ≤ 6.9 ≤ 8.6</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 1 (0.1)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">199 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfpCB0UChJ95bYHAAAAkElEQVRo3u3Y2wnAIAyFYVdoN6jdoO6/W6EkDxa8JaFQ+M+LIOZDEPGSErFk6ydLBsPmsLM8ucDAwMDAwMDAwNzY4J62hpX+DMHAwD7CdGOHYIIUMD8m63KEYNKCgYGBgZmxvT4vnViNgMVh7weLC9NuMDAwMDCw32B6Eq5hWiVY45tgEtNuwRpVNiyHJBFLbjYJMiOCk9MbAAAAAElFTkSuQmCC" class="img-fluid figure-img" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">204 (81.0%)</td>
+<td style="text-align: center;">48 (19.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Confianza en las Instituciones [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 3.9 (0.7)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1.6 ≤ 3.9 ≤ 5.8</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 1 (0.2)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">200 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfpCB0UChMK4oaRAAAAlUlEQVRo3u3YUQqAIBBFUbdQO6h2kPvfWxAzH0ZqOYNB3vcjyHhQEEVDIC2ZylkllbJn2BbP7GBgYGBg42KVi+UdFsszBANrwnSTumCCRDAwMDCw3pic5osLJi0YGBgYGBjYR9j1M8GEaXdHbE7fmUYsrQYDA/sVpsedC7bdVnfFdD0umHaPhWV+KtuwzCjbzGwJpCUHskVOoEPKJJAAAAAASUVORK5CYII=" class="img-fluid figure-img" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">213 (84.5%)</td>
+<td style="text-align: center;">39 (15.5%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Actitudes a la Democracia [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 5.9 (0.7)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3.3 ≤ 5.9 ≤ 7.8</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 1 (0.1)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">201 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfpCB0UChMK4oaRAAAAj0lEQVRo3u3WwQ2AIAyFYVbQDcQNZP/dTORdmhAE7AX834UL/dIDpA2BjGR7zR5zanfasfTkAgMDAwMDWxyrjc8GTOXCag02YKdRwMDAwMDAwMDA1seK2+goVmwQ7C+Y3pIPlpUEBgYG9gfMzuKPmG0QDGweTB/BB9MxGWZ2qX5M5UehpX5MdT5YdEkgI7kBLxEgmomk/60AAAAASUVORK5CYII=" class="img-fluid figure-img" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">213 (84.5%)</td>
+<td style="text-align: center;">39 (15.5%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Justicia Redistributiva [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 3.2 (0.7)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1.7 ≤ 3.2 ≤ 5.5</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 0.8 (0.2)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">143 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfpCB0UChMK4oaRAAAAhElEQVRo3u3YzQnAIAxAYVewGzRu0Oy/Ww9tegmiaCitvHcSxA9v/qREI+VqYuV2Tazo1QEGBgYGBgYG9lFss8tPCHYbCgYGBgb2T6zjSdyPaXuLYGBgYGCrY3aw7BGYDV7GntMxAnNrwcDAlsHEfbBMYKW6FiwSE9cE5mfAFsQkpEQjnbhpNgCZvS7BAAAAAElFTkSuQmCC" class="img-fluid figure-img" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">162 (64.3%)</td>
+<td style="text-align: center;">90 (35.7%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cohesión horizontal [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 6.4 (0.6)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">4.9 ≤ 6.5 ≤ 8.4</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 0.8 (0.1)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">200 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfpCB0UChMK4oaRAAAAjElEQVRo3u3ZQQqAIBBAUa9gN0hvkPe/W4saCWRwtBEK/l8JMg/BlRUCzRTVkhT7dbFcrg6wccxwE3as9I8IBgYGBgYGBgYGBgYG9hFskwehCyazYB6YXM3ugckCDAwMLD4+y3pgzSwYGBgYGNifsPYX2Qus7izFkvqIM2B1+MayOmvA6s4KLLkUaKYTK0BSvI840KEAAAAASUVORK5CYII=" class="img-fluid figure-img" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">204 (81.0%)</td>
+<td style="text-align: center;">48 (19.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cohesión vertical [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 4.5 (0.7)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2.9 ≤ 4.4 ≤ 6.7</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 0.8 (0.2)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">204 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfpCB0UChMK4oaRAAAAkUlEQVRo3u3ZTQqAIBBAYa9gN8hukPe/W0QzC4e08mdhvLcRAj/ChQzlHNXk7wvS6l9VxrZ4BQYGBgYGBgZmMJ05umCy7mBgYD/CFrkl+mApAgYGBgZWwh7mtG9YLL8hGBgYGBgY2Ggs89OnDpMV7Exnpi6Y2TUtZgfJJkwfj8RC+u2hDcvsmh7TQzJn1pajmg6GVREAQBcBUAAAAABJRU5ErkJggg==" class="img-fluid figure-img" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">213 (84.5%)</td>
+<td style="text-align: center;">39 (15.5%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cohesión general [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 5.5 (0.6)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">4.2 ≤ 5.4 ≤ 7.6</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 0.7 (0.1)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">202 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfpCB0UChMK4oaRAAAAiklEQVRo3u3ZwQ2AIAxAUVbADYQNZP/dvJQeMERSKlHz/0UTwwsnqjEEshTbtiTtcbwuViQwMDAwsE9hdRYkDyzL9QADAwMDA/sFpmPSA9O1YGBgYGDLsYHvnnGs3G8RDAwMDAzstZgORQ8sd9c+jPV/bxmwegMGtgK7vpdOYPrEFdMttqfGVIEsnRa8MiM8hiR/AAAAAElFTkSuQmCC" class="img-fluid figure-img" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">204 (81.0%)</td>
+<td style="text-align: center;">48 (19.0%)</td>
+</tr>
+</tbody>
+</table>
+
+</div></div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="variables-independientes" class="level3">
+<h3 class="anchored" data-anchor-id="variables-independientes">Variables Independientes</h3>
+</section>
+</section>
+<section id="método" class="level2 unnumbered">
+
 
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referencias</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Método</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-andrews_welfare_2015" class="csl-entry" role="listitem">
 ANDREWS, RHYS, y SEBASTIAN JILKE. 2015. <span>«Welfare <span>States</span> and <span>Social Cohesion</span> in <span>Europe</span>: <span>Does Social Service Quality Matter</span>?»</span> <em>Journal of Social Policy</em> 45 (1): 119-40. <a href="https://doi.org/10.1017/s0047279415000513">https://doi.org/10.1017/s0047279415000513</a>.
 </div>
@@ -275,6 +703,12 @@ Kustov, Alexander, y Giuliana Pardelli. 2024. <span>«Beyond <span>Diversity</sp
 </div>
 <div id="ref-langer_conceptualising_2016" class="csl-entry" role="listitem">
 Langer, Arnim, Frances Stewart, Kristien Smedts, y Leila Demarest. 2016. <span>«Conceptualising and <span>Measuring Social Cohesion</span> in <span>Africa</span>: <span>Towards</span> a <span>Perceptions-Based Index</span>»</span>. <em>Social Indicators Research</em> 131 (1): 321-43. <a href="https://doi.org/10.1007/s11205-016-1250-4">https://doi.org/10.1007/s11205-016-1250-4</a>.
+</div>
+<div id="ref-lapoplab_americasbarometer_2023" class="csl-entry" role="listitem">
+LAPOP LAb. 2023. <span>«<span>AmericasBarometer</span>»</span>.
+</div>
+<div id="ref-maerz_vdemdata_2025" class="csl-entry" role="listitem">
+Maerz, Seraphine F., Amanda B. Esgell, Sebastian Hellemeier, Nina Illchenko, y Linnea Fox. 2025. <span>«Vdemdata: <span>An R</span> Package to Load, Explore and Work with the Most Recent <span>V-Dem</span> (<span>Varieties</span> of <span>Democracy</span>) Dataset.»</span>
 </div>
 <div id="ref-meer_ethnic_2014" class="csl-entry" role="listitem">
 Meer, Tom van der, y Jochem Tolsma. 2014. <span>«Ethnic <span>Diversity</span> and <span>Its Effects</span> on <span>Social Cohesion</span>»</span>. <em>Annual Review of Sociology</em> 40 (1): 459-78. <a href="https://doi.org/10.1146/annurev-soc-071913-043309">https://doi.org/10.1146/annurev-soc-071913-043309</a>.

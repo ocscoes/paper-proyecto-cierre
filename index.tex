@@ -129,6 +129,20 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 \KOMAoption{captions}{tableheading}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
@@ -566,6 +580,130 @@ proponemos las siguientes hipótesis:
   cohesión social y el porcentaje de población migrante en el país.
 \end{itemize}
 
+\section{Metodología}\label{metodologuxeda}
+
+\subsection{Datos}\label{datos}
+
+La principal fuente de datos para este estudio es la
+\emph{AmericasBarometer} del \emph{Latin American Public Opinion
+Project} (LAPOP Lab), también conocida como Encuesta LAPOP. La encuesta
+tiene por objetivo recolectar datos la opinión pública sobre democracia
+y gobernanza en el continente americano. El diseño de la encuesta es
+probalístico y representativo de la población adulta de cada país
+(\citeproc{ref-lapoplab_americasbarometer_2023}{LAPOP LAb 2023}).
+
+La encuesta se ha realizado de manera regular desde el año 2004. A la
+fecha, se han realizado 9 olas que han incluido entre 11 a 23 países. El
+cuestionario se administra a través de encuestas cara a cara, con la
+excepción de Canadá y Estados Unidos.
+
+Complementariamente, se utilizaron indicadores del estudio
+Latinobarómetro. El estudio declara como objetivo el investigar el
+desarrollo de la democracia, la economía y la sociedad a partir de
+indicadores de opinión pública que miden actitudes, valores y
+comportamientos de la población. Se basa en muestras nacionales de 18
+países de América Latina, representativas de la población mayor de 18
+años de los respectivos países.
+
+Como criterio, se incluyeron en este estudio únicamente los países de la
+región que tengan disponible datos para los indicadores principales del
+estudio en al menos 5 puntos en el tiempo. De tal manera, esta
+investigación incluye a 23 de las 33 naciones independientes de América
+Latina y el Caribe. Como se resumen en Tabla~\ref{tbl-paises}, 11 países
+tienen datos para todas las olas, y otros 7 tienen datos para 8 olas.
+
+\begin{longtable}[t]{lcl}
+
+\caption{\label{tbl-paises}Disponibilidad de datos por olas y países}
+
+\tabularnewline
+
+\toprule
+País & Nº de olas & Olas disponibles\\
+\midrule
+Bolivia & 9 & 2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Colombia & 9 & 2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Costa Rica & 9 & 2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Dominican Republic & 9 & 2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Ecuador & 9 & 2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+\addlinespace
+El Salvador & 9 & 2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Guatemala & 9 & 2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Honduras & 9 & 2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Mexico & 9 & 2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Nicaragua & 9 & 2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+\addlinespace
+Panama & 9 & 2004; 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Argentina & 8 & 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Brazil & 8 & 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Chile & 8 & 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Jamaica & 8 & 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+\addlinespace
+Paraguay & 8 & 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Peru & 8 & 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Uruguay & 8 & 2006; 2008; 2010; 2012; 2014; 2016; 2018; 2022\\
+Haiti & 7 & 2006; 2008; 2010; 2012; 2014; 2016; 2022\\
+Guyana & 6 & 2006; 2008; 2010; 2012; 2014; 2016\\
+\addlinespace
+Trinidad \& Tobago & 6 & 2006; 2008; 2010; 2012; 2014; 2022\\
+Venezuela & 6 & 2006; 2008; 2010; 2012; 2014; 2016\\
+Belize & 5 & 2008; 2010; 2012; 2014; 2022\\
+\bottomrule
+
+\end{longtable}
+
+Para datos contexuales de los países, se recurrió a diversas fuentes de
+datos que incluyen:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Los datos abiertos del Banco Mundial. Incluye diversos indicadores
+  sobre desarrollo social y económico de la mayoría de los países del
+  mundo. El portal es de datos es accesible en:
+  \url{https://datos.bancomundial.org/}.
+\item
+  \emph{The Worlwide Governance Indicators} del Banco Mundial. Se trata
+  de una encuesta a expertos que recopila datos primeros sobre diveros
+  indicadores de gobernanza, cubriendo múltiple países con información
+  actualizada entre 1996 y 2003. Los datos son accesibles en:
+  \url{https://www.worldbank.org/en/publication/worldwide-governance-indicators}.
+\item
+  \emph{The V-Dem Dataset} que recoge un conjunto multidimensional de
+  datos que busca medir la calidad de la democracia alrededor del mundo.
+  La base de datos es accesible mediante el paquete de R
+  \texttt{vdemdata} (\citeproc{ref-maerz_vdemdata_2025}{Maerz et~al.
+  2025})
+\end{enumerate}
+
+\subsection{Variables}\label{variables}
+
+\subsubsection{Variables Dependientes}\label{variables-dependientes}
+
+Se construyó un índice \textbf{Cohesión Social} que se compone de dos
+dimensiones que, a su vez, son índices sumativos construidos a partir de
+indicadores de LAPOP y Latinobarometro. El detalle de la construcción de
+los índices se pueden encontrar aquí:
+\url{https://ocscoes.github.io/medicion-cohesion-LA/}.
+
+El \textbf{Índice de Cohesión Horizontal} (\(\alpha\) = 0.7) se compone
+de dos subdimensiones, \emph{Seguridad Urbana} y \emph{Confianza
+Interpersonal}. Seguridad urbana integra indicadores de seguridad
+objetiva y seguridad subjetiva. Confianza Interpersonal, en tanto, es un
+único indicador sobre que tan confiuable son las personas en general.
+Aunque conceptualmente se entiende que el sentido de pertenencia es un
+componente importante para la cohesión horizontal, ni LAPOP ni
+Latinobarómetro cuentan con un indicador que permita medir ese fenómeno
+de manera adecuada. Por otro lado, si bien se esperaba que la
+participación comunitaria fuera parte del índice, un análisis factorial
+exploratorio indicó que no forma parte del mismo concepto latente que
+las otras dos subsimensiones.
+
+\subsubsection{Variables Independientes}\label{variables-independientes}
+
+\subsection*{Método}\label{muxe9todo}
+\addcontentsline{toc}{subsection}{Método}
+
 \phantomsection\label{refs}
 \begin{CSLReferences}{1}{0}
 \bibitem[\citeproctext]{ref-andrews_welfare_2015}
@@ -675,6 +813,15 @@ Langer, Arnim, Frances Stewart, Kristien Smedts, y Leila Demarest. 2016.
 {«Conceptualising and {Measuring Social Cohesion} in {Africa}: {Towards}
 a {Perceptions-Based Index}»}. \emph{Social Indicators Research} 131
 (1): 321-43. \url{https://doi.org/10.1007/s11205-016-1250-4}.
+
+\bibitem[\citeproctext]{ref-lapoplab_americasbarometer_2023}
+LAPOP LAb. 2023. {«{AmericasBarometer}»}.
+
+\bibitem[\citeproctext]{ref-maerz_vdemdata_2025}
+Maerz, Seraphine F., Amanda B. Esgell, Sebastian Hellemeier, Nina
+Illchenko, y Linnea Fox. 2025. {«Vdemdata: {An R} Package to Load,
+Explore and Work with the Most Recent {V-Dem} ({Varieties} of
+{Democracy}) Dataset.»}
 
 \bibitem[\citeproctext]{ref-meer_ethnic_2014}
 Meer, Tom van der, y Jochem Tolsma. 2014. {«Ethnic {Diversity} and {Its
