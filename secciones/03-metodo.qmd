@@ -98,15 +98,43 @@ print(dfSummary(datos_cohesion,
 ```
 ### Variables Independientes
 
+Se incluyeron como variables independientes factores económicos, institucionales y culturales. La @tbl-indicadores-ind resume estos indicadores. 
+
 *Prosperidad económica* se medirá a través del PIB per cápita a valores de paridad de poder adquisitivo (PPA). *Desigualdad económica* en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial.
 
-En cuanto a factores institucionales, se incluyó el Índice de Democracia Electoral, o poliarquía, para medir la *Calidad democrática de los países*. Por otro lado, se incluyó **un índice de gobernanza** ($\alpha$ = X) calculado a partir de los *Worldwide Governace Indicators* del Banco Mundial. 
+En cuanto a factores institucionales, se incluyó el Índice de Democracia Electoral, o poliarquía, para medir la *Calidad democrática de los países*. Por otro lado, se incluyó **un índice de gobernanza**  calculado a partir de los *Worldwide Governace Indicators* del Banco Mundial [@kaufmann_worldwide_2024].
 
 Por último, se medirá **diversidad cultural** como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logistica.
 
+```{r}
+#| label: tbl-indicadores-ind
+#| tbl-cap: Resumen variables independientes
+
+
+datosind <- datos_wide |>
+  select(12:18)
+
+# data <- data %>%
+#   mutate(across(where(~inherits(.x, "haven_labelled")), as_factor))
+
+print(dfSummary(datosind,
+          headings=FALSE,
+          style = "multiline",
+          plain.ascii = FALSE,
+          tmp.img.dir = 'tmp',
+          varnumbers = FALSE,
+          silent= TRUE,
+          split.by = NULL),
+      max.tbl.height = 500,
+      method = 'render',
+      # css.class = 'table',
+      silent = TRUE,
+      footnote = NA)
+```
+
 ## Método
 
-Reconociendo la estructura jerárquica de los datos disponibles (olas anidadas en países), seguimos una estrategia de modelamiento multinivel longitudinal [@singer_applied_2003].  Dado que las observaciones repetidas en el tiempo dentro un mismo país comparten varianza, éstas deben modelarse para evitar inferencias sesgadas producto de considerar cada observación como independiente. La ventaja de los modelos de regresión multinivel radica en que, al modelar efectos aleatorios, capturan correctamente la varianza asociada a la estructura anidada de los datos. De tal forma, es posible captar la heterogeneidad en las trayectorias de cohesión social entre países. Los modelos fueron estimados usando el paquete de R `lme4` (bates_fitting_2015).
+Reconociendo la estructura jerárquica de los datos disponibles (olas anidadas en países), seguimos una estrategia de modelamiento multinivel longitudinal [@singer_applied_2003].  Dado que las observaciones repetidas en el tiempo dentro un mismo país comparten varianza, éstas deben modelarse para evitar inferencias sesgadas producto de considerar cada observación como independiente. La ventaja de los modelos de regresión multinivel radica en que, al modelar efectos aleatorios, capturan correctamente la varianza asociada a la estructura anidada de los datos. De tal forma, es posible captar la heterogeneidad en las trayectorias de cohesión social entre países. Los modelos fueron estimados usando el paquete de R `lme4` [@bates_fitting_2015].
 
 El modelo propuesto se podría expresar formalmente como:
 

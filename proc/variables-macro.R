@@ -18,10 +18,12 @@ devtools::install_github("vdeminstitute/vdemdata")
 load("input/orig/base_shiny_completa.RData") 
 
 gdp <- read_xls("input/orig/gdp-ppa.xls", range= "A4:BQ270") |> clean_names()
-educ <- read_xls("input/orig/ed-secundaria.xls", range="A4:BP270") |> clean_names()
+# educ <- read_xls("input/orig/ed-secundaria.xls", range="A4:BP270") |> clean_names()
 migra <- read_xlsx("input/orig/migration.xlsx", sheet = "Table 3")
+wgi <- read_xlsx("input/orig/wgi.xlsx")
 
 df <- clean_names(df)
+
 
 vdem <- vdemdata::vdem
 
@@ -75,42 +77,11 @@ gdp_long <- gdp_proc %>%
   ) %>%
   # deja solo los dígitos del nombre de columna (quita X y espacios)
   mutate(year = as.integer(gsub("\\D", "", year))) %>%
-  arrange(country_code, year, indicator_name)     
-
-# Filtrar años
-
-olas <- unique(datos_wide$ola)
-
-gdp_long <- gdp_long |>
-  filter(year %in% olas) |>
-  mutate(log_pib_ppa = log(value)) |>
-  select(ola=year,
-         codigo_pais=country_code,
-         "PIB per cápita (PPA)"= value,
-         "(Log) PIB per cápita (PPA)"= log_pib_ppa)
-
-## Base educación ----
-
-educa_proc <- educ |>
-  filter(country_code %in% codigos_pais) |>
-  select(1:3, 49:67) |>
-  rename_with(~ sub("^x(?=(\\d|año))", "", .x, perl = TRUE))
-
-# Detectar columnas de años
-educ_long <- educa_proc %>%
-  pivot_longer(
-    # selecciona todas las columnas que "parecen" años
-    matches("^(X)?\\s*\\d{4}\\s*$"),
-    names_to  = "year",
-    values_to = "value"
-  ) %>%
-  # deja solo los dígitos del nombre de columna (quita X y espacios)
-  mutate(year = as.integer(gsub("\\D", "", year))) %>%
-  arrange(country_code, year, indicator_name)
+  arrange(country_code, year, indicator_name)    
 
 # Imputación con lógica extendida
-educ_long_imp <- educ_long  %>%
-  group_by(country_code) %>%
+gdp_long <- gdp_long %>%
+  group_by(country_name, value) %>%
   arrange(year) %>%
   mutate(
     value = if_else(
@@ -130,11 +101,60 @@ educ_long_imp <- educ_long  %>%
 
 olas <- unique(datos_wide$ola)
 
-educ_long <- educ_long |>
+gdp_long <- gdp_long |>
   filter(year %in% olas) |>
+  mutate(log_pib_ppa = log(value)) |>
   select(ola=year,
          codigo_pais=country_code,
-         "Pob. con educación secundaria completa"= value)
+         "PIB per cápita (PPA)"= value,
+         "(Log) PIB per cápita (PPA)"= log_pib_ppa)
+
+ ## Base educación ----
+# 
+# educa_proc <- educ |>
+#   filter(country_code %in% codigos_pais) |>
+#   select(1:3, 49:67) |>
+#   rename_with(~ sub("^x(?=(\\d|año))", "", .x, perl = TRUE))
+# 
+# # Detectar columnas de años
+# educ_long <- educa_proc %>%
+#   pivot_longer(
+#     # selecciona todas las columnas que "parecen" años
+#     matches("^(X)?\\s*\\d{4}\\s*$"),
+#     names_to  = "year",
+#     values_to = "value"
+#   ) %>%
+#   # deja solo los dígitos del nombre de columna (quita X y espacios)
+#   mutate(year = as.integer(gsub("\\D", "", year))) %>%
+#   arrange(country_code, year, indicator_name)
+# 
+# # Imputación con lógica extendida
+# educ_long_imp <- educ_long  %>%
+#   group_by(country_code) %>%
+#   arrange(year) %>%
+#   mutate(
+#     value = if_else(
+#       is.na(value),
+#       case_when(
+#         !is.na(lag(value)) & !is.na(lead(value)) ~ (lag(value) + lead(value)) / 2,
+#         !is.na(lag(value)) ~ lag(value),
+#         !is.na(lead(value)) ~ lead(value),
+#         TRUE ~ NA_real_
+#       ),
+#       value  # si ya tiene value, se mantiene
+#     )
+#   ) %>%
+#   ungroup()
+# 
+# # Filtrar años
+# 
+# olas <- unique(datos_wide$ola)
+# 
+# educ_long <- educ_long |>
+#   filter(year %in% olas) |>
+#   select(ola=year,
+#          codigo_pais=country_code,
+#          "Pob. con educación secundaria completa"= value)
 
 ## Migración  ----
 
@@ -262,6 +282,33 @@ vdem_proc <- vdem |>
          ola=year,
          "Indice V-Dem"= v2x_polyarchy)
 
+# Imputación con lógica extendida
+vdem_proc <- vdem_proc %>%
+  group_by(codigo_pais, `Indice V-Dem`) %>%
+  arrange(ola) %>%
+  mutate(
+    `Indice V-Dem` = if_else(
+      is.na(`Indice V-Dem`),
+      case_when(
+        !is.na(lag(`Indice V-Dem`)) & !is.na(lead(`Indice V-Dem`)) ~ (lag(`Indice V-Dem`) + lead(`Indice V-Dem`)) / 2,
+        !is.na(lag(`Indice V-Dem`)) ~ lag(`Indice V-Dem`),
+        !is.na(lead(`Indice V-Dem`)) ~ lead(`Indice V-Dem`),
+        TRUE ~ NA_real_
+      ),
+      `Indice V-Dem`  # si ya tiene `Indice V-Dem`, se mantiene
+    )
+  ) %>%
+  ungroup()
+
+
+# WGI
+
+wgi_proc <- wgi |>
+  filter(year>=2004 & year<=2022 & code %in% codigos_pais) |>
+  mutate(estimate= as.numeric(estimate)) |>
+  select(codigo_pais= code,
+         ola=year,
+         "WGI"= estimate)
 
 # añadir codigos iso a la base datos principal
 
@@ -273,16 +320,17 @@ datos_wide <- datos_wide |>
 # merge
 
 # Los objetos que quieres conservar (ajusta los nombres si hace falta)
-keep <- c("datos_wide", "gdp_long", "educ_long", "migra_log", "vdem_proc")
+keep <- c("datos_wide", "gdp_long",  "migra_log", "vdem_proc", "wgi_proc")
 
 # Borra todo lo demás del entorno global
 rm(list = setdiff(ls(envir = .GlobalEnv), keep), envir = .GlobalEnv)
 
 datos_wide <- datos_wide |>
   left_join(gdp_long, by=c("codigo_pais", "ola")) |>
-  left_join(educ_long, by=c("codigo_pais", "ola")) |>
+  # left_join(educ_long, by=c("codigo_pais", "ola")) |>
   left_join(migra_log, by=c("codigo_pais", "ola")) |>
   left_join(vdem_proc, by=c("codigo_pais", "ola")) |>
+  left_join(wgi_proc, by=c("codigo_pais", "ola")) |>
   select(ola,
          pais=pais.x,
          codigo_pais,
@@ -290,7 +338,31 @@ datos_wide <- datos_wide |>
          -pais.y
          )
 
+# Limpiar
+
+resumen <- datos_wide |>
+  dplyr::filter(!is.na(`Cohesión general`), !is.na(ola)) |>
+  dplyr::distinct(pais, ola) |>                      # evita duplicados país-año
+  dplyr::group_by(pais) |>
+  dplyr::summarise(
+    n_olas = n(),
+    `olas disponibles` = paste(sort(as.integer(ola)), collapse = "; "),
+    .groups = "drop"
+  ) |>
+  dplyr::filter(n_olas >= 5, !pais %in% c("Canada", "United States")) |>
+  arrange(desc(n_olas), pais) |>
+  select(pais, n_olas, "olas disponibles")
+
+
+datos_wide <- datos_wide |>
+  dplyr::filter(!is.na(`Cohesión general`), !is.na(ola)) |>
+  semi_join(resumen, by="pais") |>
+  select(1:11, 20,22:27)
+  
+
 # exportar
 
 save(datos_wide, file="input/proc/datos-completos.rdata")
+
+
 
