@@ -1,3 +1,2 @@
 project:
   output-dir: docs
-  resources: docs/index_files/figure-html/"*.png"
