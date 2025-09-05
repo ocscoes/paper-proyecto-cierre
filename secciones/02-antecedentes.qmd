@@ -65,7 +65,7 @@ A partir de la literatura revisada y considerando el contexto latinoamericano ca
 
 -   **H2**: Existe una asociación positiva y significativa entre cohesión social y prosperidad económica; los países con mayor desarrollo económico presentarán mayores niveles de cohesión social.
 
--   **H3**: Los efectos del crecimiento económico sobre la cohesión social estarán moderados por los niveles de desigualdad económica. En países con mayor desigualdad y menores niveles educativos, el impacto positivo del crecimiento económico sobre la cohesión social será más limitado.
+-   **H3**: Los efectos del crecimiento económico sobre la cohesión social estarán moderados por los niveles de desigualdad económica. En países con mayor desigualdad el impacto positivo del crecimiento económico sobre la cohesión social será más limitado.
 
 -   **H4**: Existe una asociación positiva y significativa entre cohesión social y calidad de la gobernanza.
 

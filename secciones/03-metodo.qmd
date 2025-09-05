@@ -96,15 +96,41 @@ print(dfSummary(datos_cohesion,
       silent = TRUE,
       footnote = NA)
 ```
-
-
 ### Variables Independientes
 
-*Prosperidad económica* se medirá a través del PIB per cápita a valores de paridad de poder adquisitivo (PPA). *Desigualdad económica* en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial. El *Nivel Educativo* se medirá como el porcentaje de la población con educación superior, según datos de la Encuesta LAPOP. 
+*Prosperidad económica* se medirá a través del PIB per cápita a valores de paridad de poder adquisitivo (PPA). *Desigualdad económica* en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial.
 
 En cuanto a factores institucionales, se incluyó el Índice de Democracia Electoral, o poliarquía, para medir la *Calidad democrática de los países*. Por otro lado, se incluyó **un índice de gobernanza** ($\alpha$ = X) calculado a partir de los *Worldwide Governace Indicators* del Banco Mundial. 
 
-Por último, se medirá **diversidad cultural** como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logistica,.
+Por último, se medirá **diversidad cultural** como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logistica.
 
 ## Método
+
+Reconociendo la estructura jerárquica de los datos disponibles (olas anidadas en países), seguimos una estrategia de modelamiento multinivel longitudinal [@singer_applied_2003].  Dado que las observaciones repetidas en el tiempo dentro un mismo país comparten varianza, éstas deben modelarse para evitar inferencias sesgadas producto de considerar cada observación como independiente. La ventaja de los modelos de regresión multinivel radica en que, al modelar efectos aleatorios, capturan correctamente la varianza asociada a la estructura anidada de los datos. De tal forma, es posible captar la heterogeneidad en las trayectorias de cohesión social entre países. Los modelos fueron estimados usando el paquete de R `lme4` (bates_fitting_2015).
+
+El modelo propuesto se podría expresar formalmente como:
+
+$$
+y_{ij} = \gamma_{00} + Ola_{ij} + PIB_{ij} + Gini_{ij} + VDem_{ij} + WGI_{ij} + Mig_{ij} + \mu_{0j} + \epsilon_{ij}
+$$
+Donde,
+
+- $y_{ij}$ es el valor de mediciones repetidas sobre los niveles de cohesión social en los países
+
+- $Ola$ es la medición de tiempo
+
+- $PIB$ es el PIB per capita (PPA) del país
+
+- $Gini$ es el la desigualdad de ingresos del país, medida a través del Índice Gini
+
+- $VDem$ es el nivel de democracia electoral
+
+- $WGI$ es el nivel de gobernanza
+
+- $Mig$ es el porcentaje de población migrante sobre la población total del país
+
+- $\mu_{0j}$ y $\epsilon_{ij}$ son los errores a nivel del país y a nivel de la ola, respectivamente. 
+
+
+
 
