@@ -65,7 +65,9 @@ Se construyó un **índice de Cohesión Social** ($\alpha$ = 0.74) que se compon
 
 El **Índice de Cohesión Horizontal** ($\alpha$ = 0.7) se compone de dos subdimensiones, *Seguridad Urbana* y *Confianza Interpersonal*. Seguridad urbana integra indicadores de seguridad objetiva y seguridad subjetiva. Confianza Interpersonal, en tanto, es un único indicador sobre que tan confiuable son las personas en general. Aunque conceptualmente se entiende que el sentido de pertenencia es un componente importante para la cohesión horizontal, ni LAPOP ni Latinobarómetro cuentan con un indicador que permita medir ese fenómeno de manera adecuada. Por otro lado, si bien se esperaba que la participación comunitaria fuera parte del índice, un análisis factorial exploratorio indicó que no forma parte del mismo concepto latente que las otras dos subsimensiones.
 
-El **Índice de Cohesión Vertical** ($\alpha$ = 0.66) se compone de tres dimensiones: *Confianza en instituciones*, *Actitudes hacia la democracia* y *Justicia Distributiva*. Confianza en las instituciones integra indicadores relativos a la confianza de los ciudadananos en el congreso, en el poder judicial y en los partidos políticos. Actitudes hacia la democracia se compone de dos indicadores sobre apoyo al sistema democrático y la satisfacción con el funcionamiento de la democracia en su país. Por último, Justicia distributiva se compone de un único indicador sobre la importancia de que el Estado redistribuya los ingresos en el país. La @tbl-indicadores describe los indicadores seleccionados, así como los índices de cohesión general, horizontal y vertical. 
+El **Índice de Cohesión Vertical** ($\alpha$ = 0.66) se compone de tres dimensiones: *Confianza en instituciones*, *Actitudes hacia la democracia* y *Justicia Distributiva*. Confianza en las instituciones integra indicadores relativos a la confianza de los ciudadananos en el congreso, en el poder judicial y en los partidos políticos. Actitudes hacia la democracia se compone de dos indicadores sobre apoyo al sistema democrático y la satisfacción con el funcionamiento de la democracia en su país. Por último, Justicia distributiva se compone de un único indicador sobre la importancia de que el Estado redistribuya los ingresos en el país. 
+
+Los tres índices tienen rango de 0 a 10, con 0 indicando bajos niveles de cohesión social y 10 indicando altos niveles de cohesión. La @tbl-indicadores describe los indicadores seleccionados, los índices construidos. 
 
 ```{r}
 #| label: tbl-indicadores
@@ -102,7 +104,7 @@ Se incluyeron como variables independientes factores económicos, institucionale
 
 *Prosperidad económica* se medirá a través del PIB per cápita a valores de paridad de poder adquisitivo (PPA). *Desigualdad económica* en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial.
 
-En cuanto a factores institucionales, se incluyó el Índice de Democracia Electoral, o poliarquía, para medir la *Calidad democrática de los países*. Por otro lado, se incluyó **un índice de gobernanza**  calculado a partir de los *Worldwide Governace Indicators* del Banco Mundial [@kaufmann_worldwide_2024].
+En cuanto a factores institucionales, se incluyó el Índice de Democracia Electoral, o poliarquía, para medir la *Calidad democrática de los países*. Por otro lado, se incluyó **un índice de gobernanza** ($\alpha$ = 0.96)  calculado a partir de los *Worldwide Governace Indicators* del Banco Mundial [@kaufmann_worldwide_2024].
 
 Por último, se medirá **diversidad cultural** como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logistica.
 

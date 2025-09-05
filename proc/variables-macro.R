@@ -306,9 +306,11 @@ vdem_proc <- vdem_proc %>%
 wgi_proc <- wgi |>
   filter(year>=2004 & year<=2022 & code %in% codigos_pais) |>
   mutate(estimate= as.numeric(estimate)) |>
+  group_by(code, year) |>
+  summarise(wgi= mean(estimate)) |>
   select(codigo_pais= code,
          ola=year,
-         "WGI"= estimate)
+         wgi)
 
 # añadir codigos iso a la base datos principal
 
@@ -325,7 +327,7 @@ keep <- c("datos_wide", "gdp_long",  "migra_log", "vdem_proc", "wgi_proc")
 # Borra todo lo demás del entorno global
 rm(list = setdiff(ls(envir = .GlobalEnv), keep), envir = .GlobalEnv)
 
-datos_wide <- datos_wide |>
+datos_wide_fix <- datos_wide |>
   left_join(gdp_long, by=c("codigo_pais", "ola")) |>
   # left_join(educ_long, by=c("codigo_pais", "ola")) |>
   left_join(migra_log, by=c("codigo_pais", "ola")) |>
