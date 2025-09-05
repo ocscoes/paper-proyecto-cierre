@@ -69,12 +69,14 @@ execute:
 library(pacman)
 p_load(dplyr,
        kableExtra,
-       knitr)
+       knitr,
+       tidyr,
+       ggplot2)
 ```
 
 
 {{< include secciones/01-intro.qmd >}}
 {{< include secciones/02-antecedentes.qmd >}}
 {{< include secciones/03-metodo.qmd >}}
-<!-- {{< include secciones/04-resultados.qmd >}} -->
+{{< include secciones/04-resultados.qmd >}}
 

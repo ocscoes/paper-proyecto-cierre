@@ -1,0 +1,96 @@
+# Resultados
+
+```{r}
+#| echo: false
+
+## cargar base
+
+load("input/proc/datos-completos.rdata")
+```
+
+# Descriptivos
+
+```{r}
+#| label: fig-ch
+#| fig-cap: Evolución dimensiones Cohesión Horizontal (2004-2022)
+
+
+olas <- datos_wide |>
+  group_by(ola) |>
+  summarise(seguridad_prom = mean(`Seguridad Pública`, na.rm=T),
+            confianza_prom = mean(`Confianza Interpersonal`, na.rm=T)) |>
+  pivot_longer(
+    cols = c(confianza_prom, seguridad_prom),
+    names_to = "indicador",
+    values_to = "promedio"
+  ) |>
+  mutate(indicador = recode(indicador,
+                            "confianza_prom" = "Confianza Interpersonal",
+                            "seguridad_prom" = "Seguridad Pública"))
+olas |>
+  ggplot(aes(x = ola, y = promedio, color=indicador)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  labs(x = "Ola", y = "Promedio", color=NULL) +
+  theme_minimal() + 
+  theme(legend.position = "bottom")
+
+```
+
+
+```{r}
+#| label: fig-cv
+#| fig-cap: Evolución dimensiones Cohesión Vertical (2004-2022)
+
+olas <- datos_wide |>
+  group_by(ola) |>
+  summarise(confianza_prom = mean(`Confianza en las Instituciones`, na.rm=T),
+            democracia_prom = mean(`Actitudes a la Democracia`, na.rm=T),
+            justicia_prom = mean(`Justicia Redistributiva`, na.rm=T)) |>
+  pivot_longer(
+    cols = c(confianza_prom, democracia_prom, justicia_prom),
+    names_to = "indicador",
+    values_to = "promedio"
+  ) |>
+  mutate(indicador = recode(indicador,
+                            "confianza_prom" = "Confianza en las Instituciones",
+                            "democracia_prom" = "Actitudes hacia la democracia",
+                            "justicia_prom" = "Justicia Redistributiva"))
+olas |>
+  ggplot(aes(x = ola, y = promedio, color=indicador)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  labs(x = "Ola", y = "Promedio", color=NULL) +
+  theme_minimal() + 
+  theme(legend.position = "bottom")
+
+```
+```{r}
+#| label: fig-cs
+#| fig-cap: Evolución dimensiones Cohesión Social (2004-2022)
+
+olas <- datos_wide |>
+  group_by(ola) |>
+  summarise(horizontal_prom = mean(`Cohesión horizontal`, na.rm=T),
+            vertical_prom = mean(`Cohesión vertical`, na.rm=T),
+            cohesion_prom = mean(`Cohesión general`, na.rm=T)) |>
+  pivot_longer(
+    cols = c(horizontal_prom, vertical_prom, cohesion_prom),
+    names_to = "indicador",
+    values_to = "promedio"
+  ) |>
+  mutate(indicador = recode(indicador,
+                            horizontal_prom = "Cohesión Horizontal",
+                            vertical_prom = "Cohesión Vertical",
+                            cohesion_prom = "Cohesión Social"))
+olas |>
+  ggplot(aes(x = ola, y = promedio, color=indicador)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  labs(x = "Ola", y = "Promedio", color=NULL) +
+  theme_minimal() + 
+  theme(legend.position = "bottom")
+
+```
+
+# Modelos Multinivel

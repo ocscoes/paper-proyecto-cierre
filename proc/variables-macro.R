@@ -8,7 +8,8 @@ p_load(tidyverse,
        janitor,
        devtools,
        stringr,
-       stringi)
+       stringi,
+       psych)
 
 devtools::install_github("vdeminstitute/vdemdata")
 
@@ -306,15 +307,22 @@ vdem_proc <- vdem_proc %>%
 wgi_proc <- wgi |>
   filter(year>=2004 & year<=2022 & code %in% codigos_pais) |>
   mutate(estimate= as.numeric(estimate)) |>
-  group_by(code, year) |>
-  summarise(wgi= mean(estimate)) |>
+  group_by(code, year, indicator) |>
+  summarise(valores= mean(estimate), .groups = "drop") |>
+  pivot_wider(names_from= indicator, values_from=valores) 
+
+items <- setdiff(names(wgi_proc), c("year","code"))
+
+a_wgi <- alpha(wgi_proc[3:8])
+
+wgi_proc <- wgi_proc |>
+  mutate(wgi=rowMeans(pick(all_of(items)))) |>
   select(codigo_pais= code,
-         ola=year,
+         ola= year,
          wgi)
 
+
 # añadir codigos iso a la base datos principal
-
-
 datos_wide <- datos_wide |>
   left_join(iso_dict, by="pais")
 
@@ -327,7 +335,7 @@ keep <- c("datos_wide", "gdp_long",  "migra_log", "vdem_proc", "wgi_proc")
 # Borra todo lo demás del entorno global
 rm(list = setdiff(ls(envir = .GlobalEnv), keep), envir = .GlobalEnv)
 
-datos_wide_fix <- datos_wide |>
+datos_wide <- datos_wide |>
   left_join(gdp_long, by=c("codigo_pais", "ola")) |>
   # left_join(educ_long, by=c("codigo_pais", "ola")) |>
   left_join(migra_log, by=c("codigo_pais", "ola")) |>
@@ -360,6 +368,7 @@ datos_wide <- datos_wide |>
   dplyr::filter(!is.na(`Cohesión general`), !is.na(ola)) |>
   semi_join(resumen, by="pais") |>
   select(1:11, 20,22:27)
+
   
 
 # exportar
