@@ -31,7 +31,7 @@ vdem <- vdemdata::vdem
 ## Estandarizar nombres paises ----
 
 iso_dict <- tibble(
-   pais = c(
+  pais = c(
     "Argentina","Bahamas","Belize","Bolivia","Brazil","Canada","Chile","Colombia",
     "Costa Rica","Dominican Republic","Ecuador","El Salvador","Grenada","Guatemala",
     "Guyana","Haiti","Honduras","Jamaica","Mexico","Nicaragua","Panama","Paraguay",
@@ -39,7 +39,19 @@ iso_dict <- tibble(
   ),
   codigo_pais = c(
     "ARG","BHS","BLZ","BOL","BRA","CAN","CHL","COL",
-    "CRI","DOM","ECU","SLV","GRD","GTM","GUY","HTI","HND","JAM","MEX","NIC","PAN","PRY","PER","SUR","TTO","USA","URY","VEN"))
+    "CRI","DOM","ECU","SLV","GRD","GTM","GUY","HTI","HND","JAM","MEX","NIC","PAN","PRY","PER","SUR","TTO","USA","URY","VEN")
+) |>
+  mutate(
+    region = case_when(
+      codigo_pais %in% c("ARG","BOL","BRA","CHL","COL","ECU","PRY","PER","URY","VEN") ~ "América del Sur",
+      codigo_pais %in% c("BLZ","CRI","SLV","GTM","HND","MEX","NIC","PAN")                                   ~ "Centroamérica",
+      codigo_pais %in% c("BHS","DOM","GRD", "GUY", "HTI","JAM","SUR","TTO")                                         ~ "El Caribe",
+      codigo_pais %in% c("CAN","USA")                                                           ~ "América del Norte",
+      TRUE ~ NA_character_
+    ),
+    region = factor(region, levels = c("América del Norte","Centroamérica","El Caribe","América del Sur"))
+  )
+
 
 ## Pivotear base macro ----
 
@@ -159,8 +171,7 @@ gdp_long <- gdp_long |>
 
 ## Migración  ----
 
-## cruzar países
-# --- 1) Tu lista objetivo (28 países canónicos) ---
+# 1) Tu set objetivo
 targets <- c(
   "Argentina","Bahamas","Belize","Bolivia","Brazil","Canada","Chile","Colombia",
   "Costa Rica","Dominican Republic","Ecuador","El Salvador","Grenada","Guatemala",
@@ -168,53 +179,84 @@ targets <- c(
   "Peru","Suriname","Trinidad & Tobago","United States","Uruguay","Venezuela"
 )
 
-# --- 2) Normalizador: quita asteriscos/paréntesis, unifica &/and, quita acentos y deja minúsculas ---
+# 2) Normalizador más robusto (maneja (..), &, THE/bahamas, comas finales, etc.)
 normalize_name <- function(x) {
   x |>
-    str_replace_all("\\*", "") |>              # quita asteriscos
-    str_replace_all("\\s*\\(.*?\\)", "") |>    # quita paréntesis y su contenido
-    str_replace_all("&", " and ") |>           # unifica & -> " and "
+    str_replace_all("\\*", "") |>                 # quita asteriscos
+    str_replace_all("\\s*\\(.*?\\)", "") |>       # quita paréntesis y su contenido
+    str_replace_all("&", " and ") |>              # unifica & -> " and "
+    str_replace_all(",\\s*the$", "") |>           # "Bahamas, The" -> "Bahamas"
+    str_replace_all("^the\\s+", "") |>            # "The Bahamas" -> "Bahamas"
     str_to_lower() |>
-    stringi::stri_trans_general("Latin-ASCII") |>  # quita acentos
-    str_replace_all("[^a-z ]+", " ") |>
+    stringi::stri_trans_general("Latin-ASCII") |> # sin tildes
+    str_replace_all("[^a-z ]+", " ") |>           # solo letras/espacios
     str_squish()
 }
 
-# --- 3) Diccionario canónico: normalizado -> etiqueta de targets ---
+# 3) Diccionario canónico normalizado
 dict <- tibble(
-  country_std  = targets,
-  norm_target  = normalize_name(targets)
+  country_std = targets,
+  norm_target = normalize_name(targets)           # p.ej. "trinidad and tobago"
 )
 
-# --- 4) Estándar en tu base: crea country_std con los nombres canónicos de targets ---
+# 4) Sinónimos habituales del geoesquema ONU -> tu etiqueta target
+synonyms <- tribble(
+  ~norm_raw,                               ~norm_target,
+  "united states of america",              "united states",
+  "bolivia plurinational state of",        "bolivia",
+  "venezuela bolivarian republic of",      "venezuela",
+  "trinidad tobago",                       "trinidad and tobago",
+  "mexico united mexican states",          "mexico",
+  "bahamas",                               "bahamas"           # cubre "bahamas the" tras normalizar
+)
+
+# Helper para aplicar sinónimos sobre una columna normalizada
+apply_synonyms <- function(norm_vec) {
+  out <- norm_vec
+  # reemplazos exactos
+  out <- coalesce(left_join(tibble(norm_raw = out),
+                            synonyms, by = "norm_raw")$norm_target, out)
+  # reemplazos por patrón/cola (ej. "bolivia ..." -> "bolivia")
+  out <- case_when(
+    str_detect(out, "^united states( .*)?$") ~ "united states",
+    str_detect(out, "^bolivia( .*)?$")       ~ "bolivia",
+    str_detect(out, "^venezuela( .*)?$")     ~ "venezuela",
+    str_detect(out, "^trinidad( and)? tobago$") ~ "trinidad and tobago",
+    TRUE ~ out
+  )
+  out
+}
+
+# ---------- A) Tu flujo original (OK) ----------
+# migra_std: normaliza y mapea a target
 migra_std <- migra %>%
   mutate(
-    country_raw  = `Region, development group, country or area`,
-    norm_raw     = normalize_name(country_raw),
-    # Sinónimos específicos que no se arreglan sólo con el normalizador:
-    norm_raw     = case_when(
-      norm_raw == "united states of america" ~ "united states",
-      TRUE ~ norm_raw
-    )
+    country_raw = `Region, development group, country or area`,
+    norm_raw = normalize_name(country_raw),
+    norm_raw = apply_synonyms(norm_raw)
   ) %>%
   left_join(dict, by = c("norm_raw" = "norm_target")) %>%
-  mutate(
-    # country_std = nombre estandarizado (si no matchea, queda NA)
-    country_std = country_std
-  )
+  mutate(country_std = country_std)
 
-# --- 5) (Opcional) Ver qué no matcheó y podrías revisar/descartar ---
 no_match <- migra_std %>%
   filter(is.na(country_std)) %>%
   distinct(country_raw) %>%
   arrange(country_raw)
 
-# --- 6) (Opcional) Quedarte sólo con los 28 países estandarizados ---
-migra <- migra_std %>%
-  filter(!is.na(country_std))
+migra <- migra_std %>% filter(!is.na(country_std))
 
+# ---------- B) El flujo que fallaba (arreglado) ----------
+# 1) Normaliza 'pais' proveniente de migra_logistico
+# 2) Mapea a country_std usando dict
+# 3) Recién ahí cruza con iso_dict (idealmente también normalizado)
 
-
+# iso_dict normalizado para cruces robustos
+iso_dict_norm <- iso_dict %>%
+  mutate(norm_iso = normalize_name(pais)) %>%
+  left_join(dict, by = c("norm_iso" = "norm_target")) %>%
+  # Si tus 'pais' en iso_dict ya son iguales a country_std, este paso solo refuerza
+  mutate(pais_std = coalesce(country_std, pais)) %>%
+  select(pais_std, codigo_pais, region)
 
 ## Imputacion
 
@@ -268,12 +310,31 @@ migra_logistico <- migra_long %>%
 
 ## Limpieza
 
-migra_log <- migra_logistico |>
-  select(ola=anio,
-         pais="Region, development group, country or area",
-         "% pob. migrante"= pct_logistico) |>
-  filter(ola>=2004 & ola<=2022) |>
-  left_join(iso_dict, by="pais")
+migra_log <- migra_logistico %>%
+  transmute(
+    ola  = anio,
+    pais_raw = `Region, development group, country or area`,
+    norm_pais = normalize_name(pais_raw),
+    norm_pais = apply_synonyms(norm_pais),
+    `% pob. migrante` = pct_logistico
+  ) %>%
+  # mapea a estándar canónico
+  left_join(dict, by = c("norm_pais" = "norm_target")) %>%
+  rename(pais_std = country_std) %>%
+  filter(ola >= 2004, ola <= 2022, !is.na(pais_std)) %>%
+  # ahora sí: ISO por país estándar
+  left_join(iso_dict_norm, by = "pais_std") %>%
+  # deja nombres finales amigables
+  rename(pais = pais_std, codigo_pais = codigo_pais) |>
+  filter(pais_raw!="United States Virgin Islands*") |>
+  select(ola,
+         pais,
+         codigo_pais,
+         region,
+         `% pob. migrante`)
+
+# Opcional: ver qué quedó sin ISO (si algo)
+# faltantes_iso <- migra_log %>% filter(is.na(codigo_pais)) %>% distinct(pais)
 
 # V-Dem
 
@@ -344,8 +405,10 @@ datos_wide <- datos_wide |>
   select(ola,
          pais=pais.x,
          codigo_pais,
+         region = region.x,
          everything(),
-         -pais.y
+         -pais.y,
+         -region.y
          )
 
 # Limpiar
@@ -359,7 +422,7 @@ resumen <- datos_wide |>
     `olas disponibles` = paste(sort(as.integer(ola)), collapse = "; "),
     .groups = "drop"
   ) |>
-  dplyr::filter(n_olas >= 5, !pais %in% c("Canada", "United States")) |>
+  dplyr::filter(n_olas >= 5) |>
   arrange(desc(n_olas), pais) |>
   select(pais, n_olas, "olas disponibles")
 
@@ -367,7 +430,7 @@ resumen <- datos_wide |>
 datos_wide <- datos_wide |>
   dplyr::filter(!is.na(`Cohesión general`), !is.na(ola)) |>
   semi_join(resumen, by="pais") |>
-  select(1:11, 20,22:27)
+  select(1:12, 21,24:28)
 
   
 

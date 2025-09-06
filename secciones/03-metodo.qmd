@@ -8,7 +8,7 @@ La encuesta se ha realizado de manera regular desde el año 2004. A la fecha, se
 
 Complementariamente, se utilizaron indicadores del estudio Latinobarómetro. El estudio declara como objetivo el investigar el desarrollo de la democracia, la economía y la sociedad a partir de indicadores de opinión pública que miden actitudes, valores y comportamientos de la población. Se basa en muestras nacionales de 18 países de América Latina, representativas de la población mayor de 18 años de los respectivos países. 
 
-Como criterio, se incluyeron en este estudio únicamente los países de la región que tengan disponible datos para los indicadores principales del estudio en al menos 5 puntos en el tiempo. De tal manera, esta investigación incluye a 23 de las 33 naciones independientes de América Latina y el Caribe. Como se resumen en @tbl-paises, 11 países tienen datos para todas las olas, y otros 7 tienen datos para 8 olas. 
+Como criterio, se incluyeron en este estudio únicamente los países de la región que tengan disponible datos para los indicadores principales del estudio en al menos 5 puntos en el tiempo. De tal manera, esta investigación incluye a 23 de las 33 naciones independientes de América Latina y el Caribe, además de Canadá y Estados Unidos. Como se resumen en @tbl-paises, 11 países tienen datos para todas las olas, y otros 9 tienen datos para 8 olas. 
 
 ```{r}
 #| label: tbl-paises
@@ -98,15 +98,18 @@ print(dfSummary(datos_cohesion,
       silent = TRUE,
       footnote = NA)
 ```
+
 ### Variables Independientes
 
 Se incluyeron como variables independientes factores económicos, institucionales y culturales. La @tbl-indicadores-ind resume estos indicadores. 
 
-*Prosperidad económica* se medirá a través del PIB per cápita a valores de paridad de poder adquisitivo (PPA). *Desigualdad económica* en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial.
+*Prosperidad económica* se medirá a través del logaritmo del PIB per cápita a valores de paridad de poder adquisitivo (PPA). *Desigualdad económica* en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial.
 
 En cuanto a factores institucionales, se incluyó el Índice de Democracia Electoral, o poliarquía, para medir la *Calidad democrática de los países*. Por otro lado, se incluyó **un índice de gobernanza** ($\alpha$ = 0.96)  calculado a partir de los *Worldwide Governace Indicators* del Banco Mundial [@kaufmann_worldwide_2024].
 
-Por último, se medirá **diversidad cultural** como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logistica.
+Se medirá **diversidad cultural** como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logistica.
+
+Además, para captar las posibilidades divergencias por contexto, se incluyó la variable de **región geográfica*, siguiendo el geoesquema de las Naciones Unidas. Así, el continente americano se divide en 4 regiones: América del Norte (Canadá y Estados Unidos), América Central (incluye México), el Caribe y América del Sur.  
 
 ```{r}
 #| label: tbl-indicadores-ind
@@ -114,7 +117,7 @@ Por último, se medirá **diversidad cultural** como el porcentaje de población
 
 
 datosind <- datos_wide |>
-  select(12:18)
+  select(13,15:18)
 
 # data <- data %>%
 #   mutate(across(where(~inherits(.x, "haven_labelled")), as_factor))
@@ -141,7 +144,7 @@ Reconociendo la estructura jerárquica de los datos disponibles (olas anidadas e
 El modelo propuesto se podría expresar formalmente como:
 
 $$
-y_{ij} = \gamma_{00} + Ola_{ij} + PIB_{ij} + Gini_{ij} + VDem_{ij} + WGI_{ij} + Mig_{ij} + \mu_{0j} + \epsilon_{ij}
+y_{ij} = \gamma_{00} + Ola_{ij} + LogPIB_{ij} + Gini_{ij} + VDem_{ij} + WGI_{ij} + Mig_{ij} + Region_{j} + \mu_{0j} + \epsilon_{ij}
 $$
 Donde,
 
@@ -161,6 +164,5 @@ Donde,
 
 - $\mu_{0j}$ y $\epsilon_{ij}$ son los errores a nivel del país y a nivel de la ola, respectivamente. 
 
-
-
+Con el fin de mejorar la interpretabilidad de los resultados, todas las variables continuas de nivel 1 se centraron en la media global (grand-mean centering). Este procedimiento permite que el intercepto del modelo se interprete como el nivel promedio de cohesión social esperado en un país con valores promedio en las covariables, en lugar de valores arbitrarios como cero, que no poseen un significado sustantivo en indicadores macro (e.g., PIB per cápita, porcentaje de población migrante).
 

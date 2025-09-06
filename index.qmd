@@ -71,7 +71,11 @@ p_load(dplyr,
        kableExtra,
        knitr,
        tidyr,
-       ggplot2)
+       ggplot2,
+       lme4,
+       janitor,
+       texreg,
+       sjPlot)
 ```
 
 

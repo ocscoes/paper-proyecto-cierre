@@ -6,6 +6,8 @@
 ## cargar base
 
 load("input/proc/datos-completos.rdata")
+
+
 ```
 
 # Descriptivos
@@ -65,9 +67,10 @@ olas |>
   theme(legend.position = "bottom")
 
 ```
+
 ```{r}
 #| label: fig-cs
-#| fig-cap: Evolución dimensiones Cohesión Social (2004-2022)
+#| tab-cap: Evolución dimensiones Cohesión Social (2004-2022)
 
 olas <- datos_wide |>
   group_by(ola) |>
@@ -94,3 +97,111 @@ olas |>
 ```
 
 # Modelos Multinivel
+
+
+```{r}
+#| label: centrado
+
+datos_wide <- clean_names(datos_wide)
+
+datos_wide <- datos_wide |>
+  dplyr::mutate(
+    pib_c   = scale(log_pib_per_capita_ppa, scale = FALSE, center = T),
+    gini_c  = scale(gini_index, scale = FALSE, center= T),
+    vdem_c  = scale(indice_v_dem, scale = FALSE, center=T),
+    wgi_c   = scale(wgi, scale = FALSE, center=T),
+    mig_c   = scale(percent_pob_migrante, scale = FALSE, center=T)
+  )
+```
+
+
+```{r}
+#| label: tbl-modelos-horizontal
+#| tbl-cap: Modelos para cohesión horizontal 
+#| results: asis
+
+
+
+# Modelo nulo general
+m0 <- lmer(cohesion_horizontal ~ 1 + (1 | pais), data = datos_wide)
+
+m1 <- lmer(cohesion_horizontal ~ factor(ola)  + (1 | pais),
+           data = datos_wide)
+
+m2 <- lmer(cohesion_horizontal ~ factor(ola) + pib_c + gini_c + vdem_c + wgi_c + mig_c + (1 | pais),
+           data = datos_wide)
+
+m3 <- lmer(cohesion_horizontal ~ factor(ola) + pib_c + gini_c + vdem_c + wgi_c + mig_c + region + (1 | pais),
+           data = datos_wide)
+
+# tab_model(m1, m2,m3,
+#           show.ci = FALSE, 
+#           show.se = TRUE,
+#           show.re.var = TRUE,
+#           dv.labels = c("Modelo 1", "Modelo 2", "Modelo 3"))
+
+htmlreg(list(m1, m2, m3),
+        doctype = FALSE)
+```
+
+```{r}
+#| label: tbl-modelos-vertical
+#| tbl-cap: Modelos para cohesión vertical
+#| results: asis
+
+datos_wide <- clean_names(datos_wide)
+
+# Modelo nulo general
+m0 <- lmer(cohesion_vertical ~ 1 + (1 | pais), data = datos_wide)
+
+m1 <- lmer(cohesion_vertical ~ factor(ola) + (1 | pais),
+           data = datos_wide)
+
+m2 <- lmer(cohesion_vertical ~ factor(ola) + pib_c + gini_c + vdem_c + wgi_c + mig_c + (1 | pais),
+           data = datos_wide)
+
+m3 <- lmer(cohesion_vertical ~ factor(ola) + pib_c + gini_c + vdem_c + wgi_c + mig_c + region + (1 | pais),
+           data = datos_wide)
+
+
+
+# tab_model(m1, m2,m3,
+#           show.ci = FALSE, 
+#           show.se = TRUE,
+#           show.re.var = TRUE,
+#           dv.labels = c("Modelo 1", "Modelo 2", "Modelo 3"))
+
+htmlreg(list(m1, m2, m3),
+        doctype = FALSE)
+
+```
+
+```{r}
+#| label: tbl-modelos-general
+#| tbl-cap: Modelos para cohesión social
+#| results: asis
+
+datos_wide <- clean_names(datos_wide)
+
+# Modelo nulo general
+m0 <- lmer(cohesion_general ~ 1 + (1 | pais), data = datos_wide)
+
+m1 <- lmer(cohesion_general ~ factor(ola) + (1 | pais),
+           data = datos_wide)
+
+m2 <- lmer(cohesion_general ~ factor(ola) + pib_c + gini_c + vdem_c + wgi_c + mig_c + (1 | pais),
+           data = datos_wide)
+
+m3 <- lmer(cohesion_general ~ factor(ola) + pib_c + gini_c + vdem_c + wgi_c + mig_c +  region + (1 | pais),
+           data = datos_wide)
+
+# tab_model(m1, m2,m3,
+#           show.ci = FALSE, 
+#           show.se = TRUE,
+#           show.re.var = TRUE,
+#           dv.labels = c("Modelo 1", "Modelo 2", "Modelo 3"))
+
+htmlreg(list(m1, m2, m3),
+        doctype = FALSE)
+
+```
