@@ -120,8 +120,6 @@ datos_wide <- datos_wide |>
 #| tbl-cap: Modelos para cohesión horizontal 
 #| results: asis
 
-
-
 # Modelo nulo general
 m0 <- lmer(cohesion_horizontal ~ 1 + (1 | pais), data = datos_wide)
 
@@ -149,7 +147,6 @@ htmlreg(list(m1, m2, m3),
 #| tbl-cap: Modelos para cohesión vertical
 #| results: asis
 
-datos_wide <- clean_names(datos_wide)
 
 # Modelo nulo general
 m0 <- lmer(cohesion_vertical ~ 1 + (1 | pais), data = datos_wide)
@@ -180,8 +177,6 @@ htmlreg(list(m1, m2, m3),
 #| label: tbl-modelos-general
 #| tbl-cap: Modelos para cohesión social
 #| results: asis
-
-datos_wide <- clean_names(datos_wide)
 
 # Modelo nulo general
 m0 <- lmer(cohesion_general ~ 1 + (1 | pais), data = datos_wide)
