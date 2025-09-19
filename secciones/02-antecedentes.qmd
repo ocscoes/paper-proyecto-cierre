@@ -57,16 +57,16 @@ La gestión de la diversidad étnica en Europa y América del Norte constrasta d
 
 Sin embargo, los cambios recientes en los patrones migratorios, que han favorecido la migración intrarregional tanto en términos relativos como absolutos [@stefoni_panorama_2018], podrían constituir nuevas fuentes de tensión para la cohesión social en las sociedades latinoamericanas. Aunque los latinoamericanos tienden a mostrar niveles de tolerancia étnico-religiosa y nacional superiores a los observados en varios países europeos [@somma_paradojas_2015], casos como el chileno —frente a la migración masiva de población venezolana— evidencian signos de deterioro en las relaciones entre migrantes y no migrantes durante los últimos años [@castillo_social_2023].
 
+El efecto de la religiosidad sobre la cohesión social también ha sido objeto de estudio. Una mayor religiosidad y heterogeneidad religiosa puede estar asociada a mayores niveles de confianza interpersonal y participación cívica [@schnabel_god_2014]. Estos hallazgos se centran principalmente en el contexto cultural europeo, y no se refieren a la realidad latinoamericana, donde el catolicisimo ha sido la religión predominante en la mayoría de los países del continente desde la colonización española y portuguesa. Sin embargo, debido al auge del pentecostalismo (como en Brasil o en los países centroamericanos) y al crecimiento de la población no religiosa (como en Argentina, Chile y Uruguay), la hegemonía católica en América Latina ha comenzado a debilitarse [@valenzuela_creen_2013]. Este cambio en el panorama religioso podría tener implicancias importantes para la cohesión social en la región, particularmente si como se ha observado en el caso chileno, el debilitamiento de las identidades religiosas tradicionales se ha asociado a procesos de individuación y de desafección institucional [@bravovega_religious_2024; @cortesparedes_autonomia_2022].
+
 ## 
 
 A partir de la literatura revisada y considerando el contexto latinoamericano caracterizado por i) un bajo crecimiento económico acompañado de altos niveles de desigualdad [@undp_trapped_2023]; ii) una limitada capacidad institucional y una gobernanza poco efectiva [@salazar-xirinachs_repensar_2023]; y iii) un aumento relativo y absoluto de los flujos migratorios interregionales, junto con el surgimiento de tensiones sociales asociadas a estos movimientos [@stefoni_panorama_2018; @castillo_social_2023], proponemos las siguientes hipótesis:
 
--   **H1**: La cohesión social ha disminuido en las sociedades latinoamericanas durante las últimas dos décadas.
+-   **H1**: Los países con mayor desarrollo económico presentarán mayores niveles de cohesión social.
 
--   **H2**: Existe una asociación positiva y significativa entre cohesión social y prosperidad económica; los países con mayor desarrollo económico presentarán mayores niveles de cohesión social.
+-   **H2**: En países con mayor desigualdad y menores niveles educativo el impacto positivo del crecimiento económico sobre la cohesión social será más limitado.
 
--   **H3**: Los efectos del crecimiento económico sobre la cohesión social estarán moderados por los niveles de desigualdad económica. En países con mayor desigualdad el impacto positivo del crecimiento económico sobre la cohesión social será más limitado.
+-   **H3**: En países con una mayor gobernanza presentarán mayores niveles de cohesión social. 
 
--   **H4**: Existe una asociación positiva y significativa entre cohesión social y calidad de la gobernanza.
-
--   **H5**: Existe una asociación negativa y significativa entre cohesión social y el porcentaje de población migrante en el país.
+-   **H4**: En países con mayores niveles de diversidad étnica y cultural, la cohesión social será menor. De tal modo, los países con una mayor proporción de migrantes y con una menor cantidad de católicos presentarán menores niveles de cohesión social. 

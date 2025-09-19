@@ -6,21 +6,27 @@
 ## cargar base
 
 load("input/proc/datos-completos.rdata")
+load("input/proc/micro-macro-merge.rdata")
+
+datos_merge_b <- datos_merge_b |>
+  mutate(across(where(haven::is.labelled), ~ vctrs::vec_data(.)),
+         pais= as.factor(pais))
+
 
 
 ```
 
-# Descriptivos
+## Descriptivos
 
 ```{r}
 #| label: fig-ch
 #| fig-cap: Evolución dimensiones Cohesión Horizontal (2004-2022)
 
 
-olas <- datos_wide |>
+olas <- datos_merge_b |>
   group_by(ola) |>
-  summarise(seguridad_prom = mean(`Seguridad Pública`, na.rm=T),
-            confianza_prom = mean(`Confianza Interpersonal`, na.rm=T)) |>
+  summarise(seguridad_prom = mean(seguridad_ind, na.rm=T),
+            confianza_prom = mean(confianza_it_ind, na.rm=T)) |>
   pivot_longer(
     cols = c(confianza_prom, seguridad_prom),
     names_to = "indicador",
@@ -44,20 +50,18 @@ olas |>
 #| label: fig-cv
 #| fig-cap: Evolución dimensiones Cohesión Vertical (2004-2022)
 
-olas <- datos_wide |>
+olas <- datos_merge_b |>
   group_by(ola) |>
-  summarise(confianza_prom = mean(`Confianza en las Instituciones`, na.rm=T),
-            democracia_prom = mean(`Actitudes a la Democracia`, na.rm=T),
-            justicia_prom = mean(`Justicia Redistributiva`, na.rm=T)) |>
+  summarise(confianza_prom = mean(confianza_inst_ind, na.rm=T),
+            democracia_prom = mean(democracia_ind, na.rm=T)) |>
   pivot_longer(
-    cols = c(confianza_prom, democracia_prom, justicia_prom),
+    cols = c(confianza_prom, democracia_prom),
     names_to = "indicador",
     values_to = "promedio"
   ) |>
   mutate(indicador = recode(indicador,
                             "confianza_prom" = "Confianza en las Instituciones",
-                            "democracia_prom" = "Actitudes hacia la democracia",
-                            "justicia_prom" = "Justicia Redistributiva"))
+                            "democracia_prom" = "Actitudes hacia la democracia"))
 olas |>
   ggplot(aes(x = ola, y = promedio, color=indicador)) +
   geom_line(linewidth = 1) +
@@ -69,10 +73,49 @@ olas |>
 ```
 
 ```{r}
+#| label: fig-correlación
+#| fig-cap: "Correlación subdimensiones de la Cohesión Social"
+#| results: asis
+
+
+chart.Correlation(datos_wide %>%
+                    na.omit() |>
+                    select(c("Confianza Interpersonal",
+                             "Seguridad Pública",
+                             "Confianza en las Instituciones",
+                             "Actitudes a la Democracia")))
+
+```
+
+## Análisis Factorial Confirmatorio
+
+```{r}
+#| label: afc
+#| fig-cap: Análisis Factorial Confirmatorio Modelo de Medición de Cohesión Social
+
+m1 <- 'cohesion_horizontal =~ seguridad_ind + confianza_it_ind
+       cohesion_vertical =~ confianza_inst_ind + democracia_ind'
+
+m1_cfa <- cfa(
+  m1, data = datos_merge_b, std.lv = TRUE)
+
+semPaths(m1_cfa,
+         what = "std",
+        label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+        residuals = FALSE, # no mostrar residuos
+        edge.color = "black") # color flechas
+
+fit <- fitmeasures(m1_cfa, fit.measures = c("rmsea", "cfi", "chisq", "pvalue", "df"))
+
+```
+Nota. RMSEA = `r round(fit["rmsea"], 3)`, CFI = `r round(fit["cfi"], 3)`, Chi-cuadrado = `r round(fit["chisq"], 2)`, gl = `r fit["df"]`, p-valor = `r round(fit["pvalue"], 3)`.
+
+
+```{r}
 #| label: fig-cs
 #| tab-cap: Evolución dimensiones Cohesión Social (2004-2022)
 
-olas <- datos_wide |>
+olas <- datos_merge_b |>
   group_by(ola) |>
   summarise(horizontal_prom = mean(`Cohesión horizontal`, na.rm=T),
             vertical_prom = mean(`Cohesión vertical`, na.rm=T),
@@ -86,6 +129,7 @@ olas <- datos_wide |>
                             horizontal_prom = "Cohesión Horizontal",
                             vertical_prom = "Cohesión Vertical",
                             cohesion_prom = "Cohesión Social"))
+
 olas |>
   ggplot(aes(x = ola, y = promedio, color=indicador)) +
   geom_line(linewidth = 1) +
@@ -96,13 +140,14 @@ olas |>
 
 ```
 
-# Modelos Multinivel
+## Modelos Multinivel
 
 
 ```{r}
 #| label: centrado
 
 datos_wide <- clean_names(datos_wide)
+datos_merge_b <- clean_names(datos_merge_b)
 
 datos_wide <- datos_wide |>
   dplyr::mutate(
@@ -178,25 +223,36 @@ htmlreg(list(m1, m2, m3),
 #| tbl-cap: Modelos para cohesión social
 #| results: asis
 
+m2 <- lmer(cohesion_general_ind ~ factor(ola) + factor(sexo) + edad + pos_politica +
+             nivel_educ + (1 | pais/ola),
+           data = datos_merge_b)
+
+levels(datos_merge_b$nivel_educ)  # verifica el orden
+
+
 # Modelo nulo general
-m0 <- lmer(cohesion_general ~ 1 + (1 | pais), data = datos_wide)
+m0 <- lmer(cohesion_general_ind ~ 1 + (1 | pais/ola), data = datos_merge_b)
 
-m1 <- lmer(cohesion_general ~ factor(ola) + (1 | pais),
-           data = datos_wide)
+# m1 <- lmer(cohesion_general_ind ~ factor(ola) + (1 | pais/ola),
+#            data = datos_merge_b)
 
-m2 <- lmer(cohesion_general ~ factor(ola) + pib_c + gini_c + vdem_c + wgi_c + mig_c + (1 | pais),
-           data = datos_wide)
+m1 <- lmer(cohesion_general_ind ~ factor(ola) + (1 | pais/ola),
+           data = datos_merge_b)
 
-m3 <- lmer(cohesion_general ~ factor(ola) + pib_c + gini_c + vdem_c + wgi_c + mig_c +  region + (1 | pais),
-           data = datos_wide)
+m2 <- lmer(cohesion_general_ind ~ factor(ola) + factor(sexo) + edad + pos_politica + relevel(factor(nivel_educ), ref="3") + (1 | pais/ola),
+           data = datos_merge_b)
 
-# tab_model(m1, m2,m3,
-#           show.ci = FALSE, 
+m3 <- lmer(cohesion_general_ind ~ factor(ola) + factor(sexo) + edad + pos_politica + relevel(factor(nivel_educ), ref="3") + log_pib_per_capita_ppa*gini_index + indice_v_dem + wgi + percent_pob_migrante + (1 | pais/ola),
+           data = datos_merge_b)
+
+# 
+# tab_model(m0, m1, m2,
+#           show.ci = FALSE,
 #           show.se = TRUE,
 #           show.re.var = TRUE,
 #           dv.labels = c("Modelo 1", "Modelo 2", "Modelo 3"))
 
-htmlreg(list(m1, m2, m3),
+htmlreg(list(m0, m1, m2, m3),
         doctype = FALSE)
 
 ```

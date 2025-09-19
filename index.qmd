@@ -75,7 +75,11 @@ p_load(dplyr,
        lme4,
        janitor,
        texreg,
-       sjPlot)
+       sjPlot,
+       summarytools,
+       lavaan,
+       semPlot,
+       PerformanceAnalytics)
 ```
 
 

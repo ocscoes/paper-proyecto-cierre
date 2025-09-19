@@ -83,8 +83,8 @@ gm23 <- read_dta("input/orig/gm23.dta")
 data2023 <- gm23 |> filter(year==2023)
 data2023 <- data2023 %>% select_if(names(data2023) %in% vars)
 
-# dta_2023<- list.files(path = "input/orig/LAPOP2023/", pattern = ".dta")
-# dta_2023 <- paste0(file = "input/orig/LAPOP2023/", dta_2023)
+dta_2023<- list.files(path = "input/orig/LAPOP2023/", pattern = ".dta")
+dta_2023 <- paste0(file = "input/orig/LAPOP2023/", dta_2023)
 
 data2021 <- lapply(dta, function(archivo){
   print(archivo)
@@ -94,13 +94,13 @@ data2021 <- lapply(dta, function(archivo){
 })
 data2021 <- bind_rows(data2021) ; rm(dta)
 
-# data2023 <- lapply(dta_2023, function(archivo){
-#   print(archivo)
-#   df <- read_dta(archivo)
-#   df <- df %>% select_if(names(df) %in% vars)
-#   return(df)
-# })
-# data2023 <- bind_rows(data2023) ; rm(dta_2023)
+data2023_f <- lapply(dta_2023, function(archivo){
+  print(archivo)
+  df <- read_dta(archivo)
+  df <- df %>% select_if(names(df) %in% vars)
+  return(df)
+})
+data2023_f <- bind_rows(data2023_f) ; rm(dta_2023)
 
 datos0418 <- datos0418 %>% select_if(names(datos0418) %in% vars)
 datos1618 <-  datos0418  %>% filter(wave==2016 | wave==2018)
@@ -129,7 +129,7 @@ data2023 <- data2023 %>%
 data2023$year <- data2023$wave
 
 # Merge 2004-2014 + 2018 + faltantes varias del grand merge + 2021
-datos <- bind_rows(datosselc,datos1618,merge_faltante,data2021, data2023) # logra una base longitudinal con la pr4 incluida. 
+datos <- bind_rows(datosselc,datos1618,merge_faltante,data2021, data2023, data2023_f) # logra una base longitudinal con la pr4 incluida. 
 datos <- copy_labels(datos, datos0418)
 # rm(list = setdiff(ls(),c("datos","vars","vars_hor","vars_ver","mean_result")))
 datos_label <- to_label(datos)
@@ -148,11 +148,25 @@ exclude_cols = c("wave", "pais","wt", control)
 # Estandariza los datos
 datos <- standarize_data(datos, exclude_cols) %>% select(pais, wave, 
                                                         everything(),
-                                                        -year, -wt)
+                                                        -year)
+
+
+# religion
+
+subset <- datos |>
+  filter(wave<2010)
 
 ## Calcular indices ----
 
 ## Subdimensiones
+
+datos <- datos %>%
+  mutate(
+    confianza_it_ind    = it1,
+    seguridad_ind        = rowMeans(across(c(aoj11, vic1ext)), na.rm = TRUE),
+    confianza_inst_ind   = rowMeans(across(c(b13, b21, b31)), na.rm = TRUE),
+    democracia_ind       = rowMeans(across(c(ing4, pn4)), na.rm =TRUE)
+  )
 
 calidad_year <- datos %>%
   as.data.frame() %>%
@@ -185,17 +199,13 @@ for(i in 1:nrow(datos)){
   }
 }
 
+## Dimensiones
 
 datos <- datos %>%
   mutate(
-    confianza_it_ind    = it1,
-    seguridad_ind        = rowMeans(across(c(aoj11, vic1ext)), na.rm = FALSE),
-    confianza_inst_ind   = rowMeans(across(c(b13, b21, b31)), na.rm = FALSE),
-    democracia_ind       = rowMeans(across(c(ing4, pn4)), na.rm = FALSE)
+    cohesion_horizontal_ind = rowMeans(across(c(confianza_it_ind, seguridad_ind)), na.rm = FALSE),
+    cohesion_vertical_ind  = rowMeans(across(c(confianza_inst_ind, democracia_ind)), na.rm = FALSE)
   )
-
-
-## Dimensiones
 
 calidad_year <- datos %>%
   as.data.frame %>%
@@ -223,13 +233,13 @@ for(i in 1:nrow(datos)){
   }
 }
 
+# Cohesión General
+
 datos <- datos %>%
   mutate(
-    cohesion_horizontal_ind = rowMeans(across(c(confianza_it_ind, seguridad_ind)), na.rm = FALSE),
-    cohesion_vertical_ind  = rowMeans(across(c(confianza_inst_ind, democracia_ind)), na.rm = FALSE)
+    cohesion_general_ind = rowMeans(across(c(cohesion_horizontal_ind, cohesion_vertical_ind)), na.rm = FALSE)
   )
 
-# Cohesión General
 
 calidad_year <- datos %>%
   as.data.frame %>%
@@ -253,10 +263,6 @@ for(i in 1:nrow(datos)) {
   }
 }
 
-datos <- datos %>%
-  mutate(
-    cohesion_general_ind = rowMeans(across(c(cohesion_horizontal_ind, cohesion_vertical_ind)), na.rm = FALSE)
-  )
 
 
 ## Recodifica variables
@@ -319,17 +325,75 @@ rm(list = setdiff(ls(),c("datos", "vars_hor", "vars_ver")))
 load("input/proc/datos-completos.rdata")
 
 datos <- datos |>
-  select(pais, ola=wave,
-         32:35, 38,
+  select(pais, ola=wave, wt,
+         sexo, edad, religion, pos_politica, nivel_educ,
          all_of(vars_hor),
          all_of(vars_ver),
-         25:31)
+         ends_with("ind"))
 
 save(datos, file = "input/proc/datos-micro.rdata")
 
 # datos <- datos |> rename(ola=wave)
 
+datos_wide <- datos_wide |> mutate(ola= ifelse(ola==2022, 2023, ola))
+
 datos_merge <- left_join(datos, datos_wide,
                          by = c("pais", "ola"))
 
+
+macro <- datos_merge %>%
+  mutate(
+    pob_catolica  = if_else(religion == "Católica", 1, 0),
+    edu_terciaria = if_else(nivel_educ == 3,          1, 0)
+  ) %>%
+  as_survey_design(
+    ids = 1,         # <- sin fórmula
+    weights =wt,    # <- sin fórmula
+    strata = NULL,
+    nest = TRUE
+  ) %>%
+  group_by(pais, ola) %>%
+  summarise(
+    pob_catolica  = 100 * survey_mean(pob_catolica,  na.rm = TRUE),
+    edu_terciaria = 100 * survey_mean(edu_terciaria, na.rm = TRUE)
+  ) |>
+  select(pais, ola, pob_catolica, edu_terciaria) |>
+  mutate(pob_catolica = ifelse(pob_catolica==0, NA, pob_catolica),
+         edu_terciaria = ifelse(edu_terciaria==0, NA, edu_terciaria))
+
+
+datos_merge <- left_join(datos_merge, macro,
+                         by = c("pais", "ola"))
+
+
 save(datos_merge, file = "input/proc/micro-macro-merge.rdata")
+
+
+# Filtrar paises
+
+load("input/proc/datos-completos.rdata")
+load("input/proc/micro-macro-merge.rdata")
+
+antes <- datos_merge |> group_by(pais) |> summarise(f= n())
+
+resumen <- datos_wide |>
+  dplyr::filter(!is.na(`Cohesión general`), !is.na(ola)) |>
+  dplyr::distinct(pais, ola) |>                      # evita duplicados país-año
+  dplyr::group_by(pais) |>
+  dplyr::summarise(
+    n_olas = n(),
+    `olas disponibles` = paste(sort(as.integer(ola)), collapse = "; "),
+    .groups = "drop"
+  ) |>
+  dplyr::filter(n_olas >= 5) |>
+  arrange(desc(n_olas), pais) |>
+  select(pais, n_olas, "olas disponibles")
+
+
+datos_merge_b <- datos_merge |>
+  dplyr::filter(!is.na(`Cohesión general`), !is.na(ola)) |>
+  semi_join(resumen, by="pais") 
+
+despues <- datos_merge |> group_by(pais) |> summarise(f= n())
+
+save(datos_merge_b, file = "input/proc/micro-macro-merge.rdata")
