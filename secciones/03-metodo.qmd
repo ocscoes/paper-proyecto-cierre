@@ -6,7 +6,7 @@ La principal fuente de datos para este estudio es la *AmericasBarometer* del *La
 
 La encuesta se ha realizado de manera regular desde el año 2004. A la fecha, se han realizado 9 olas que han incluido entre 11 a 23 países, sumando un total sobre 400.000 entrevistas en dos décadas. El cuestionario se administra a través de encuestas cara  a cara, con la excepción de Canadá y Estados Unidos.  
 
-Como criterio, se incluyeron en este estudio únicamente los países de la región que tengan disponible datos para los indicadores principales del estudio en al menos 5 puntos en el tiempo. Como se resume en @tbl-paises, se incluyen en este estudio un total de 291.062 casos anidadas 9 olas y 25 países de América Latina y el Caribe, admeás de Canadá y Estados Unidos. 
+Como criterio, se incluyeron en este estudio únicamente los países de la región que tengan disponible datos para los indicadores principales del estudio en al menos 5 puntos en el tiempo. Como se resume en @tbl-paises, se incluyen en este estudio un total de 238.257 individuos anidados en 174 olas-paises en 25 países del continente americano. 
 
 ```{r}
 #| label: tbl-paises
@@ -59,107 +59,70 @@ library(psych)
 ```
 
 
-Se construyó un **índice de Cohesión Social** ($\alpha$ = 0.74) que se compone de dos dimensiones que, a su vez, son índices sumativos construidos a partir de indicadores de LAPOP y Latinobarometro. El detalle de la construcción de los índices se pueden encontrar aquí: [https://ocscoes.github.io/medicion-cohesion-LA/](https://ocscoes.github.io/medicion-cohesion-LA/).
+Se construyó un **índice de Cohesión Social** que se compone de dos dimensiones que, a su vez, son índices sumativos construidos a partir de indicadores de LAPOP. La selección de indicadores, subdimensiones y dimensiones está basado en el trabajo previo a nivel agregado del Observatorio de Cohesión Social, accesible aquí: [https://ocscoes.github.io/medicion-cohesion-LA/](https://ocscoes.github.io/medicion-cohesion-LA/).
 
-El **Índice de Cohesión Horizontal** ($\alpha$ = 0.7) se compone de dos subdimensiones, *Seguridad Urbana* y *Confianza Interpersonal*. Seguridad urbana integra indicadores de seguridad objetiva y seguridad subjetiva. Confianza Interpersonal, en tanto, es un único indicador sobre que tan confiuable son las personas en general. Aunque conceptualmente se entiende que el sentido de pertenencia es un componente importante para la cohesión horizontal, ni LAPOP ni Latinobarómetro cuentan con un indicador que permita medir ese fenómeno de manera adecuada. Por otro lado, si bien se esperaba que la participación comunitaria fuera parte del índice, un análisis factorial exploratorio indicó que no forma parte del mismo concepto latente que las otras dos subsimensiones.
+El **Índice de Cohesión Horizontal** se compone de dos subdimensiones, *Seguridad Urbana* y *Confianza Interpersonal*. Seguridad urbana integra indicadores de seguridad objetiva y seguridad subjetiva. Confianza Interpersonal, en tanto, es un único indicador sobre que tan confiuable son las personas en general. Aunque conceptualmente se entiende que el sentido de pertenencia es un componente importante para la cohesión horizontal, ni LAPOP ni Latinobarómetro cuentan con un indicador que permita medir ese fenómeno de manera adecuada. Por otro lado, si bien se esperaba que la participación comunitaria fuera parte del índice, un análisis factorial exploratorio indicó que no forma parte del mismo concepto latente que las otras dos subsimensiones.
 
-El **Índice de Cohesión Vertical** ($\alpha$ = 0.66) se compone de tres dimensiones: *Confianza en instituciones*, *Actitudes hacia la democracia* y *Justicia Distributiva*. Confianza en las instituciones integra indicadores relativos a la confianza de los ciudadananos en el congreso, en el poder judicial y en los partidos políticos. Actitudes hacia la democracia se compone de dos indicadores sobre apoyo al sistema democrático y la satisfacción con el funcionamiento de la democracia en su país. Por último, Justicia distributiva se compone de un único indicador sobre la importancia de que el Estado redistribuya los ingresos en el país. 
+El **Índice de Cohesión Vertical** se compone de dos dimensiones: *Confianza en instituciones*, *Actitudes hacia la democracia*. Confianza en las instituciones integra indicadores relativos a la confianza de los ciudadananos en el congreso, en el poder judicial y en los partidos políticos. Actitudes hacia la democracia se compone de dos indicadores sobre apoyo al sistema democrático y la satisfacción con el funcionamiento de la democracia en su país. Otras variables conceptualmente pertinentes, como participación política o percepciones de justicia, no se incluyeron debido a la falta de indicadores disponibles. 
 
-Los tres índices tienen rango de 0 a 10, con 0 indicando bajos niveles de cohesión social y 10 indicando altos niveles de cohesión. La @tbl-indicadores describe los indicadores seleccionados, los índices construidos. 
+Los indicadores fueron estandarizados de modo que todas las subdimensiones y dimensiones de los índices tienen un rango de 0 a 10 con 0 indicando bajos niveles de cohesión social y 10 indicando altos niveles de cohesión. 
 
 ```{r}
 #| label: tbl-indicadores
+#| eval: false
+#| include: false
+#| results: asis
 #| tbl-cap: Resumen indicadores de Cohesión Social
 
-# library(summarytools)
-# library(dplyr)
-# library(haven)
-# 
-# 
-# datos_cohesion <- datos_wide |>
-#   select(4:11)
-# 
-# # data <- data %>%
-# #   mutate(across(where(~inherits(.x, "haven_labelled")), as_factor))
-# 
-# print(dfSummary(datos_cohesion,
-#           headings=FALSE,
-#           style = "multiline",
-#           plain.ascii = FALSE,
-#           tmp.img.dir = 'tmp',
-#           varnumbers = FALSE,
-#           silent= TRUE,
-#           split.by = NULL),
-#       max.tbl.height = 500,
-#       method = 'render',
-#       # css.class = 'table',
-#       silent = TRUE,
-#       footnote = NA)
+
+datos_cohesion <- datos_merge_b |>
+  select(17:20) |>   
+  rename("Confianza Interpersonal" = confianza_it_ind,
+          "Seguridad Pública" = seguridad_ind,
+          "Confianza en las Instituciones" = confianza_inst_ind,
+          "Actitudes hacia la democracia" = democracia_ind)
+
+# data <- data %>%
+#   mutate(across(where(~inherits(.x, "haven_labelled")), as_factor))
+
+stargazer::stargazer(datos_cohesion, type="html")
+
 ```
 
 ### Variables Independientes
 
-Se incluyeron como variables independientes factores económicos, institucionales y culturales. La @tbl-indicadores-ind resume estos indicadores. 
+Se incluyeron como variables independientes factores económicos, institucionales y culturales. Reconociendo la estructura jerarquica de los datos, se incluyen predictores a nivel individual, a nivel de olas-país, y a nivel país. 
 
-*Prosperidad económica* se medirá a través del logaritmo del PIB per cápita a valores de paridad de poder adquisitivo (PPA). *Desigualdad económica* en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial.
+#### Variables Individuales
+
+El principal predictor individual utilizado en este estudio es el **nivel educativo** de las personas. Las múltiples codificaciones de LAPOP para este indicador fueron únificadas para crear una variable de 3 categorías, distinguiendo individuos con educación primeria, secundaria y terciaria.
+
+Además, se incluyen como variables de control el sexo, la edad y la posición políticas de los individuos. 
+
+#### Variables Contextuales
+
+*Prosperidad económica* se medirá a través del logaritmo del PIB per cápita a valores de paridad de poder adquisitivo (PPA). *Desigualdad económica* en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial. Además, se incluirá el porcentaje de individuos con educación terciaria en un país como *proxy* de **oportunidades educativas**. 
 
 En cuanto a factores institucionales, se incluyó el Índice de Democracia Electoral, o poliarquía, para medir la *Calidad democrática de los países*. Por otro lado, se incluyó **un índice de gobernanza** ($\alpha$ = 0.96)  calculado a partir de los *Worldwide Governace Indicators* del Banco Mundial [@kaufmann_worldwide_2024].
 
 Se medirá **diversidad cultural** como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logistica.
 
-Además, para captar las posibilidades divergencias por contexto, se incluyó la variable de **región geográfica*, siguiendo el geoesquema de las Naciones Unidas. Así, el continente americano se divide en 4 regiones: América del Norte (Canadá y Estados Unidos), América Central (incluye México), el Caribe y América del Sur.  
-
-```{r}
-#| label: tbl-indicadores-ind
-#| tbl-cap: Resumen variables independientes
-
-
-# datosind <- datos_wide |>
-#   select(13,15:18)
-# 
-
-# 
-# print(dfSummary(datosind,
-#           headings=FALSE,
-#           style = "multiline",
-#           plain.ascii = FALSE,
-#           tmp.img.dir = 'tmp',
-#           varnumbers = FALSE,
-#           silent= TRUE,
-#           split.by = NULL),
-#       max.tbl.height = 500,
-#       method = 'render',
-#       # css.class = 'table',
-#       silent = TRUE,
-#       footnote = NA)
-```
-
 ## Método
 
-Reconociendo la estructura jerárquica de los datos disponibles (olas anidadas en países), seguimos una estrategia de modelamiento multinivel longitudinal [@singer_applied_2003].  Dado que las observaciones repetidas en el tiempo dentro un mismo país comparten varianza, éstas deben modelarse para evitar inferencias sesgadas producto de considerar cada observación como independiente. La ventaja de los modelos de regresión multinivel radica en que, al modelar efectos aleatorios, capturan correctamente la varianza asociada a la estructura anidada de los datos. De tal forma, es posible captar la heterogeneidad en las trayectorias de cohesión social entre países. Los modelos fueron estimados usando el paquete de R `lme4` [@bates_fitting_2015].
+### Análisis Factorial Confirmatorio
+
+Se realizó un análisis factorial confirmatorio con el fin de poner a prueba el modelo construido por el Observatorio de Cohesión Social [-@observatoriodecohesionsocial_medicion_2025] y la propuesta teórica de Chan, To y Chan. Como se observa en la @fig-modelo, se entiende la Cohesión Social como un constructo latente constituido de dos dimensiones latentes -- Cohesión Vertical y Cohesión Horizontal.
+
+![Esquema Conceputal de Cohesión Social](input/esquema.png){#fig-modelo}
+
+### Análisis Multinivel
+
+Dada la estructura jerárquica de los datos, se estimaron modelos de regresión multinivel híbridos. Esta técnica permite utilizar datos a nivel individual para descomponer los efectos a nivel país en sus componentes entre países (*efectos between*) y dentro de un país en el tiempo (*efectos within*) [@schmidt-catran_random_2016; @fairbrother_two_2014]. Los modelos fueron estimados usando el paquete de R `lme4` [@bates_fitting_2015].
 
 El modelo propuesto se podría expresar formalmente como:
 
 $$
-y_{ij} = \gamma_{00} + Ola_{ij} + LogPIB_{ij} + Gini_{ij} + VDem_{ij} + WGI_{ij} + Mig_{ij} + Region_{j} + \mu_{0j} + \epsilon_{ij}
+y_{jti} = \beta_{0}(t) + \beta_{1}X_{jti} + \gamma_{we}(Z_{jt}-\bar{Z}_{j}) + \gamma_{be}\bar{Z}_{j} + v_j + u_{jt} + e_{jti}
 $$
-Donde,
-
-- $y_{ij}$ es el valor de mediciones repetidas sobre los niveles de cohesión social en los países
-
-- $Ola$ es la medición de tiempo
-
-- $PIB$ es el PIB per capita (PPA) del país
-
-- $Gini$ es el la desigualdad de ingresos del país, medida a través del Índice Gini
-
-- $VDem$ es el nivel de democracia electoral
-
-- $WGI$ es el nivel de gobernanza
-
-- $Mig$ es el porcentaje de población migrante sobre la población total del país
-
-- $\mu_{0j}$ y $\epsilon_{ij}$ son los errores a nivel del país y a nivel de la ola, respectivamente. 
-
-Con el fin de mejorar la interpretabilidad de los resultados, todas las variables continuas de nivel 1 se centraron en la media global (grand-mean centering). Este procedimiento permite que el intercepto del modelo se interprete como el nivel promedio de cohesión social esperado en un país con valores promedio en las covariables, en lugar de valores arbitrarios como cero, que no poseen un significado sustantivo en indicadores macro (e.g., PIB per cápita, porcentaje de población migrante).
+El modelo integra 3 niveles con individuos $i$ anidados en olas-países $t$ anidados países $j$. $X_{jti}$ representa variables de nivel individual mientras que $Z_{jt}$ son variables contextuales a nivel ola-país. Dado que $Z_{jt}$ contiene varianza tanto de nivel 2 como de nivel 3, se descompuso en el promedio de la variable a lo largo de todas sus olas ($\bar{Z}_{j}$) y en la desviación intra-país en una ola dada ($Z_{jt}-\bar{Z}_{j}$). De tal forma, $\gamma_{we}$ representa en el efecto *within*, es decir, el efecto del cambio en un país en el tiempo; mientras que $\gamma_{be}$ representa el efecto *between*, es decir, las diferencias estructurales entre países. Además, $\beta_{0}(t)$ controla cambios en el tiempos no explicados por el modelo. Por último, $v_j$, $u_{jt}$ y $e_{jti}$ representan los errores a nivel país, ola-país e individual.  
 

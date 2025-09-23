@@ -93,8 +93,8 @@ chart.Correlation(datos_wide %>%
 #| label: afc
 #| fig-cap: Análisis Factorial Confirmatorio Modelo de Medición de Cohesión Social
 
-m1 <- 'cohesion_horizontal =~ seguridad_ind + confianza_it_ind
-       cohesion_vertical =~ confianza_inst_ind + democracia_ind'
+m1 <- 'ch =~ seguridad_ind + confianza_it_ind
+       cv =~ confianza_inst_ind + democracia_ind'
 
 m1_cfa <- cfa(
   m1, data = datos_merge_b, std.lv = TRUE)
@@ -117,9 +117,9 @@ Nota. RMSEA = `r round(fit["rmsea"], 3)`, CFI = `r round(fit["cfi"], 3)`, Chi-cu
 
 olas <- datos_merge_b |>
   group_by(ola) |>
-  summarise(horizontal_prom = mean(`Cohesión horizontal`, na.rm=T),
-            vertical_prom = mean(`Cohesión vertical`, na.rm=T),
-            cohesion_prom = mean(`Cohesión general`, na.rm=T)) |>
+  summarise(horizontal_prom = mean(`cohesion_horizontal_ind`, na.rm=T),
+            vertical_prom = mean(`cohesion_vertical_ind`, na.rm=T),
+            cohesion_prom = mean(`cohesion_general_ind`, na.rm=T)) |>
   pivot_longer(
     cols = c(horizontal_prom, vertical_prom, cohesion_prom),
     names_to = "indicador",
@@ -222,6 +222,8 @@ htmlreg(list(m1, m2, m3),
 #| label: tbl-modelos-general
 #| tbl-cap: Modelos para cohesión social
 #| results: asis
+#| include: false
+#| eval: false
 
 m2 <- lmer(cohesion_general_ind ~ factor(ola) + factor(sexo) + edad + pos_politica +
              nivel_educ + (1 | pais/ola),

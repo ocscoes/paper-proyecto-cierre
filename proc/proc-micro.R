@@ -369,7 +369,7 @@ datos_merge <- left_join(datos, datos_wide,
 macro <- datos_merge %>%
   mutate(
     pob_catolica  = if_else(religion == "Católica", 1, 0),
-    edu_terciaria = if_else(nivel_educ == 3,          1, 0),
+    edu_terciaria = if_else(nivel_educ == "Tertiary", 1, 0),
     sin_politica = if_else(pos_politica==99, 1, 0)
   ) %>%
   as_survey_design(
@@ -391,16 +391,20 @@ macro <- datos_merge %>%
 
 datos_merge <- left_join(datos_merge, macro,
                          by = c("pais", "ola")) |>
+  group_by(pais) |>
   mutate(pib_be = mean(log_pib_per_capita_ppa, na.rm=T),
          gini_be = mean(gini_index, na.rm=T),
          mig_be = mean(percent_pob_migrante, na.rm=T),
          dem_be = mean(indice_v_dem, na.rm=T),
          wgi_be = mean(wgi, na.rm=T),
-         pib_we = log_pib_per_capita_ppa - pib_be,
-         gini_we = gini_index - gini_be,
-         mig_we = percent_pob_migrante - mig_be,
-         dem_we = indice_v_dem - dem_be,
-         wgi_we = wgi- wgi_be)
+         edu_be = mean(edu_terciaria, na.rm=T)) |>
+  ungroup() |>
+  mutate(pib_we = log_pib_per_capita_ppa - pib_be,
+          gini_we = gini_index - gini_be,
+          mig_we = percent_pob_migrante - mig_be,
+          dem_we = indice_v_dem - dem_be,
+          wgi_we = wgi- wgi_be,
+          edu_we = edu_terciaria-edu_be)
   
 
 
@@ -430,7 +434,8 @@ resumen <- datos_wide |>
 
 datos_merge_b <- datos_merge |>
   dplyr::filter(!is.na(cohesion_general_ind), !is.na(ola)) |>
-  semi_join(resumen, by="pais") 
+  semi_join(resumen, by="pais") |>
+  filter(ola!=2021)
 
 despues <- datos_merge_b |> group_by(pais) |> summarise(f= n())
 
