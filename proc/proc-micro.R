@@ -9,7 +9,9 @@ p_load(tidyverse,
        srvyr,
        survey,
        forcats,
-       lapop)
+       car,
+       janitor)
+       
 
 
 ## Funciones ----
@@ -77,7 +79,6 @@ merge_faltante <- bind_rows(merge_faltante)
 
 dta<- list.files(path = "input/orig/LAPOP2021/", pattern = ".dta")
 dta <- paste0(file = "input/orig/LAPOP2021/",dta)
-
 
 gm23 <- read_dta("input/orig/gm23.dta")
 data2023 <- gm23 |> filter(year==2023)
@@ -268,30 +269,53 @@ for(i in 1:nrow(datos)) {
 ## Recodifica variables
 
 datos <- datos |>
-  mutate(sexo = coalesce(q1, q1tb, q1tc_r),
-         edad = ifelse(is.na(q2), wave-q2y, q2),
-         religion = coalesce(q3c, q3cn, q3),
-         religion= case_when(
-           religion %in% c(4, 11) ~ "Sin religión",
-           religion == 1          ~ "Católica",
-           religion == 2          ~ "Protestante",
-           religion == 5          ~ "Evangélica",
-           is.na(religion)        ~ NA_character_,
-           TRUE                   ~ "Otra religión"),
-         pos_politica = coalesce(l1, l1b, l1n),
-         ed_r = case_when(
-           ed == 0 ~ 0,
-           ed >0 & ed <=6 ~ 1,
-           ed >6 & ed <=12 ~ 2,
-           ed >12 ~ 3,
-           TRUE ~ NA_real_),
-         edre_r = case_when(
-           edre == 0 ~ 0,
-           edre >0 & edre <=2 ~ 1,
-           edre >2 & edre <=4 ~ 2,
-           edre >4  ~ 3,
-           TRUE ~ NA_real_),
-         nivel_educ = coalesce(ed_r, edre_r, edr))
+  mutate(
+    sexo = coalesce(q1, q1tb, q1tc_r),
+    sexo = ifelse(is.na(sexo), NA, ifelse(sexo == 1, 1, 0)),
+    sexo = factor(sexo, levels = c(0,1), labels = c("Female", "Male")),
+    
+    edad = ifelse(is.na(q2), wave - q2y, q2),
+    
+    religion = coalesce(q3c, q3cn, q3),
+    religion = case_when(
+      religion %in% c(4, 11) ~ "Sin religión",
+      religion == 1          ~ "Católica",
+      religion == 2          ~ "Protestante",
+      religion == 5          ~ "Evangélica",
+      is.na(religion)        ~ NA_character_,
+      TRUE                   ~ "Otra religión"
+    ),
+    
+    pos_politica = coalesce(l1, l1b, l1n),
+    pos_politica = as.numeric(pos_politica),
+    pos_politica = car::recode(pos_politica, "1:4=1; 5:6=2; 7:10=3"),
+    pos_politica = ifelse(is.na(pos_politica), 99, pos_politica),
+    pos_politica = factor(pos_politica,
+                          levels = c(1,2,3,99),
+                          labels = c("Left","Center","Right","Not declared")),
+    
+    ed_r = case_when(
+      ed <= 6            ~ 1,
+      ed > 6  & ed <=12  ~ 2,
+      ed > 12            ~ 3,
+      TRUE               ~ NA_real_
+    ),
+    
+    edre_r = case_when(
+      edre <= 2           ~ 1,
+      edre > 2 & edre <=4 ~ 2,
+      edre > 4            ~ 3,
+      TRUE                ~ NA_real_
+    ),
+    
+    edr_r = ifelse(edr == 0, 1, edr),
+    
+    nivel_educ = coalesce(ed_r, edre_r, edr_r),
+    nivel_educ = factor(nivel_educ,
+                        levels = c(1,2,3),
+                        labels = c("Primary","Secondary","Tertiary"))
+  )
+
 
 
 vars_creadas <- c("sexo","edad","religion","pos_politica","nivel_educ")
@@ -338,13 +362,15 @@ save(datos, file = "input/proc/datos-micro.rdata")
 datos_wide <- datos_wide |> mutate(ola= ifelse(ola==2022, 2023, ola))
 
 datos_merge <- left_join(datos, datos_wide,
-                         by = c("pais", "ola"))
+                         by = c("pais", "ola")) |>
+  clean_names()
 
 
 macro <- datos_merge %>%
   mutate(
     pob_catolica  = if_else(religion == "Católica", 1, 0),
-    edu_terciaria = if_else(nivel_educ == 3,          1, 0)
+    edu_terciaria = if_else(nivel_educ == 3,          1, 0),
+    sin_politica = if_else(pos_politica==99, 1, 0)
   ) %>%
   as_survey_design(
     ids = 1,         # <- sin fórmula
@@ -355,15 +381,27 @@ macro <- datos_merge %>%
   group_by(pais, ola) %>%
   summarise(
     pob_catolica  = 100 * survey_mean(pob_catolica,  na.rm = TRUE),
-    edu_terciaria = 100 * survey_mean(edu_terciaria, na.rm = TRUE)
-  ) |>
-  select(pais, ola, pob_catolica, edu_terciaria) |>
+    edu_terciaria = 100 * survey_mean(edu_terciaria, na.rm = TRUE),
+    sin_politica  = 100 * survey_mean(sin_politica, na.rm=T)) |>
+  select(pais, ola, pob_catolica, edu_terciaria, sin_politica) |>
   mutate(pob_catolica = ifelse(pob_catolica==0, NA, pob_catolica),
-         edu_terciaria = ifelse(edu_terciaria==0, NA, edu_terciaria))
+         edu_terciaria = ifelse(edu_terciaria==0, NA, edu_terciaria),
+         sin_politica = ifelse(sin_politica == 0, NA, sin_politica))
 
 
 datos_merge <- left_join(datos_merge, macro,
-                         by = c("pais", "ola"))
+                         by = c("pais", "ola")) |>
+  mutate(pib_be = mean(log_pib_per_capita_ppa, na.rm=T),
+         gini_be = mean(gini_index, na.rm=T),
+         mig_be = mean(percent_pob_migrante, na.rm=T),
+         dem_be = mean(indice_v_dem, na.rm=T),
+         wgi_be = mean(wgi, na.rm=T),
+         pib_we = log_pib_per_capita_ppa - pib_be,
+         gini_we = gini_index - gini_be,
+         mig_we = percent_pob_migrante - mig_be,
+         dem_we = indice_v_dem - dem_be,
+         wgi_we = wgi- wgi_be)
+  
 
 
 save(datos_merge, file = "input/proc/micro-macro-merge.rdata")
@@ -377,7 +415,7 @@ load("input/proc/micro-macro-merge.rdata")
 antes <- datos_merge |> group_by(pais) |> summarise(f= n())
 
 resumen <- datos_wide |>
-  dplyr::filter(!is.na(`Cohesión general`), !is.na(ola)) |>
+  dplyr::filter(!is.na("Cohesión general"), !is.na(ola)) |>
   dplyr::distinct(pais, ola) |>                      # evita duplicados país-año
   dplyr::group_by(pais) |>
   dplyr::summarise(
@@ -391,9 +429,9 @@ resumen <- datos_wide |>
 
 
 datos_merge_b <- datos_merge |>
-  dplyr::filter(!is.na(`Cohesión general`), !is.na(ola)) |>
+  dplyr::filter(!is.na(cohesion_general_ind), !is.na(ola)) |>
   semi_join(resumen, by="pais") 
 
-despues <- datos_merge |> group_by(pais) |> summarise(f= n())
+despues <- datos_merge_b |> group_by(pais) |> summarise(f= n())
 
 save(datos_merge_b, file = "input/proc/micro-macro-merge.rdata")
