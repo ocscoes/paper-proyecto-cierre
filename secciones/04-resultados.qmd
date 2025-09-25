@@ -12,7 +12,7 @@ datos_merge_b <- datos_merge_b |>
   mutate(across(where(haven::is.labelled), ~ vctrs::vec_data(.)),
          pais= as.factor(pais))
 
-
+datos_merge_b$country_wave = do.call(paste, c(datos_merge_b[c("pais", "ola")], sep = "_"))
 
 ```
 
@@ -142,21 +142,37 @@ olas |>
 
 ## Modelos Multinivel
 
+```{r}
+#| label: preparacion-datos
+
+## Estandarizar continuos tras separar W/B (recomendado)
+z <- function(x) as.numeric(scale(x))
+
+datos_merge_b <- datos_merge_b %>%
+  mutate(
+    pib_we  = z(pib_we),   gini_we = z(gini_we), wgi_we = z(wgi_we), dem_we = z(dem_we),
+    mig_we  = z(mig_we),   edu_we = z(edu_we),
+    pib_be  = z(pib_be),   gini_be = z(gini_be), wgi_be = z(wgi_be), dem_be = z(dem_be),
+    mig_be  = z(mig_be),   edu_be = z(edu_be),
+    edad_c = scale(edad) %>% as.numeric()
+  )
+
+```
 
 ```{r}
-#| label: centrado
+#| label: modelos-nulos
 
-datos_wide <- clean_names(datos_wide)
-datos_merge_b <- clean_names(datos_merge_b)
+m0_ch = lmer(cohesion_horizontal_ind ~ 1 + (1 | country_wave) + (1 |pais), data=datos_merge_b, weights=wt)
 
-datos_wide <- datos_wide |>
-  dplyr::mutate(
-    pib_c   = scale(log_pib_per_capita_ppa, scale = FALSE, center = T),
-    gini_c  = scale(gini_index, scale = FALSE, center= T),
-    vdem_c  = scale(indice_v_dem, scale = FALSE, center=T),
-    wgi_c   = scale(wgi, scale = FALSE, center=T),
-    mig_c   = scale(percent_pob_migrante, scale = FALSE, center=T)
-  )
+icc(m0_ch, by_group=TRUE) # 2.3% y 5.6%
+
+m0_cv = lmer(cohesion_vertical_ind ~ 1 + (1 | country_wave) + (1 |pais), data=datos_merge_b, weights=wt)
+
+icc(m0_cv, by_group=TRUE) # 6.3% y 6.3%
+
+m0_cs = lmer(cohesion_general_ind ~ 1 + (1 | country_wave) + (1 |pais), data=datos_merge_b, weights=wt)
+
+icc(m0_cs, by_group=TRUE) # 4.9% y 7.5%
 ```
 
 
@@ -165,26 +181,34 @@ datos_wide <- datos_wide |>
 #| tbl-cap: Modelos para cohesión horizontal 
 #| results: asis
 
-# Modelo nulo general
-m0 <- lmer(cohesion_horizontal ~ 1 + (1 | pais), data = datos_wide)
 
-m1 <- lmer(cohesion_horizontal ~ factor(ola)  + (1 | pais),
-           data = datos_wide)
+# Modelo 1: Nivel individual
+m1 <- lmer(cohesion_horizontal_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + (1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
-m2 <- lmer(cohesion_horizontal ~ factor(ola) + pib_c + gini_c + vdem_c + wgi_c + mig_c + (1 | pais),
-           data = datos_wide)
+# Modelo 2: Nivel Ola Pais
+m2 <- lmer(cohesion_horizontal_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+(1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
-m3 <- lmer(cohesion_horizontal ~ factor(ola) + pib_c + gini_c + vdem_c + wgi_c + mig_c + region + (1 | pais),
-           data = datos_wide)
 
-# tab_model(m1, m2,m3,
-#           show.ci = FALSE, 
-#           show.se = TRUE,
-#           show.re.var = TRUE,
-#           dv.labels = c("Modelo 1", "Modelo 2", "Modelo 3"))
+# Modelo 3: Nivel País
+m3 <- lmer(cohesion_horizontal_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+(1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
-htmlreg(list(m1, m2, m3),
-        doctype = FALSE)
+# Modelo 4: Interacciones
+m4 <- lmer(cohesion_horizontal_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+mig_we:wgi_be +
+gini_be:edu_be +
+edu_be:gini_we +
+(1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
+
+htmlreg(list(m1, m2, m3, m4),  stars = c(0.01,0.05,0.1), digits = 3)
+
+
 ```
 
 ```{r}
@@ -192,29 +216,32 @@ htmlreg(list(m1, m2, m3),
 #| tbl-cap: Modelos para cohesión vertical
 #| results: asis
 
+# Modelo 1: Nivel individual
+m1 <- lmer(cohesion_general_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + (1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
-# Modelo nulo general
-m0 <- lmer(cohesion_vertical ~ 1 + (1 | pais), data = datos_wide)
-
-m1 <- lmer(cohesion_vertical ~ factor(ola) + (1 | pais),
-           data = datos_wide)
-
-m2 <- lmer(cohesion_vertical ~ factor(ola) + pib_c + gini_c + vdem_c + wgi_c + mig_c + (1 | pais),
-           data = datos_wide)
-
-m3 <- lmer(cohesion_vertical ~ factor(ola) + pib_c + gini_c + vdem_c + wgi_c + mig_c + region + (1 | pais),
-           data = datos_wide)
+# Modelo 2: Nivel factor(ola) Pais
+m2 <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+(1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
 
+# Modelo 3: Nivel País
+m3 <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+(1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
-# tab_model(m1, m2,m3,
-#           show.ci = FALSE, 
-#           show.se = TRUE,
-#           show.re.var = TRUE,
-#           dv.labels = c("Modelo 1", "Modelo 2", "Modelo 3"))
+# Modelo 4: Interacciones
+m4 <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+mig_we:wgi_be +
+gini_be:edu_be +
+edu_be:gini_we +
+(1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
-htmlreg(list(m1, m2, m3),
-        doctype = FALSE)
+htmlreg(list(m1, m2, m3, m4),  stars = c(0.01,0.05,0.1), digits = 3)
+
 
 ```
 
@@ -222,39 +249,30 @@ htmlreg(list(m1, m2, m3),
 #| label: tbl-modelos-general
 #| tbl-cap: Modelos para cohesión social
 #| results: asis
-#| include: false
-#| eval: false
 
-m2 <- lmer(cohesion_general_ind ~ factor(ola) + factor(sexo) + edad + pos_politica +
-             nivel_educ + (1 | pais/ola),
-           data = datos_merge_b)
+# Modelo 1: Nivel individual
+m1 <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + (1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
-levels(datos_merge_b$nivel_educ)  # verifica el orden
+# Modelo 2: Nivel factor(ola) Pais
+m2 <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+(1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
+# Modelo 3: Nivel País
+m3 <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+(1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
-# Modelo nulo general
-m0 <- lmer(cohesion_general_ind ~ 1 + (1 | pais/ola), data = datos_merge_b)
+# Modelo 4: Interacciones
+m4 <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+mig_we:wgi_be +
+gini_be:edu_be +
+edu_be:gini_we +
+(1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
-# m1 <- lmer(cohesion_general_ind ~ factor(ola) + (1 | pais/ola),
-#            data = datos_merge_b)
-
-m1 <- lmer(cohesion_general_ind ~ factor(ola) + (1 | pais/ola),
-           data = datos_merge_b)
-
-m2 <- lmer(cohesion_general_ind ~ factor(ola) + factor(sexo) + edad + pos_politica + relevel(factor(nivel_educ), ref="3") + (1 | pais/ola),
-           data = datos_merge_b)
-
-m3 <- lmer(cohesion_general_ind ~ factor(ola) + factor(sexo) + edad + pos_politica + relevel(factor(nivel_educ), ref="3") + log_pib_per_capita_ppa*gini_index + indice_v_dem + wgi + percent_pob_migrante + (1 | pais/ola),
-           data = datos_merge_b)
-
-# 
-# tab_model(m0, m1, m2,
-#           show.ci = FALSE,
-#           show.se = TRUE,
-#           show.re.var = TRUE,
-#           dv.labels = c("Modelo 1", "Modelo 2", "Modelo 3"))
-
-htmlreg(list(m0, m1, m2, m3),
-        doctype = FALSE)
+htmlreg(list(m1, m2, m3, m4),  stars = c(0.01,0.05,0.1), digits = 3)
 
 ```

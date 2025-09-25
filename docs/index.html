@@ -173,7 +173,7 @@ window.Quarto = {
   <div class="abstract">
     <div class="block-title">Resumen</div>
     <p>En un contexto regional marcado por crisis políticas, desigualdades persistentes y episodios de conflictividad social, comprender la evolución de la cohesión social es fundamental para evaluar la estabilidad democrática y la legitimidad institucional. Si bien existen numerosos estudios sobre las causas y consecuencias de la desconfianza o la polarización en América Latina, aún persiste un vacío en el análisis sistemático y longitudinal de la cohesión social como fenómeno integral. Este proyecto busca llenar ese vacío mediante el desarrollo de un conjunto de indicadores que permitan analizar con comparabilidad temporal y regional la evolución de las distintas dimensiones de la cohesión social.</p>
-    <p>Este artículo busca cubrir esas brechas proponiendo y validando un modelo de medición que permita un análisis comparativo, longitudinal y multinivel de la cohesión social en América Latina. En concreto, buscamos avanzar en: (i) una operacionalización clara y validada que integre dimensiones claves a partir de la literatura existente y los datos disponibles para la región; (ii) la estimación de trayectorias regionales y nacionales durante las últimas dos décadas; y (iii) la identificación de factores asociados a estos cambios mediante la aplicación de modelos de regresión multinivel. Con esto, se espera aportar evidencia robusta sobre los cambios en la región en las últimas dos décadas, aportando a la discusión académica y política sobre los desafíos y oportunidades de la cohesión social en América Latina.</p>
+    <p>Este artículo busca cubrir esas brechas proponiendo y validando un modelo de medición que permita un análisis comparativo, longitudinal y multinivel de la cohesión social en América Latina. En concreto, buscamos avanzar en: (i) una operacionalización clara y validada que integre dimensiones claves a partir de la literatura existente y los datos disponibles para la región; (ii) la estimación de trayectorias regionales y nacionales durante las últimas dos décadas; y (iii) la identificación de factores asociados a estos cambios mediante la aplicación de modelos de regresión multinivel híbridos. Con esto, se espera aportar evidencia robusta sobre los cambios en la región en las últimas dos décadas, aportando a la discusión académica y política sobre los desafíos y oportunidades de la cohesión social en América Latina.</p>
   </div>
 </div>
 
@@ -539,12 +539,40 @@ Figura&nbsp;5
 </section>
 <section id="modelos-multinivel" class="level2">
 <h2 class="anchored" data-anchor-id="modelos-multinivel">Modelos Multinivel</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># ICC by Group
+
+Group        |   ICC
+--------------------
+country_wave | 0.023
+pais         | 0.056</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># ICC by Group
+
+Group        |   ICC
+--------------------
+country_wave | 0.063
+pais         | 0.063</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># ICC by Group
+
+Group        |   ICC
+--------------------
+country_wave | 0.049
+pais         | 0.075</code></pre>
+</div>
+</div>
 <div id="tbl-modelos-horizontal" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-modelos-horizontal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Tabla&nbsp;2: Modelos para cohesión horizontal
 </figcaption>
 <div aria-describedby="tbl-modelos-horizontal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
+Model failed to converge with max|grad| = 0.0133626 (tol = 0.002, component 1)</code></pre>
 <table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
 <caption>
 Statistical models
@@ -563,6 +591,9 @@ Model 2
 <th style="padding-left: 5px;padding-right: 5px;">
 Model 3
 </th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 4
+</th>
 </tr>
 </thead>
 <tbody>
@@ -571,13 +602,16 @@ Model 3
 (Intercept)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-6.48<sup>***</sup>
+6.154<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-6.74<sup>***</sup>
+6.608<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-7.80<sup>***</sup>
+6.537<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+6.507<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -585,13 +619,288 @@ Model 3
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.15)
+(0.164)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.16)
+(0.259)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.53)
+(0.237)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.243)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(nivel_educ)Secondary
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.115<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.122<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.122<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.122<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.014)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.014)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.014)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(nivel_educ)Tertiary
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.020
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.028<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.028<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.028<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.015)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.016)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.016)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.016)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(sexo)Male
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.195<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.215<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.215<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.215<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.009)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+edad_c
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.111<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.099<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.098<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.098<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.006)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.006)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.006)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.006)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+edad_c^2
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.050<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.057<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.057<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.057<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.004)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.005)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.005)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.005)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(pos_politica)Center
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.101<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.120<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.120<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.120<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.014)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.014)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.014)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(pos_politica)Right
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.183<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.224<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.224<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.224<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.015)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.015)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.015)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(pos_politica)Not declared
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.122<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.169<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.169<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.169<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.016)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.019)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.019)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.019)
 </td>
 </tr>
 <tr>
@@ -599,13 +908,16 @@ Model 3
 factor(ola)2006
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.03
+0.053
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.14
+-0.134
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.13
+-0.125
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.099
 </td>
 </tr>
 <tr>
@@ -613,13 +925,16 @@ factor(ola)2006
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.11)
+(0.149)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.12)
+(0.158)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.12)
+(0.158)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.161)
 </td>
 </tr>
 <tr>
@@ -627,13 +942,16 @@ factor(ola)2006
 factor(ola)2008
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.03
+0.098
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.20
+-0.307<sup>*</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.19
+-0.271
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.253
 </td>
 </tr>
 <tr>
@@ -641,13 +959,16 @@ factor(ola)2008
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.11)
+(0.146)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.13)
+(0.183)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.13)
+(0.183)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.185)
 </td>
 </tr>
 <tr>
@@ -655,13 +976,16 @@ factor(ola)2008
 factor(ola)2010
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.04
+0.087
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.25
+-0.288
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.23
+-0.246
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.238
 </td>
 </tr>
 <tr>
@@ -669,13 +993,16 @@ factor(ola)2010
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.11)
+(0.141)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.14)
+(0.197)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.14)
+(0.196)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.197)
 </td>
 </tr>
 <tr>
@@ -683,13 +1010,16 @@ factor(ola)2010
 factor(ola)2012
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.18
+0.297<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.12
+-0.212
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.10
+-0.158
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.160
 </td>
 </tr>
 <tr>
@@ -697,13 +1027,16 @@ factor(ola)2012
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.11)
+(0.142)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.15)
+(0.224)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.15)
+(0.223)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.225)
 </td>
 </tr>
 <tr>
@@ -711,13 +1044,16 @@ factor(ola)2012
 factor(ola)2014
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.04
+0.136
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.36<sup>*</sup>
+-0.455<sup>*</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.33<sup>*</sup>
+-0.393
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.395
 </td>
 </tr>
 <tr>
@@ -725,13 +1061,16 @@ factor(ola)2014
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.11)
+(0.141)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.16)
+(0.246)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.17)
+(0.244)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.246)
 </td>
 </tr>
 <tr>
@@ -739,13 +1078,16 @@ factor(ola)2014
 factor(ola)2016
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.27<sup>*</sup>
+-0.191
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.70<sup>***</sup>
+-0.835<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.66<sup>***</sup>
+-0.758<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.758<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -753,13 +1095,16 @@ factor(ola)2016
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.11)
+(0.143)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.17)
+(0.276)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.18)
+(0.274)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.277)
 </td>
 </tr>
 <tr>
@@ -767,41 +1112,16 @@ factor(ola)2016
 factor(ola)2018
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.41<sup>***</sup>
+-0.324<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.85<sup>***</sup>
+-1.033<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.81<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+-0.937<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.12)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.19)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.20)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-factor(ola)2022
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.27<sup>*</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.80<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.74<sup>**</sup>
+-0.932<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -809,55 +1129,67 @@ factor(ola)2022
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.11)
+(0.145)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.22)
+(0.309)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.23)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-pib_c
+(0.306)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.38<sup>*</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.47<sup>*</sup>
+(0.310)
 </td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+factor(ola)2023
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+-0.066
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.19)
+-0.935<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.21)
+-0.817<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.792<sup>**</sup>
 </td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">
-gini_c
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.147)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.372)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.369)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.375)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+pib_we
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.01
+0.199<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.01
+0.181<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.193<sup>**</sup>
 </td>
 </tr>
 <tr>
@@ -868,52 +1200,30 @@ gini_c
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
+(0.083)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-vdem_c
+(0.082)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--1.35<sup>*</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.95
+(0.083)
 </td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+gini_we
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.53)
+-0.041
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.54)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-wgi_c
+-0.033
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.38<sup>*</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.20
+-0.041
 </td>
 </tr>
 <tr>
@@ -924,52 +1234,30 @@ wgi_c
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.18)
+(0.050)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.19)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-mig_c
+(0.050)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.01
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.05
+(0.051)
 </td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+dem_we
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
+-0.057<sup>*</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.03)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-regionCentroamérica
+-0.051
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.93
+-0.048
 </td>
 </tr>
 <tr>
@@ -980,52 +1268,30 @@ regionCentroamérica
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+(0.033)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.61)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-regionEl Caribe
+(0.033)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--1.16
+(0.033)
 </td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+wgi_we
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+-0.032
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.67)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-regionAmérica del Sur
+-0.029
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--1.39<sup>*</sup>
+-0.028
 </td>
 </tr>
 <tr>
@@ -1036,10 +1302,387 @@ regionAmérica del Sur
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
+(0.029)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.029)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.031)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+mig_we
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.61)
+-0.098<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.100<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.126<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.035)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.035)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.043)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+edu_we
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.015
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.015
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.014
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.028)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.029)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.029)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+pib_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.027
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.030
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.148)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.153)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+gini_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.058
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.068
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.105)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.112)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+dem_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.277<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.258
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.157)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.169)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+wgi_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.526<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.515<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.195)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.208)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+mig_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.326<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.284
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.186)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.217)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+edu_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.359<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.367<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.142)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.152)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+mig_we:wgi_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.021
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.028)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+gini_be:edu_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.037
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.082)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+gini_we:edu_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.043
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.044)
 </td>
 </tr>
 <tr style="border-top: 1px solid #000000;">
@@ -1047,13 +1690,16 @@ regionAmérica del Sur
 AIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-217.93
+998218.755
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-182.08
+808295.565
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-181.24
+808296.242
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+808313.592
 </td>
 </tr>
 <tr>
@@ -1061,13 +1707,16 @@ AIC
 BIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-254.26
+998425.027
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-230.87
+808558.093
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-239.19
+808619.354
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+808666.996
 </td>
 </tr>
 <tr>
@@ -1075,13 +1724,16 @@ BIC
 Log Likelihood
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--97.96
+-499089.378
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--75.04
+-404121.782
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--71.62
+-404116.121
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-404121.796
 </td>
 </tr>
 <tr>
@@ -1089,13 +1741,33 @@ Log Likelihood
 Num. obs.
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-201
+222705
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-156
+179377
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-156
+179377
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+179377
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. groups: country_wave
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+166
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+130
 </td>
 </tr>
 <tr>
@@ -1111,19 +1783,42 @@ Num. groups: pais
 <td style="padding-left: 5px;padding-right: 5px;">
 22
 </td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: country_wave (Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.085
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.073
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.073
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.074
+</td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">
 Var: pais (Intercept)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.30
+0.258
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.19
+0.311
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.20
+0.102
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.108
 </td>
 </tr>
 <tr style="border-bottom: 2px solid #000000;">
@@ -1131,20 +1826,23 @@ Var: pais (Intercept)
 Var: Residual
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.09
+4.910
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.09
+4.987
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.08
+4.987
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+4.987
 </td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
-<td style="font-size: 0.8em;" colspan="4">
-<sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05
+<td style="font-size: 0.8em;" colspan="5">
+<sup>***</sup>p &lt; 0.01; <sup>**</sup>p &lt; 0.05; <sup>*</sup>p &lt; 0.1
 </td>
 </tr>
 </tfoot>
@@ -1176,6 +1874,9 @@ Model 2
 <th style="padding-left: 5px;padding-right: 5px;">
 Model 3
 </th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 4
+</th>
 </tr>
 </thead>
 <tbody>
@@ -1184,13 +1885,16 @@ Model 3
 (Intercept)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-4.52<sup>***</sup>
+5.383<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-4.82<sup>***</sup>
+5.072<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-4.90<sup>***</sup>
+5.267<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+5.232<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -1198,13 +1902,288 @@ Model 3
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.16)
+(0.153)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.16)
+(0.301)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.50)
+(0.294)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.298)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(nivel_educ)Secondary
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.120<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.117<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.117<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.117<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.009)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(nivel_educ)Tertiary
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.049<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.105<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.105<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.105<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.010)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(sexo)Male
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.103<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.018<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.018<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.018<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.007)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.008)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.008)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.008)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+edad_c
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.057<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.013<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.013<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.013<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.004)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.005)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.005)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.005)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+edad_c^2
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.070<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.095<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.095<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.095<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.003)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.004)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.004)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.004)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(pos_politica)Center
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.091<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.119<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.119<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.119<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.009)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(pos_politica)Right
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.313<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.522<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.522<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.522<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.009)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(pos_politica)Not declared
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.003
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.074<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.074<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.074<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.014)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.014)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.014)
 </td>
 </tr>
 <tr>
@@ -1212,13 +2191,16 @@ Model 3
 factor(ola)2006
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.16
+0.202
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.00
+0.099
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.00
+0.055
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.048
 </td>
 </tr>
 <tr>
@@ -1226,13 +2208,16 @@ factor(ola)2006
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.14)
+(0.150)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.14)
+(0.200)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.14)
+(0.202)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.203)
 </td>
 </tr>
 <tr>
@@ -1240,13 +2225,16 @@ factor(ola)2006
 factor(ola)2008
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.08
+0.182
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.23
+-0.211
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.22
+-0.331
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.338
 </td>
 </tr>
 <tr>
@@ -1254,13 +2242,16 @@ factor(ola)2008
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.14)
+(0.146)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.15)
+(0.229)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.15)
+(0.232)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.233)
 </td>
 </tr>
 <tr>
@@ -1268,13 +2259,16 @@ factor(ola)2008
 factor(ola)2010
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.14
+0.230
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.14
+-0.015
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.13
+-0.174
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.168
 </td>
 </tr>
 <tr>
@@ -1282,13 +2276,16 @@ factor(ola)2010
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.14)
+(0.142)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.15)
+(0.245)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.16)
+(0.247)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.247)
 </td>
 </tr>
 <tr>
@@ -1296,13 +2293,16 @@ factor(ola)2010
 factor(ola)2012
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.28<sup>*</sup>
+0.356<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.25
+-0.284
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.24
+-0.463<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.455
 </td>
 </tr>
 <tr>
@@ -1310,13 +2310,16 @@ factor(ola)2012
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.14)
+(0.142)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.16)
+(0.277)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.17)
+(0.280)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.281)
 </td>
 </tr>
 <tr>
@@ -1324,13 +2327,16 @@ factor(ola)2012
 factor(ola)2014
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.05
+0.111
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.38<sup>*</sup>
+-0.467
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.36<sup>*</sup>
+-0.688<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.659<sup>**</sup>
 </td>
 </tr>
 <tr>
@@ -1338,13 +2344,16 @@ factor(ola)2014
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.14)
+(0.142)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.17)
+(0.304)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.18)
+(0.307)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.308)
 </td>
 </tr>
 <tr>
@@ -1352,13 +2361,16 @@ factor(ola)2014
 factor(ola)2016
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.21
+-0.237
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.73<sup>***</sup>
+-1.026<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.71<sup>***</sup>
+-1.266<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.242<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -1366,13 +2378,16 @@ factor(ola)2016
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.14)
+(0.144)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.18)
+(0.341)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.19)
+(0.345)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.346)
 </td>
 </tr>
 <tr>
@@ -1380,41 +2395,16 @@ factor(ola)2016
 factor(ola)2018
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.27
+-0.260<sup>*</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.81<sup>***</sup>
+-0.923<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.79<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+-1.216<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.14)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.19)
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-(0.21)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-factor(ola)2022
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.23
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.75<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.72<sup>**</sup>
+-1.191<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -1422,55 +2412,67 @@ factor(ola)2022
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.14)
+(0.146)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.22)
+(0.380)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.24)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-pib_c
+(0.385)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.15
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.13
+(0.387)
 </td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+factor(ola)2023
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+-0.075
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.18)
+-0.775<sup>*</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.20)
+-1.143<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.109<sup>**</sup>
 </td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">
-gini_c
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.147)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.457)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.463)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.468)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+pib_we
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.04<sup>**</sup>
+0.053
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--0.04<sup>**</sup>
+0.110
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.106
 </td>
 </tr>
 <tr>
@@ -1481,52 +2483,30 @@ gini_c
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
+(0.103)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-vdem_c
+(0.104)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--3.09<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--3.19<sup>***</sup>
+(0.104)
 </td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+gini_we
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.56)
+-0.103
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.60)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-wgi_c
+-0.126<sup>**</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.80<sup>***</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.83<sup>***</sup>
+-0.133<sup>**</sup>
 </td>
 </tr>
 <tr>
@@ -1537,52 +2517,30 @@ wgi_c
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.18)
+(0.063)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.20)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-mig_c
+(0.064)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.01
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.01
+(0.064)
 </td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+dem_we
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.02)
+-0.197<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.03)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-regionCentroamérica
+-0.204<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.15
+-0.198<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -1593,52 +2551,30 @@ regionCentroamérica
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+(0.041)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.57)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-regionEl Caribe
+(0.041)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.12
+(0.042)
 </td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+wgi_we
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
+0.108<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.62)
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-regionAmérica del Sur
+0.103<sup>***</sup>
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-&nbsp;
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.06
+0.078<sup>**</sup>
 </td>
 </tr>
 <tr>
@@ -1649,10 +2585,387 @@ regionAmérica del Sur
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
+(0.037)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.037)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.040)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+mig_we
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
 &nbsp;
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-(0.57)
+-0.098<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.089<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.078
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.044)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.045)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.054)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+edu_we
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.036
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.044
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.052
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.036)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.036)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.036)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+pib_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.028
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.048
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.162)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.169)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+gini_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.251<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.272<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.116)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.124)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+dem_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.029
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.012
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.171)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.186)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+wgi_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.272
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.227
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.213)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.228)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+mig_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.126
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.087
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.201)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.237)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+edu_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.335<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.360<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.154)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.166)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+mig_we:wgi_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.041
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.036)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+gini_be:edu_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.037
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.090)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+gini_we:edu_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.064
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.056)
 </td>
 </tr>
 <tr style="border-top: 1px solid #000000;">
@@ -1660,13 +2973,16 @@ regionAmérica del Sur
 AIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-290.08
+833040.152
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-203.33
+714760.659
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-210.52
+714770.846
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+714785.522
 </td>
 </tr>
 <tr>
@@ -1674,13 +2990,16 @@ AIC
 BIC
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-326.41
+833246.424
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-252.12
+715023.187
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-268.47
+715093.958
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+715138.925
 </td>
 </tr>
 <tr>
@@ -1688,13 +3007,16 @@ BIC
 Log Likelihood
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--134.04
+-416500.076
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--85.66
+-357354.329
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
--86.26
+-357353.423
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-357357.761
 </td>
 </tr>
 <tr>
@@ -1702,13 +3024,33 @@ Log Likelihood
 Num. obs.
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-201
+222705
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-156
+179377
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-156
+179377
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+179377
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. groups: country_wave
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+166
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+130
 </td>
 </tr>
 <tr>
@@ -1724,19 +3066,42 @@ Num. groups: pais
 <td style="padding-left: 5px;padding-right: 5px;">
 22
 </td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: country_wave (Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.088
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.121
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.123
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.122
+</td>
 </tr>
 <tr>
 <td style="padding-left: 5px;padding-right: 5px;">
 Var: pais (Intercept)
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.31
+0.172
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.12
+0.217
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.15
+0.113
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.123
 </td>
 </tr>
 <tr style="border-bottom: 2px solid #000000;">
@@ -1744,20 +3109,1306 @@ Var: pais (Intercept)
 Var: Residual
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.14
+2.337
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.11
+2.959
 </td>
 <td style="padding-left: 5px;padding-right: 5px;">
-0.11
+2.959
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.959
 </td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
-<td style="font-size: 0.8em;" colspan="4">
-<sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05
+<td style="font-size: 0.8em;" colspan="5">
+<sup>***</sup>p &lt; 0.01; <sup>**</sup>p &lt; 0.05; <sup>*</sup>p &lt; 0.1
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</figure>
+</div>
+<div id="tbl-modelos-general" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-modelos-general-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;4: Modelos para cohesión social
+</figcaption>
+<div aria-describedby="tbl-modelos-general-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<caption>
+Statistical models
+</caption>
+<thead>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 3
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 4
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+(Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+4.616<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+5.072<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+5.267<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+5.232<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.197)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.301)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.294)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.298)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(nivel_educ)Secondary
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.125<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.117<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.117<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.117<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.010)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(nivel_educ)Tertiary
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.118<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.105<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.105<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.105<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.012)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(sexo)Male
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.011
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.018<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.018<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.018<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.007)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.008)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.008)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.008)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+edad_c
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.003
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.013<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.013<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.013<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.004)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.005)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.005)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.005)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+edad_c^2
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.090<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.095<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.095<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.095<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.003)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.004)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.004)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.004)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(pos_politica)Center
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.080<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.119<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.119<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.119<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.010)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(pos_politica)Right
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.442<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.522<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.522<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.522<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.010)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(pos_politica)Not declared
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.114<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.074<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.074<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.074<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.014)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.014)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.014)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(ola)2006
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.354<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.099
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.055
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.048
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.203)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.200)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.202)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.203)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(ola)2008
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.270
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.211
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.331
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.338
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.199)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.229)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.232)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.233)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(ola)2010
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.369<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.015
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.174
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.168
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.192)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.245)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.247)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.247)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(ola)2012
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.415<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.284
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.463<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.455
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.193)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.277)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.280)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.281)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(ola)2014
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.085
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.467
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.688<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.659<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.193)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.304)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.307)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.308)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(ola)2016
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.282
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.026<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.266<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.242<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.196)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.341)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.345)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.346)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(ola)2018
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.198
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.923<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.216<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.191<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.198)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.380)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.385)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.387)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+factor(ola)2023
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.088
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.775<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.143<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.109<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.200)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.457)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.463)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.468)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+pib_we
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.053
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.110
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.106
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.103)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.104)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.104)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+gini_we
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.103
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.126<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.133<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.063)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.064)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.064)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+dem_we
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.197<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.204<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.198<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.041)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.041)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.042)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+wgi_we
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.108<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.103<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.078<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.037)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.037)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.040)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+mig_we
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.098<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.089<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.078
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.044)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.045)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.054)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+edu_we
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.036
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.044
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.052
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.036)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.036)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.036)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+pib_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.028
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.048
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.162)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.169)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+gini_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.251<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.272<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.116)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.124)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+dem_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.029
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.012
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.171)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.186)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+wgi_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.272
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.227
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.213)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.228)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+mig_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.126
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.087
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.201)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.237)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+edu_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.335<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.360<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.154)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.166)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+mig_we:wgi_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.041
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.036)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+gini_be:edu_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.037
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.090)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+gini_we:edu_be
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.064
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.056)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+AIC
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+891866.595
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+714760.659
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+714770.846
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+714785.522
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+BIC
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+892072.867
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+715023.187
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+715093.958
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+715138.925
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Log Likelihood
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-445913.298
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-357354.329
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-357353.423
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-357357.761
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+222705
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+179377
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+179377
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+179377
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. groups: country_wave
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+166
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+130
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. groups: pais
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+25
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: country_wave (Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.163
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.121
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.123
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.122
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: pais (Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.210
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.217
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.113
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.123
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: Residual
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+3.043
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.959
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.959
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.959
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="5">
+<sup>***</sup>p &lt; 0.01; <sup>**</sup>p &lt; 0.05; <sup>*</sup>p &lt; 0.1
 </td>
 </tr>
 </tfoot>
