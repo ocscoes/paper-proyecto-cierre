@@ -202,14 +202,40 @@ m4 <- lmer(cohesion_horizontal_ind ~ 1 + factor(nivel_educ) + factor(sexo) + eda
 pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
 pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
 mig_we:wgi_be +
-gini_be:edu_be +
-edu_be:gini_we +
+edu_be:gini_be +
+  edu_be:gini_we +
 (1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
-htmlreg(list(m1, m2, m3, m4),  stars = c(0.01,0.05,0.1), digits = 3)
+sjPlot::tab_model(m1, m2, m3, m4,
+                  show.ci = FALSE,
+                  dv.labels = c("m1", "m2", "m3", "m4"))
 
 
 ```
+
+
+```{r}
+p_load(influence.ME)
+
+estex.cw <- influence(m4, "country_wave")
+estex.c <- influence(m4, "pais")
+
+# Casos influyentes a nivel ola-país
+
+cooks_cw <- cooks.distance(estex.cw, sort = T)
+cut_cw <- 4/sqrt(130)
+
+plot(estex.cw, which="cook",
+     cutoff=cut_cw, sort=TRUE)
+
+# Influyentes a nivel país
+
+cut_c <- 4/sqrt(22)
+
+plot(estex.c, which="cook",
+     cutoff=cut_c, sort=TRUE)
+```
+
 
 ```{r}
 #| label: tbl-modelos-vertical
@@ -236,14 +262,56 @@ m4 <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_
 pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
 pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
 mig_we:wgi_be +
-gini_be:edu_be +
-edu_be:gini_we +
+edu_be:gini_be +
+  edu_be:gini_we +
 (1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
-htmlreg(list(m1, m2, m3, m4),  stars = c(0.01,0.05,0.1), digits = 3)
+sjPlot::tab_model(m1, m2, m3, m4,
+                  show.ci = FALSE,
+                  dv.labels = c("m1", "m2", "m3", "m4"))
 
 
 ```
+
+```{r}
+
+estex.cw <- influence(m4, "country_wave")
+estex.c <- influence(m4, "pais")
+
+# Casos influyentes a nivel ola-país
+
+cooks_cw <- cooks.distance(estex.cw, sort = T)
+cut_cw <- 4/sqrt(130)
+
+plot(estex.cw, which="cook",
+     cutoff=cut_cw, sort=TRUE)
+
+# Influyentes a nivel país
+
+cut_c <- 4/sqrt(22)
+
+plot(estex.c, which="cook",
+     cutoff=cut_c, sort=TRUE)
+
+# Uruguay y Bolivia aparecen como influyentes
+```
+```{r}
+data_cut <- datos_merge_b |> filter(pais!="Uruguay" & pais!="Bolivia")
+
+m5 <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+mig_we:wgi_be +
+edu_be:gini_be +
+  edu_be:gini_we +
+(1 | country_wave) + (1 | pais), data= data_cut, weights= wt)
+
+sjPlot::tab_model(m4, m5,
+                  show.ci = FALSE,
+                  dv.labels = c("completo", "sin influyentes"))
+```
+
+
 
 ```{r}
 #| label: tbl-modelos-general
@@ -251,28 +319,69 @@ htmlreg(list(m1, m2, m3, m4),  stars = c(0.01,0.05,0.1), digits = 3)
 #| results: asis
 
 # Modelo 1: Nivel individual
-m1 <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + (1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
+m1 <- lmer(cohesion_general_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + (1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
 # Modelo 2: Nivel factor(ola) Pais
-m2 <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+m2 <- lmer(cohesion_general_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
 pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
 (1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
 # Modelo 3: Nivel País
-m3 <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+m3 <- lmer(cohesion_general_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
 pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
 pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
 (1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
 # Modelo 4: Interacciones
-m4 <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+m4 <- lmer(cohesion_general_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
 pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
 pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
 mig_we:wgi_be +
-gini_be:edu_be +
-edu_be:gini_we +
+edu_be:gini_be +
+  edu_be:gini_we +
 (1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
-htmlreg(list(m1, m2, m3, m4),  stars = c(0.01,0.05,0.1), digits = 3)
+sjPlot::tab_model(m1, m2, m3, m4,
+                  show.ci = FALSE,
+                  dv.labels = c("m1", "m2", "m3", "m4"))
 
 ```
+
+```{r}
+p_load(influence.ME)
+
+estex.cw <- influence(m4, "country_wave")
+estex.c <- influence(m4, "pais")
+
+# Casos influyentes a nivel ola-país
+
+cooks_cw <- cooks.distance(estex.cw, sort = T)
+cut_cw <- 4/sqrt(130)
+
+plot(estex.cw, which="cook",
+     cutoff=cut_cw, sort=TRUE)
+
+# Influyentes a nivel país
+
+cut_c <- 4/sqrt(22)
+
+plot(estex.c, which="cook",
+     cutoff=cut_c, sort=TRUE)
+
+# De nuevo Bolivia y Uruguay
+
+
+m5 <- lmer(cohesion_general_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + factor(ola) + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+mig_we:wgi_be +
+edu_be:gini_be +
+  edu_be:gini_we +
+(1 | country_wave) + (1 | pais), data= data_cut, weights= wt)
+
+sjPlot::tab_model(m4, m5,
+                  show.ci = FALSE,
+                  dv.labels = c("completo", "sin influyentes"))
+```
+
+
