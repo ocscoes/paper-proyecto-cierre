@@ -471,135 +471,135 @@ edu_be:gini_be +
   scale(ola):wgi_we +
 (1 | country_wave) + (1 | pais), data= datos_merge_b, weights= wt)
 
-# sjPlot::tab_model(mh, mv, mc,
-#                   show.ci = FALSE,
-#                   dv.labels = c("Cohesión Horizontal",
-#                                 "Cohesión Vertical",
-#                                 "Cohesión General"))
-# 
-# plot_completo <- plot_model(mc,
-#             std.est = TRUE,  # estandariza los coeficientes (opcional)
-#             show.values = TRUE,
-#             show.legend = TRUE,
-#             value.offset = .3,
-#            terms = c("scale(ola)",
-#                      "pib_we",
-#                      "gini_we",
-#                      "dem_we",
-#                      "wgi_we",
-#                      "mig_we",
-#                      "edu_we",
-#                      "pib_be",
-#                      "gini_be",
-#                      "dem_be",
-#                      "wgi_be",
-#                      "mig_be",
-#                      "edu_be",
-#                      "mig_we:wgi_be",
-#                      "gini_be:edu_be",
-#                      "gini_we:edu_be"),
-#            axis.labels = c("Gini (within) x Educación (between)",
-#                             "Gini (between) x Educación (between)",
-#                             "Migración (within) x Gobernanza (between)",
-#                             "Pob. Educ. Terciaria",
-#                             "Pob. Migrante",
-#                             "Gobernanza",
-#                             "Democracia",
-#                             "Gini",
-#                             "PIB",
-#                             "Pob. Educ. Terciaria",
-#                             "Pob. Migrante",
-#                               "Gobernanza",
-#                             "Democracia",
-#                           "Gini",
-#                           "PIB per capita",
-#                           "Ola"),
-#            title= "Modelo de Cohesión General"
-# )
-# 
-# plot_horizontal <- plot_model(mh,
-#             std.est = TRUE,  # estandariza los coeficientes (opcional)
-#             show.values = TRUE,
-#             show.legend = TRUE,
-#             value.offset = .3,
-#            terms = c("scale(ola)",
-#                      "pib_we",
-#                      "gini_we",
-#                      "dem_we",
-#                      "wgi_we",
-#                      "mig_we",
-#                      "edu_we",
-#                      "pib_be",
-#                      "gini_be",
-#                      "dem_be",
-#                      "wgi_be",
-#                      "mig_be",
-#                      "edu_be",
-#                      "mig_we:wgi_be",
-#                      "gini_be:edu_be",
-#                      "gini_we:edu_be"),
-#            axis.labels = c("Gini (within) x Educación (between)",
-#                             "Gini (between) x Educación (between)",
-#                             "Migración (within) x Gobernanza (between)",
-#                             "Pob. Educ. Terciaria",
-#                             "Pob. Migrante",
-#                             "Gobernanza",
-#                             "Democracia",
-#                             "Gini",
-#                             "PIB",
-#                             "Pob. Educ. Terciaria",
-#                             "Pob. Migrante",
-#                               "Gobernanza",
-#                             "Democracia",
-#                           "Gini",
-#                           "PIB per capita",
-#                           "Ola"),
-#            title= "Modelo de Cohesión Horizontal"
-# )
-# 
-# plot_vertical <- plot_model(mv,
-#             std.est = TRUE,  # estandariza los coeficientes (opcional)
-#             show.values = TRUE,
-#             show.legend = TRUE,
-#             value.offset = .3,
-#            terms = c("scale(ola)",
-#                      "pib_we",
-#                      "gini_we",
-#                      "dem_we",
-#                      "wgi_we",
-#                      "mig_we",
-#                      "edu_we",
-#                      "pib_be",
-#                      "gini_be",
-#                      "dem_be",
-#                      "wgi_be",
-#                      "mig_be",
-#                      "edu_be",
-#                      "mig_we:wgi_be",
-#                      "gini_be:edu_be",
-#                      "gini_we:edu_be"),
-#            axis.labels = c("Gini (within) x Educación (between)",
-#                             "Gini (between) x Educación (between)",
-#                             "Migración (within) x Gobernanza (between)",
-#                             "Pob. Educ. Terciaria",
-#                             "Pob. Migrante",
-#                             "Gobernanza",
-#                             "Democracia",
-#                             "Gini",
-#                             "PIB",
-#                             "Pob. Educ. Terciaria",
-#                             "Pob. Migrante",
-#                               "Gobernanza",
-#                             "Democracia",
-#                           "Gini",
-#                           "PIB per capita",
-#                           "Ola"),
-#            title= "Modelo de Cohesión Vertical"
-# )
+sjPlot::tab_model(mh, mv, mc,
+                  show.ci = FALSE,
+                  dv.labels = c("Cohesión Horizontal",
+                                "Cohesión Vertical",
+                                "Cohesión General"))
+
+plot_completo <- plot_model(mc,
+            std.est = TRUE,  # estandariza los coeficientes (opcional)
+            show.values = TRUE,
+            show.legend = TRUE,
+            value.offset = .3,
+           terms = c("scale(ola)",
+                     "pib_we",
+                     "gini_we",
+                     "dem_we",
+                     "wgi_we",
+                     "mig_we",
+                     "edu_we",
+                     "pib_be",
+                     "gini_be",
+                     "dem_be",
+                     "wgi_be",
+                     "mig_be",
+                     "edu_be",
+                     "mig_we:wgi_be",
+                     "gini_be:edu_be",
+                     "gini_we:edu_be"),
+           axis.labels = c("Gini (within) x Educación (between)",
+                            "Gini (between) x Educación (between)",
+                            "Migración (within) x Gobernanza (between)",
+                            "Pob. Educ. Terciaria",
+                            "Pob. Migrante",
+                            "Gobernanza",
+                            "Democracia",
+                            "Gini",
+                            "PIB",
+                            "Pob. Educ. Terciaria",
+                            "Pob. Migrante",
+                              "Gobernanza",
+                            "Democracia",
+                          "Gini",
+                          "PIB per capita",
+                          "Ola"),
+           title= "Modelo de Cohesión General"
+)
+
+plot_horizontal <- plot_model(mh,
+            std.est = TRUE,  # estandariza los coeficientes (opcional)
+            show.values = TRUE,
+            show.legend = TRUE,
+            value.offset = .3,
+           terms = c("scale(ola)",
+                     "pib_we",
+                     "gini_we",
+                     "dem_we",
+                     "wgi_we",
+                     "mig_we",
+                     "edu_we",
+                     "pib_be",
+                     "gini_be",
+                     "dem_be",
+                     "wgi_be",
+                     "mig_be",
+                     "edu_be",
+                     "mig_we:wgi_be",
+                     "gini_be:edu_be",
+                     "gini_we:edu_be"),
+           axis.labels = c("Gini (within) x Educación (between)",
+                            "Gini (between) x Educación (between)",
+                            "Migración (within) x Gobernanza (between)",
+                            "Pob. Educ. Terciaria",
+                            "Pob. Migrante",
+                            "Gobernanza",
+                            "Democracia",
+                            "Gini",
+                            "PIB",
+                            "Pob. Educ. Terciaria",
+                            "Pob. Migrante",
+                              "Gobernanza",
+                            "Democracia",
+                          "Gini",
+                          "PIB per capita",
+                          "Ola"),
+           title= "Modelo de Cohesión Horizontal"
+)
+
+plot_vertical <- plot_model(mv,
+            std.est = TRUE,  # estandariza los coeficientes (opcional)
+            show.values = TRUE,
+            show.legend = TRUE,
+            value.offset = .3,
+           terms = c("scale(ola)",
+                     "pib_we",
+                     "gini_we",
+                     "dem_we",
+                     "wgi_we",
+                     "mig_we",
+                     "edu_we",
+                     "pib_be",
+                     "gini_be",
+                     "dem_be",
+                     "wgi_be",
+                     "mig_be",
+                     "edu_be",
+                     "mig_we:wgi_be",
+                     "gini_be:edu_be",
+                     "gini_we:edu_be"),
+           axis.labels = c("Gini (within) x Educación (between)",
+                            "Gini (between) x Educación (between)",
+                            "Migración (within) x Gobernanza (between)",
+                            "Pob. Educ. Terciaria",
+                            "Pob. Migrante",
+                            "Gobernanza",
+                            "Democracia",
+                            "Gini",
+                            "PIB",
+                            "Pob. Educ. Terciaria",
+                            "Pob. Migrante",
+                              "Gobernanza",
+                            "Democracia",
+                          "Gini",
+                          "PIB per capita",
+                          "Ola"),
+           title= "Modelo de Cohesión Vertical"
+)
 
 
 sjPlot::plot_models(mh, mv, mc, grid  = T,
-                    std.est = T,
+                    std.est = T
                     rm.terms = c("factor(nivel_educ)Secondary",
                                  "factor(nivel_educ)Tertiary",
                                  "factor(sexo)Male",
@@ -616,59 +616,25 @@ sjPlot::plot_models(mh, mv, mc, grid  = T,
                     axis.labels = c("Gini (within) x Educación (between)",
                             "Gini (between) x Educación (between)",
                             "Migración (within) x Gobernanza (between)",
-                            "Pob. Educ. Terciaria (between)",
-                            "Pob. Migrante (between)",
-                            "Gobernanza (between)",
-                            "Democracia (between)",
-                            "Gini (between)",
-                            "PIB (between)",
-                            "Pob. Educ. Terciaria (within)",
-                            "Pob. Migrante (within)",
-                              "Gobernanza (within)",
-                            "Democracia (within)",
-                          "Gini (within)",
-                          "PIB per capita (within)",
+                            "Pob. Educ. Terciaria",
+                            "Pob. Migrante",
+                            "Gobernanza",
+                            "Democracia",
+                            "Gini",
+                            "PIB",
+                            "Pob. Educ. Terciaria",
+                            "Pob. Migrante",
+                              "Gobernanza",
+                            "Democracia",
+                          "Gini",
+                          "PIB per capita",
                           "Ola"),
                     show.p = T,
-                    show.legend = F,
-                    show.values = T
+                    show.legend = F
                     )
 ```
 
-## Pendiente aleatorio Ola
 
 
-```{r}
-
-# datos_fit <- datos_merge_b |>
-#   dplyr::mutate(
-#     ola_s = as.numeric(scale(ola, center = TRUE, scale = TRUE)),
-#     nivel_educ   = forcats::fct_drop(factor(nivel_educ)),
-#     sexo         = forcats::fct_drop(factor(sexo)),
-#     pos_politica = forcats::fct_drop(factor(pos_politica)),
-#     pais         = forcats::fct_drop(factor(pais)),
-#     country_wave = forcats::fct_drop(factor(country_wave))
-#   )
-# 
-# mc_ola <- lme4::lmer(
-#   cohesion_general_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) +
-#     pos_politica + ola_s +
-#     pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
-#     pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
-#     mig_we:wgi_be + edu_be:gini_be + edu_be:gini_we + ola_s:wgi_we +
-#     (1 | country_wave) + (1 + dem_we | pais),
-#   data = datos_fit, weights = wt
-# )
-# 
-# # Ahora sí puedes usar ggeffects sin error:
-# ge_ola <- ggpredict(mc_ola, terms = c("dem_we [all]", "pais [Chile, El Salvador, Uruguay]"),
-#                     type = "random")
-# 
-# library(scales)   # para hue_pal()
-# n <- length(unique(as.data.frame(ge_ola)$group))  # nº de países en el objeto ggeffects
-# cols <- hue_pal()(n)                          # genera n colores distintos
-# 
-# plot(ge_ola, show_ci = FALSE, colors = cols)
-```
 
 
