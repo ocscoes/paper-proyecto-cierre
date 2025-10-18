@@ -86,8 +86,8 @@ p_load(dplyr,
 ```
 
 
-{{< include secciones/01-intro.qmd >}}
-{{< include secciones/02-antecedentes.qmd >}}
-{{< include secciones/03-metodo.qmd >}}
-{{< include secciones/04-resultados.qmd >}}
+{{< include 01-intro.qmd >}}
+{{< include 02-antecedentes.qmd >}}
+{{< include 03-metodo.qmd >}}
+{{< include 04-resultados.qmd >}}
 
