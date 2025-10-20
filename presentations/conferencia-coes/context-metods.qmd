@@ -15,7 +15,7 @@ editor: source
 
 **_¿De qué hablamos cuando hablamos de cohesión social?_**
 
-## 
+## Contexto
 
 ::::: columns
 ::: {.column width="35%"}
@@ -101,55 +101,74 @@ En esta línea, también se encuentra el Observatorio de Cohesión social (el cu
 
 :::{.incremental style="font-size: 30px;"}
 
-- $H_{1}$: Los países con un mayor desarrollo económico presentarán mayores niveles de cohesión social
+- <div style="margin-bottom: 1.5em;">$H_{1}$: Los países con un mayor desarrollo económico presentarán mayores niveles de cohesión social</div>
 
-- $H_{2}$: Países con mayores niveles de desigualdad presentarán menores niveles de cohesión social
 
-- $H_{3}$: Individuos con mayor nivel educativo mostrarán mayores nivel de cohesión social
+- <div style="margin-bottom: 1.5em;">$H_{2}$: Países con mayores niveles de desigualdad presentarán menores niveles de cohesión social</div>
 
-- $H_{4}$: Países con mayores niveles de gobernanza presentarán mayores niveles de cohesión social
 
-- $H_{5}$: Aumentos en la proporción de población migrante en un país estarán asociados a disminuciones en los niveles de cohesión social
+- <div style="margin-bottom: 1.5em;">$H_{3}$: Individuos con mayor nivel educativo mostrarán mayores nivel de cohesión social</div>
+
+
+- <div style="margin-bottom: 1.5em;">$H_{4}$: Países con mayores niveles de gobernanza presentarán mayores niveles de cohesión social</div>
+
+
+- <div style="margin-bottom: 1.5em;">$H_{5}$: Aumentos en la proporción de población migrante en un país estarán asociados a disminuciones en los niveles de cohesión social</div>
+
 :::
 
 # Metodología {data-background-color="#1b241f"}
 
-## Datos y métodos
+## Datos
 
-::::: columns
+:::: columns
+
 ::: {.column width="50%" style="font-size: 30px;"}
-
-- <div style="margin-bottom: 1.5em;">Los datos utilizados son de la encuesta del [Latin American Public Opinion Project](https://ropercenter.cornell.edu/latin-american-public-opinion-project-lapop)</div>
+<div class="fragment">
+  
+- <div style="margin-bottom: 1.5em;">Los datos utilizados son de la encuesta del [Latin American Public Opinion Project.](https://ropercenter.cornell.edu/latin-american-public-opinion-project-lapop)</div>
 
 - <div style="margin-bottom: 1.5em;">La encuesta tiene por objetivo recolectar datos la opinión pública sobre democracia y gobernanza en el continente americano, aplicándose de manera regular desde 2004.</div>
 
 - <div style="margin-bottom: 1.5em;">Esta investigación contiene un N = 238.257 individuos dentro de 25 países considerando desde 2004 hasta 2023.</div>
 
+</div>
 :::
 
 ::: {.column width="50%" style="font-size: 30px;"}
+<div class="fragment">
+  
+- <div style="margin-bottom: 1.5em;">Variables dependientes: índice de cohesión vertical e índice de cohesión horizontal.</div>
 
--   <div style="margin-bottom: 1.5em;">Variables dependientes: índice de cohesión vertical e índice de cohesión horizontal.</div>
+- <div style="margin-bottom: 1.5em;">Variables independientes individuales: nivel educativo.</div>
 
--   <div style="margin-bottom: 1.5em;">Variables independientes individuales: nivel educativo.</div>
+- <div style="margin-bottom: 1.5em;">Variables independientes contextuales: PIB per cápita, Índice Gini, Índice de Gobernanza, Diversidad cultural.</div>
 
--  <div style="margin-bottom: 1.5em;">Variables independientes contextuales: PIB per cápita, Índice Gini, Índice de Gobernanza, Diversidad cultural.</div>
-
+</div>
 :::
-:::::
+::::
 
 ## Marco de medición
 
 ![](images/esquema-al.png)
 
+:::{.notes}
+el esquema de medición de América Latina se compone por una dimensión vertical y otra horizontal.
+
+ en la dimensión vertical se considera confianza en instituciones que se mide a partir del grado de confianza que se tiene al poder judicial, congreso y los partidos políticos. Actitudes hacia la democracia considera cuánto apoya alguien a la democracia y cuán satisfecho está con ella. Por último, justicia distributiva se mide a partir de la pregunta qué tan justa se percibe la distribución de ingresos en el país.
+
+Cohesión horizontal está medida por seguridad pública, la cual aborda la seguridad subjetiva, es decir, la percepción de la seguridad, y la seguridad objetiva, medida considerando si el encuestado ha sido víctima de delitos o no. Además, confianza interpersonal se comprende como el nivel de confianza que tienen las personas respecto a sus vecinos.
+:::
+
+
 ## Método
 
-:::{.incremental}
+:::{.incremental style="font-size: 35px;"}
 
-- Para validar el modelo construido, se aplica un análisis factorial confirmatorio
+- <div style="margin-bottom: 1.5em;">Para validar el modelo construido, se aplica un análisis factorial confirmatorio.</div>
 
-- Posteriormente, gracias a estructura jerárquica de los datos, se estiman modelos de regresión multinivel híbridos.
+- <div style="margin-bottom: 1.5em;">Posteriormente, gracias a estructura jerárquica de los datos, se estiman modelos de regresión multinivel híbridos.</div>
   
-- $y_{jti} = \beta_{0}(t) + \beta_{1}X_{jti} + \gamma_{we}(Z_{jt}-\bar{Z}_{j}) + \gamma_{be}\bar{Z}_{j} + v_j + u_{jt} + e_{jti}$
+- <div style="margin-bottom: 1.5em;">$y_{jti} = \beta_{0}(t) + \beta_{1}X_{jti} + \gamma_{we}(Z_{jt}-\bar{Z}_{j}) + \gamma_{be}\bar{Z}_{j} + v_j + u_{jt} + e_{jti}$</div>
 
 :::
