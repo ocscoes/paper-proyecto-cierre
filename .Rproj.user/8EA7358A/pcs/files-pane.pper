@@ -2,8 +2,8 @@
     "sortOrder": [
         {
             "columnIndex": 2,
-            "ascending": true
+            "ascending": false
         }
     ],
-    "path": "~/GitHub/OCS/paper-proyecto-cierre/input/proc"
+    "path": "~/GitHub/OCS/paper-proyecto-cierre/presentations/conferencia-coes"
 }

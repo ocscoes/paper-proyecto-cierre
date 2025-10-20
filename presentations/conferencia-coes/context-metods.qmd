@@ -151,3 +151,5 @@ En esta línea, también se encuentra el Observatorio de Cohesión social (el cu
 - Posteriormente, gracias a estructura jerárquica de los datos, se estiman modelos de regresión multinivel híbridos.
   
 - $y_{jti} = \beta_{0}(t) + \beta_{1}X_{jti} + \gamma_{we}(Z_{jt}-\bar{Z}_{j}) + \gamma_{be}\bar{Z}_{j} + v_j + u_{jt} + e_{jti}$
+
+:::

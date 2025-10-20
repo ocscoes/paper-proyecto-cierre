@@ -1,0 +1,2094 @@
+# Bivariados {data-background-color="#1b241f"}
+
+```{r}
+library(pacman)
+p_load(dplyr,
+       kableExtra,
+       knitr,
+       tidyr,
+       ggplot2,
+       lme4,
+       janitor,
+       texreg,
+       sjPlot,
+       summarytools,
+       lavaan,
+       semPlot,
+       PerformanceAnalytics,
+       stargazer,
+       performance,
+       ggeffects,
+       ggrepel,
+       scales)
+
+load("input/proc/micro-macro-merge.rdata")
+
+datos_merge_b <- datos_merge_b |>
+  mutate(across(where(haven::is.labelled), ~ vctrs::vec_data(.)),
+         pais= as.factor(pais))
+
+datos_merge_b$country_wave = do.call(paste, c(datos_merge_b[c("pais", "ola")], sep = "_"))
+```
+
+## Cohesión Horizontal
+
+```{r}
+#| label: fig-ch
+#| fig-cap: Evolución dimensiones Cohesión Horizontal (2004-2023)
+
+olas <- datos_merge_b |>
+  group_by(ola) |>
+  summarise(seguridad_prom = mean(seguridad_ind, na.rm=T),
+            confianza_prom = mean(confianza_it_ind, na.rm=T)) |>
+  pivot_longer(
+    cols = c(confianza_prom, seguridad_prom),
+    names_to = "indicador",
+    values_to = "promedio"
+  ) |>
+  mutate(indicador = recode(indicador,
+                            "confianza_prom" = "Confianza Interpersonal",
+                            "seguridad_prom" = "Seguridad Pública"))
+olas |>
+  ggplot(aes(x = ola, y = promedio, color=indicador)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  labs(x = "Ola", y = "Promedio", color=NULL) +
+  theme_minimal() + 
+  theme(legend.position = "bottom")
+
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| label: fig-ch-chile
+#| fig-cap: Evolución dimensiones Cohesión Horizontal en Chile (2004-2022)
+
+olas <- datos_merge_b |>
+  group_by(pais, ola) |>
+  summarise(
+    seguridad_prom  = mean(seguridad_ind,    na.rm = TRUE),
+    confianza_prom  = mean(confianza_it_ind, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(grupo = if_else(pais == "Chile", "Chile", "Promedio otros")) |>
+  group_by(grupo, ola) |>
+  summarise(
+    seguridad_prom  = mean(seguridad_prom,  na.rm = TRUE),
+    confianza_prom  = mean(confianza_prom,  na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  pivot_longer(
+    cols = c(confianza_prom, seguridad_prom),
+    names_to = "indicador",
+    values_to = "promedio"
+  ) |>
+  mutate(
+    indicador = recode(
+      indicador,
+      "confianza_prom" = "Confianza Interpersonal",
+      "seguridad_prom" = "Seguridad Pública"
+    ),
+    grupo = factor(grupo, levels = c("Chile", "Promedio otros"))
+  )
+
+ggplot(olas, aes(x = ola, y = promedio, color = grupo, group = grupo)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  facet_wrap(~ indicador, ncol = 1, scales = "free_y") +
+  labs(
+    x = "Ola",
+    y = "Promedio",
+    color = NULL
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| label: fig-ch-chile-b
+#| fig-cap: Evolución Cohesión Horizontal en Chile y AL (2004-2022)
+
+
+# 1) Preparar datos: Chile vs Promedio otros
+olas_tbl <- datos_merge_b |>
+  group_by(pais, ola) |>
+  summarise(
+    horizontal_prom = mean(cohesion_horizontal_ind, na.rm = TRUE),
+    vertical_prom   = mean(cohesion_vertical_ind,   na.rm = TRUE),
+    cohesion_prom   = mean(cohesion_general_ind,    na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(grupo = if_else(pais == "Chile", "Chile", "Promedio otros")) |>
+  group_by(grupo, ola) |>
+  summarise(
+    horizontal_prom = mean(horizontal_prom, na.rm = TRUE),
+    vertical_prom   = mean(vertical_prom,   na.rm = TRUE),
+    cohesion_prom   = mean(cohesion_prom,   na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  pivot_longer(
+    cols = c(horizontal_prom, vertical_prom, cohesion_prom),
+    names_to = "indicador",
+    values_to = "promedio"
+  ) |>
+  mutate(
+    indicador = recode(
+      indicador,
+      horizontal_prom = "Cohesión Horizontal",
+      vertical_prom   = "Cohesión Vertical",
+      cohesion_prom   = "Cohesión Social"
+    ),
+    grupo = factor(grupo, levels = c("Chile", "Promedio otros"))
+  )
+
+# 2) Función auxiliar para graficar una dimensión
+plot_dim <- function(df, dim_label) {
+  ggplot(dplyr::filter(df, indicador == dim_label),
+         aes(x = ola, y = promedio, color = grupo, group = grupo)) +
+    geom_line(linewidth = 1) +
+    geom_point(size = 2) +
+    labs(x = "Ola", y = "Promedio", color = NULL) +
+    theme_minimal() +
+    theme(legend.position = "bottom")
+}
+
+# 3) Tres gráficos separados
+p_horizontal <- plot_dim(olas_tbl, "Cohesión Horizontal")
+p_vertical   <- plot_dim(olas_tbl, "Cohesión Vertical")
+p_social     <- plot_dim(olas_tbl, "Cohesión Social")
+
+# Muestra uno por vez en tu IDE:
+p_horizontal
+
+```
+
+## Cohesión Vertical
+
+```{r}
+#| label: fig-cv
+#| fig-cap: Evolución dimensiones Cohesión Vertical (2004-2022)
+
+olas <- datos_merge_b |>
+  group_by(ola) |>
+  summarise(confianza_prom = mean(confianza_inst_ind, na.rm=T),
+            democracia_prom = mean(democracia_ind, na.rm=T)) |>
+  pivot_longer(
+    cols = c(confianza_prom, democracia_prom),
+    names_to = "indicador",
+    values_to = "promedio"
+  ) |>
+  mutate(indicador = recode(indicador,
+                            "confianza_prom" = "Confianza en las Instituciones",
+                            "democracia_prom" = "Actitudes hacia la democracia"))
+
+olas |>
+  ggplot(aes(x = ola, y = promedio, color=indicador)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  labs(x = "Ola", y = "Promedio", color=NULL) +
+  theme_minimal() + 
+  theme(legend.position = "bottom")
+
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| label: fig-cv-chile
+#| fig-cap: Evolución dimensiones Cohesión Vertical en Chile (2004-2022)
+
+olas <- datos_merge_b |>
+  group_by(pais, ola) |>
+  summarise(
+    confianza_prom  = mean(confianza_inst_ind, na.rm = TRUE),
+    democracia_prom = mean(democracia_ind,     na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(grupo = if_else(pais == "Chile", "Chile", "Promedio otros")) |>
+  group_by(grupo, ola) |>
+  summarise(
+    confianza_prom  = mean(confianza_prom,  na.rm = TRUE),
+    democracia_prom = mean(democracia_prom, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  pivot_longer(
+    cols = c(confianza_prom, democracia_prom),
+    names_to = "indicador",
+    values_to = "promedio"
+  ) |>
+  mutate(
+    indicador = recode(
+      indicador,
+      "confianza_prom"  = "Confianza en las Instituciones",
+      "democracia_prom" = "Actitudes hacia la Democracia"
+    ),
+    grupo = factor(grupo, levels = c("Chile", "Promedio otros"))
+  )
+
+ggplot(olas, aes(x = ola, y = promedio, color = grupo, group = grupo)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  facet_wrap(~ indicador, ncol = 1, scales = "free_y") +
+  labs(
+    x = "Ola",
+    y = "Promedio",
+    color = NULL
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| label: fig-cv-chile-b
+#| fig-cap: Evolución Cohesión Vertical en Chile y AL (2004-2022)
+
+p_vertical
+```
+
+## Cohesión Social
+
+```{r}
+#| label: fig-cs
+#| fig-cap: Evolución dimensiones Cohesión Social (2004-2022)
+
+olas <- datos_merge_b |>
+  group_by(ola) |>
+  summarise(horizontal_prom = mean(`cohesion_horizontal_ind`, na.rm=T),
+            vertical_prom = mean(`cohesion_vertical_ind`, na.rm=T),
+            cohesion_prom = mean(`cohesion_general_ind`, na.rm=T)) |>
+  pivot_longer(
+    cols = c(horizontal_prom, vertical_prom, cohesion_prom),
+    names_to = "indicador",
+    values_to = "promedio"
+  ) |>
+  mutate(indicador = recode(indicador,
+                            horizontal_prom = "Cohesión Horizontal",
+                            vertical_prom = "Cohesión Vertical",
+                            cohesion_prom = "Cohesión Social"))
+
+olas |>
+  ggplot(aes(x = ola, y = promedio, color=indicador)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  labs(x = "Ola", y = "Promedio", color=NULL) +
+  theme_minimal() + 
+  theme(legend.position = "bottom")
+
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| label: fig-cs-chile-b
+#| fig-cap: Evolución Cohesión Social en Chile y AL (2004-2022)
+
+p_social
+```
+
+# Modelo Multinivel
+
+```{r}
+#| label: preparacion-datos
+
+## Estandarizar continuos tras separar W/B (recomendado)
+z <- function(x) as.numeric(scale(x))
+
+datos_fit <- datos_merge_b %>%
+  mutate(
+    pib_we  = z(pib_we),   gini_we = z(gini_we), wgi_we = z(wgi_we), dem_we = z(dem_we),
+    mig_we  = z(mig_we),   edu_we = z(edu_we),
+    pib_be  = z(pib_be),   gini_be = z(gini_be), wgi_be = z(wgi_be), dem_be = z(dem_be),
+    mig_be  = z(mig_be),   edu_be = z(edu_be),
+    edad_c = scale(edad) %>% as.numeric(),
+    ola_s = as.numeric(scale(ola, center = TRUE, scale = TRUE)),
+    nivel_educ   = forcats::fct_drop(factor(nivel_educ)),
+    sexo         = forcats::fct_drop(factor(sexo)),
+    pos_politica = forcats::fct_drop(factor(pos_politica)),
+    pais         = forcats::fct_drop(factor(pais)),
+    country_wave = forcats::fct_drop(factor(country_wave))
+  ) |>
+  select(cohesion_general_ind, cohesion_vertical_ind, cohesion_horizontal_ind,
+         nivel_educ, sexo, edad_c, ola_s, pos_politica,
+         pib_we, gini_we, dem_we, wgi_we, mig_we, edu_we,
+         pib_be, gini_be, dem_be, wgi_be, mig_be, edu_be,
+         country_wave, pais, wt) |> na.omit()
+```
+
+## Coef Plot
+
+```{r}
+#| eval: false
+mh <- lmer(cohesion_horizontal_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + ola_s + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+mig_we:wgi_be +
+edu_be:gini_be +
+  edu_be:gini_we +
+  ola_s:mig_be +
+(1 + pib_we | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+
+mv <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + ola_s + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+mig_we:wgi_be +
+edu_be:gini_be +
+  edu_be:gini_we +
+  ola_s:wgi_we +
+(1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+
+mc <- lmer(cohesion_general_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + ola_s + 
+pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+mig_we:wgi_be +
+edu_be:gini_be +
+  edu_be:gini_we +
+  ola_s:wgi_we +
+(1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+
+save(mh, file="output/modelo_horizontal.rdata")
+save(mv, file="output/modelo_vertical.rdata")
+save(mc, file= "output/modelo_completo.rdata")
+
+```
+
+```{r}
+#| label: fig-coef
+#| fig-cap: Coeficientes Modelos de Cohesión Social
+
+load("output/modelo_horizontal.rdata")
+load("output/modelo_vertical.rdata")
+load("output/modelo_completo.rdata")
+
+sjPlot::plot_models(mh, mv, mc, grid  = T,
+                    std.est = T,
+                    rm.terms = c("factor(nivel_educ)Secondary",
+                                 "factor(nivel_educ)Tertiary",
+                                 "factor(sexo)Male",
+                                 "edad_c",
+                                 "I(edad_c^2)",
+                                 "factor(pos_politica)Center",
+                                 "factor(pos_politica)Right",
+                                 "factor(pos_politica)Not declared",
+                                 "ola_s:mig_be",
+                                 "ola_s:wgi_we"),
+                    m.labels= c("Cohesión Horizontal",
+                                "Cohesión Vertical",
+                                "Cohesión Social"),
+                    axis.labels = c("Gini (within) x Educación (between)",
+                            "Gini (between) x Educación (between)",
+                            "Migración (within) x Gobernanza (between)",
+                            "Pob. Educ. Terciaria (between)",
+                            "Pob. Migrante (between)",
+                            "Gobernanza (between)",
+                            "Democracia (between)",
+                            "Gini (between)",
+                            "PIB (between)",
+                            "Pob. Educ. Terciaria (within)",
+                            "Pob. Migrante (within)",
+                              "Gobernanza (within)",
+                            "Democracia (within)",
+                          "Gini (within)",
+                          "PIB per capita (within)",
+                          "Ola"),
+                    show.p = T,
+                    show.legend = F,
+                    show.values = T
+                    )
+```
+
+# Democracia y Cohesión Social
+
+## Evolución Índice de Democracia
+
+```{r}
+
+
+olas <- datos_merge_b |>
+  filter(ola>2004) |>
+  group_by(pais, ola) |>
+  summarise(
+    dem_prom  = mean(indice_v_dem, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(grupo = if_else(pais == "Chile", "Chile", "Promedio otros")) |>
+  group_by(grupo, ola) |>
+  summarise(
+    dem_prom  = mean(dem_prom,  na.rm = TRUE),
+    .groups = "drop"
+  )
+
+ggplot(olas, aes(x = ola, y = dem_prom, color = grupo, group = grupo)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  labs(
+    x = "Ola",
+    y = "Índice V-Dem",
+    color = NULL
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| eval: false
+
+# Filtrar antes toda la base
+datos_filtrados <- datos_merge_b %>%
+  filter(ola == 2023)
+
+# Seleccionar las variables que terminan en "_ind"
+vars_ind <- datos_filtrados %>%
+  select(ends_with("_ind"))
+
+# Calcular correlaciones con edu_terciaria dentro del mismo subconjunto
+cors <- sapply(vars_ind, function(x) cor(datos_filtrados$indice_v_dem, x, use = "pairwise.complete.obs"))
+
+# Convertir a data.frame ordenado
+cor_df <- data.frame(
+  variable = names(cors),
+  correlacion = as.numeric(cors)
+) %>%
+  arrange(desc(abs(correlacion)))
+
+cor_df
+
+```
+
+```{r}
+datos_merge_b |>
+  filter(ola == 2023) |>
+  group_by(pais) |>
+  summarise(
+    dem_prom = mean(indice_v_dem, na.rm = TRUE),
+    democracia = mean(democracia_ind, na.rm = TRUE)
+  ) |>
+  ggplot(aes(x = dem_prom, y = democracia, label = pais)) +
+  geom_point(color = "#4E79A7", size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "gray40", linetype = "dashed") +
+  geom_text_repel(size = 3, max.overlaps = 20) +
+  labs(
+    x = "Indice V-Dem",
+    y = "Actitudades Hacia la Democracia") +
+  theme_minimal(base_size = 13)
+
+```
+
+## Efectos Within
+
+```{r}
+# m_dem <- lme4::lmer(
+#   cohesion_general_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) +
+#     pos_politica + ola_s +
+#     pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+#     pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+#     mig_we:wgi_be + edu_be:gini_be + edu_be:gini_we + ola_s:wgi_we +
+#     (1 | country_wave) + (1 + dem_we | pais),
+#   data = datos_fit, weights = wt
+# )
+# 
+# save(m_dem, file = "output/modelo_democracia_within.rdata")
+
+load("output/modelo_democracia_within.rdata")
+
+
+# Predicciones
+ge_dem <- ggpredict(
+  m_dem,
+  terms = c("dem_we [all]", "pais [all]"),
+  type = "random"
+)
+
+# Paleta de colores
+n <- length(unique(as.data.frame(ge_dem)$group))
+cols <- hue_pal()(n)
+
+# Gráfico personalizado
+plot(ge_dem, show_ci = FALSE, color = cols) +
+  labs(
+    x = "Indice V-Dem (efecto within)",
+    y = "Cohesión social predicha",
+    title = ""
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# Convertir a data.frame
+df <- as.data.frame(ge_dem)
+
+# País a destacar
+focus_country <- "Chile"
+
+# Definir colores
+cols <- ifelse(df$group == focus_country, "Chile", "Otros")
+df$highlight <- factor(cols, levels = c("Otros", "Chile"))
+
+ggplot(df, aes(x = x, y = predicted, group = group)) +
+  geom_line(aes(color = highlight, size = highlight), alpha = 0.9) +
+  scale_color_manual(values = c("Otros" = "gray80", "Chile" = "#e41a1c")) +
+  scale_size_manual(values = c("Otros" = 0.6, "Chile" = 1.3)) +
+  labs(
+    x = "Indice V-Dem (within)",
+    y = "Cohesión social predicha",
+    title = "Efecto within del Indice V-Dem sobre la cohesión social",
+    subtitle = paste("País destacado:", focus_country)
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+### Comparar con otros países ----
+
+# Países a destacar
+focus <- c("Chile", "Uruguay", "El Salvador")
+
+# Etiqueta de énfasis
+df <- df %>%
+  mutate(is_focus = group %in% focus)
+
+# Último punto para etiquetas
+df_end <- df %>%
+  group_by(group) %>%
+  slice_max(x, n = 1) %>%
+  ungroup()
+
+color_map <- c(
+  "Chile"   = "#D52B1E",
+  "Uruguay" = "#5BB5E6",
+  "El Salvador" = "#FF6F61"
+)
+
+
+# Gráfico
+ggplot() +
+  # Todas las líneas grises primero (background)
+  geom_line(
+    data = df %>% filter(!is_focus),
+    aes(x = x, y = predicted, group = group),
+    color = "gray80", linewidth = 0.5, alpha = 0.8
+  ) +
+  # Luego las líneas destacadas encima
+  geom_line(
+    data = df %>% filter(is_focus),
+    aes(x = x, y = predicted, color = group),
+    linewidth = 1.3
+  ) +
+  # Etiquetas al final de las destacadas
+  geom_text_repel(
+    data = df_end %>% filter(group %in% focus),
+    aes(x = x, y = predicted, label = group, color = group),
+    nudge_x = 0.25, direction = "y", hjust = 0,
+    size = 3.5, segment.color = NA, show.legend = FALSE
+  ) +
+  scale_color_manual(values = color_map) +
+  labs(
+    x = "Indice V-Dem (within)",
+    y = "Cohesión social predicha",
+    title = "Efecto within del Indice V-Dem sobre la cohesión social",
+    subtitle = "Chile, Honduras y Canada destacados"
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    plot.margin = margin(5, 60, 5, 5)
+  )
+```
+
+## Efectos Between
+
+```{r}
+# m_dem <- lme4::lmer(
+#   cohesion_general_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) +
+#     pos_politica + ola_s +
+#     pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+#     pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+#     mig_we:wgi_be + edu_be:gini_be + edu_be:gini_we + ola_s:wgi_we +
+#     (1 | country_wave) + (1 + dem_be | pais),
+#   data = datos_fit, weights = wt
+# )
+# 
+# save(m_dem, file = "output/modelo_democracia_between.rdata")
+load("output/modelo_democracia_between.rdata")
+
+# Ahora sí puedes usar ggeffects sin error:
+ge_dem <- ggpredict(m_dem, terms = c("dem_be [all]", "pais [all]"),
+                    type = "random")
+
+library(scales)   # para hue_pal()
+n <- length(unique(as.data.frame(ge_dem)$group))  # nº de países en el objeto ggeffects
+cols <- hue_pal()(n)                          # genera n colores distintos
+
+# Gráfico personalizado
+plot(ge_dem, show_ci = FALSE, color = cols) +
+  labs(
+    x = "Indice V-Dem (efecto between)",
+    y = "Cohesión social predicha",
+    title = ""
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# Convertir a data.frame
+df <- as.data.frame(ge_dem)
+
+# País a destacar
+focus_country <- "Chile"
+
+# Definir colores
+cols <- ifelse(df$group == focus_country, "Chile", "Otros")
+df$highlight <- factor(cols, levels = c("Otros", "Chile"))
+
+ggplot(df, aes(x = x, y = predicted, group = group)) +
+  geom_line(aes(color = highlight, size = highlight), alpha = 0.9) +
+  scale_color_manual(values = c("Otros" = "gray80", "Chile" = "#e41a1c")) +
+  scale_size_manual(values = c("Otros" = 0.6, "Chile" = 1.3)) +
+  labs(
+    x = "Indice V-Dem (between)",
+    y = "Cohesión social predicha",
+    title = "Efecto between del Indice V-Dem sobre la cohesión social",
+    subtitle = paste("País destacado:", focus_country)
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+### Comparar con otros países ----
+
+# Países a destacar
+focus <- c("Chile", "Uruguay", "El Salvador", "Peru")
+
+# Etiqueta de énfasis
+df <- df %>%
+  mutate(is_focus = group %in% focus)
+
+# Último punto para etiquetas
+df_end <- df %>%
+  group_by(group) %>%
+  slice_max(x, n = 1) %>%
+  ungroup()
+
+color_map <- c(
+  "Chile"   = "#D52B1E",
+  "Uruguay" = "#5BB5E6",
+  "El Salvador" = "#FF6F61",
+  "Peru" = "#FFD700"
+)
+
+
+# Gráfico
+ggplot() +
+  # Todas las líneas grises primero (background)
+  geom_line(
+    data = df %>% filter(!is_focus),
+    aes(x = x, y = predicted, group = group),
+    color = "gray80", linewidth = 0.5, alpha = 0.8
+  ) +
+  # Luego las líneas destacadas encima
+  geom_line(
+    data = df %>% filter(is_focus),
+    aes(x = x, y = predicted, color = group),
+    linewidth = 1.3
+  ) +
+  # Etiquetas al final de las destacadas
+  geom_text_repel(
+    data = df_end %>% filter(group %in% focus),
+    aes(x = x, y = predicted, label = group, color = group),
+    nudge_x = 0.25, direction = "y", hjust = 0,
+    size = 3.5, segment.color = NA, show.legend = FALSE
+  ) +
+  scale_color_manual(values = color_map) +
+  labs(
+    x = "Indice V-Dem (between)",
+    y = "Cohesión social predicha",
+    title = "Efecto between del Indice V-Dem sobre la cohesión social",
+    subtitle = "Chile, Uruguay y El Salvador destacados"
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    plot.margin = margin(5, 60, 5, 5)
+  )
+```
+
+# Gobernanza y Cohesión Social
+
+## Evolución Índice WGI
+
+```{r}
+
+
+olas <- datos_merge_b |>
+  filter(ola>2004) |>
+  group_by(pais, ola) |>
+  summarise(
+    wgi_prom  = mean(wgi, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(grupo = if_else(pais == "Chile", "Chile", "Promedio otros")) |>
+  group_by(grupo, ola) |>
+  summarise(
+    wgi_prom  = mean(wgi_prom,  na.rm = TRUE),
+    .groups = "drop"
+  )
+
+ggplot(olas, aes(x = ola, y = wgi_prom, color = grupo, group = grupo)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  labs(
+    x = "Ola",
+    y = "Índice WGI",
+    color = NULL
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| eval: false
+
+# Filtrar antes toda la base
+datos_filtrados <- datos_merge_b %>%
+  filter(ola == 2023)
+
+# Seleccionar las variables que terminan en "_ind"
+vars_ind <- datos_filtrados %>%
+  select(ends_with("_ind"))
+
+# Calcular correlaciones con edu_terciaria dentro del mismo subconjunto
+cors <- sapply(vars_ind, function(x) cor(datos_filtrados$wgi, x, use = "pairwise.complete.obs"))
+
+# Convertir a data.frame ordenado
+cor_df <- data.frame(
+  variable = names(cors),
+  correlacion = as.numeric(cors)
+) %>%
+  arrange(desc(abs(correlacion)))
+
+cor_df
+
+```
+
+```{r}
+datos_merge_b |>
+  filter(ola == 2023) |>
+  group_by(pais) |>
+  summarise(
+    wgi_prom = mean(wgi, na.rm = TRUE),
+    democracia = mean(democracia_ind, na.rm = TRUE)
+  ) |>
+  ggplot(aes(x = wgi_prom, y = democracia, label = pais)) +
+  geom_point(color = "#4E79A7", size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "gray40", linetype = "dashed") +
+  geom_text_repel(size = 3, max.overlaps = 20) +
+  labs(
+    x = "Indice WGI",
+    y = "Actitudades Hacia la Democracia") +
+  theme_minimal(base_size = 13)
+
+```
+
+## Efectos Within
+
+```{r}
+# m_wgi <- lme4::lmer(
+#   cohesion_general_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) +
+#     pos_politica + ola_s +
+#     pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+#     pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+#     mig_we:wgi_be + edu_be:gini_be + edu_be:gini_we + ola_s:wgi_we +
+#     (1 | country_wave) + (1 + wgi_we | pais),
+#   data = datos_fit, weights = wt
+# )
+# 
+# save(m_wgi, file = "output/modelo_wgi_within.rdata")
+load("output/modelo_wgi_within.rdata")
+
+
+# Predicciones
+ge_wgi <- ggpredict(
+  m_wgi,
+  terms = c("wgi_we [all]", "pais [all]"),
+  type = "random"
+)
+
+# Paleta de colores
+n <- length(unique(as.data.frame(ge_wgi)$group))
+cols <- hue_pal()(n)
+
+# Gráfico personalizado
+plot(ge_wgi, show_ci = FALSE, color = cols) +
+  labs(
+    x = "Indice WGI (efecto within)",
+    y = "Cohesión social predicha",
+    title = ""
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# Convertir a data.frame
+df <- as.data.frame(ge_wgi)
+
+# País a destacar
+focus_country <- "Chile"
+
+# Definir colores
+cols <- ifelse(df$group == focus_country, "Chile", "Otros")
+df$highlight <- factor(cols, levels = c("Otros", "Chile"))
+
+ggplot(df, aes(x = x, y = predicted, group = group)) +
+  geom_line(aes(color = highlight, size = highlight), alpha = 0.9) +
+  scale_color_manual(values = c("Otros" = "gray80", "Chile" = "#e41a1c")) +
+  scale_size_manual(values = c("Otros" = 0.6, "Chile" = 1.3)) +
+  labs(
+    x = "Indice WGI (within)",
+    y = "Cohesión social predicha",
+    title = "Efecto within del Indice WGI sobre la cohesión social",
+    subtitle = paste("País destacado:", focus_country)
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+### Comparar con otros países ----
+
+# Países a destacar
+focus <- c("Chile", "Uruguay", "El Salvador", "Peru")
+
+# Etiqueta de énfasis
+df <- df %>%
+  mutate(is_focus = group %in% focus)
+
+# Último punto para etiquetas
+df_end <- df %>%
+  group_by(group) %>%
+  slice_max(x, n = 1) %>%
+  ungroup()
+
+color_map <- c(
+  "Chile"   = "#D52B1E",
+  "Uruguay" = "#5BB5E6",
+  "El Salvador" = "#FF6F61",
+  "Peru" = "#9B59B6"
+)
+
+
+# Gráfico
+ggplot() +
+  # Todas las líneas grises primero (background)
+  geom_line(
+    data = df %>% filter(!is_focus),
+    aes(x = x, y = predicted, group = group),
+    color = "gray80", linewidth = 0.5, alpha = 0.8
+  ) +
+  # Luego las líneas destacadas encima
+  geom_line(
+    data = df %>% filter(is_focus),
+    aes(x = x, y = predicted, color = group),
+    linewidth = 1.3
+  ) +
+  # Etiquetas al final de las destacadas
+  geom_text_repel(
+    data = df_end %>% filter(group %in% focus),
+    aes(x = x, y = predicted, label = group, color = group),
+    nudge_x = 0.25, direction = "y", hjust = 0,
+    size = 3.5, segment.color = NA, show.legend = FALSE
+  ) +
+  scale_color_manual(values = color_map) +
+  labs(
+    x = "Indice WGI (within)",
+    y = "Cohesión social predicha",
+    title = "Efecto within del Indice WGI sobre la cohesión social",
+    subtitle = "Chile, Uruguay, El Salvador y Perú destacados"
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    plot.margin = margin(5, 60, 5, 5)
+  )
+```
+
+## Efectos Between
+
+```{r}
+# m_wgi <- lme4::lmer(
+#   cohesion_general_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) +
+#     pos_politica + ola_s +
+#     pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+#     pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+#     mig_we:wgi_be + edu_be:gini_be + edu_be:gini_we + ola_s:wgi_we +
+#     (1 | country_wave) + (1 + wgi_be | pais),
+#   data = datos_fit, weights = wt
+# )
+# 
+# save(m_wgi, file = "output/modelo_wgi_between.rdata")
+load("output/modelo_wgi_between.rdata")
+
+# Ahora sí puedes usar ggeffects sin error:
+ge_wgi <- ggpredict(m_wgi, terms = c("wgi_be [all]", "pais [all]"),
+                    type = "random")
+
+library(scales)   # para hue_pal()
+n <- length(unique(as.data.frame(ge_wgi)$group))  # nº de países en el objeto ggeffects
+cols <- hue_pal()(n)                          # genera n colores distintos
+
+# Gráfico personalizado
+plot(ge_wgi, show_ci = FALSE, color = cols) +
+  labs(
+    x = "Indice WGI (efecto between)",
+    y = "Cohesión social predicha",
+    title = ""
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# Convertir a data.frame
+df <- as.data.frame(ge_wgi)
+
+# País a destacar
+focus_country <- "Chile"
+
+# Definir colores
+cols <- ifelse(df$group == focus_country, "Chile", "Otros")
+df$highlight <- factor(cols, levels = c("Otros", "Chile"))
+
+ggplot(df, aes(x = x, y = predicted, group = group)) +
+  geom_line(aes(color = highlight, size = highlight), alpha = 0.9) +
+  scale_color_manual(values = c("Otros" = "gray80", "Chile" = "#e41a1c")) +
+  scale_size_manual(values = c("Otros" = 0.6, "Chile" = 1.3)) +
+  labs(
+    x = "IndiceW WGI (between)",
+    y = "Cohesión social predicha",
+    title = "Efecto between del WGI sobre la cohesión social",
+    subtitle = paste("País destacado:", focus_country)
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+### Comparar con otros países ----
+
+# Países a destacar
+focus <- c("Chile", "Uruguay", "El Salvador", "Peru")
+
+# Etiqueta de énfasis
+df <- df %>%
+  mutate(is_focus = group %in% focus)
+
+# Último punto para etiquetas
+df_end <- df %>%
+  group_by(group) %>%
+  slice_max(x, n = 1) %>%
+  ungroup()
+
+color_map <- c(
+  "Chile"   = "#D52B1E",
+  "Uruguay" = "#5BB5E6",
+  "El Salvador" = "#FF6F61",
+  "Peru" = "#9B59B6"
+)
+
+
+# Gráfico
+ggplot() +
+  # Todas las líneas grises primero (background)
+  geom_line(
+    data = df %>% filter(!is_focus),
+    aes(x = x, y = predicted, group = group),
+    color = "gray80", linewidth = 0.5, alpha = 0.8
+  ) +
+  # Luego las líneas destacadas encima
+  geom_line(
+    data = df %>% filter(is_focus),
+    aes(x = x, y = predicted, color = group),
+    linewidth = 1.3
+  ) +
+  # Etiquetas al final de las destacadas
+  geom_text_repel(
+    data = df_end %>% filter(group %in% focus),
+    aes(x = x, y = predicted, label = group, color = group),
+    nudge_x = 0.25, direction = "y", hjust = 0,
+    size = 3.5, segment.color = NA, show.legend = FALSE
+  ) +
+  scale_color_manual(values = color_map) +
+  labs(
+    x = "Indice V-Dem (between)",
+    y = "Cohesión social predicha",
+    title = "Efecto between del Indice WGI sobre la cohesión social",
+    subtitle = "Chile, Uruguay, El Salvador y Peru destacados"
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    plot.margin = margin(5, 60, 5, 5)
+  )
+```
+
+# Desigualdad Económica y Cohesión Social
+
+## Evolución Indice Gini
+
+```{r}
+
+olas <- datos_merge_b |>
+  filter(ola>2004) |>
+  group_by(pais, ola) |>
+  summarise(
+    gini_prom  = mean(gini_index, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(grupo = if_else(pais == "Chile", "Chile", "Promedio otros")) |>
+  group_by(grupo, ola) |>
+  summarise(
+    gini_prom  = mean(gini_prom,  na.rm = TRUE),
+    .groups = "drop"
+  )
+
+ggplot(olas, aes(x = ola, y = gini_prom, color = grupo, group = grupo)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  labs(
+    x = "Ola",
+    y = "Promedio Gini",
+    color = NULL
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+## Indice Gini y Cohesión Vertical
+
+```{r}
+#| label: fig-gini-b
+#| fig-cap: Desigualdad económica y Cohesión Vertical en América Latina (2004-2022)
+
+
+datos_merge_b |>
+  filter(ola == 2023) |>
+  group_by(pais) |>
+  summarise(
+    gini_prom = mean(gini_index, na.rm = TRUE),
+    cohesion_vertical = mean(cohesion_vertical_ind, na.rm = TRUE)
+  ) |>
+  ggplot(aes(x = gini_prom, y = cohesion_vertical, label = pais)) +
+  geom_point(color = "#4E79A7", size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "gray40", linetype = "dashed") +
+  geom_text_repel(size = 3, max.overlaps = 20) +
+  labs(
+    x = "Desigualdad (Gini promedio)",
+    y = "Confianza en instituciones (promedio)") +
+  theme_minimal(base_size = 13)
+
+```
+
+## Efectos Within
+
+```{r}
+# m_gini <- lme4::lmer(
+#   cohesion_general_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) +
+#     pos_politica + ola_s +
+#     pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+#     pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+#     mig_we:wgi_be + edu_be:gini_be + edu_be:gini_we + ola_s:wgi_we +
+#     (1 | country_wave) + (1 + gini_we | pais),
+#   data = datos_fit, weights = wt
+# )
+# 
+# save(m_gini, file = "output/modelo_gini_within.rdata")
+load("output/modelo_gini_within.rdata")
+
+# Predicciones
+ge_gini <- ggpredict(
+  m_gini,
+  terms = c("gini_we [all]", "pais [all]"),
+  type = "random"
+)
+
+# Paleta de colores
+n <- length(unique(as.data.frame(ge_gini)$group))
+cols <- hue_pal()(n)
+
+# Gráfico personalizado
+plot(ge_gini, show_ci = FALSE, color = cols) +
+  labs(
+    x = "Desigualdad (Gini, efecto within)",
+    y = "Cohesión social predicha",
+    title = ""
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# Convertir a data.frame
+df <- as.data.frame(ge_gini)
+
+# País a destacar
+focus_country <- "Chile"
+
+# Definir colores
+cols <- ifelse(df$group == focus_country, "Chile", "Otros")
+df$highlight <- factor(cols, levels = c("Otros", "Chile"))
+
+ggplot(df, aes(x = x, y = predicted, group = group)) +
+  geom_line(aes(color = highlight, size = highlight), alpha = 0.9) +
+  scale_color_manual(values = c("Otros" = "gray80", "Chile" = "#e41a1c")) +
+  scale_size_manual(values = c("Otros" = 0.6, "Chile" = 1.3)) +
+  labs(
+    x = "Gini (within)",
+    y = "Cohesión social predicha",
+    title = "Efecto within del Gini sobre la cohesión social",
+    subtitle = paste("País destacado:", focus_country)
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+### Comparar con otros países ----
+
+# Países a destacar
+focus <- c("Uruguay", "Chile", "Colombia")
+
+# Etiqueta de énfasis
+df <- df %>%
+  mutate(is_focus = group %in% focus)
+
+# Último punto para etiquetas
+df_end <- df %>%
+  group_by(group) %>%
+  slice_max(x, n = 1) %>%
+  ungroup()
+
+color_map <- c(
+  "Uruguay" = "#5BB5E6",
+  "Chile"   = "#D52B1E",
+  "Colombia" = "#FCD116"
+)
+
+
+# Gráfico
+ggplot() +
+  # Todas las líneas grises primero (background)
+  geom_line(
+    data = df %>% filter(!is_focus),
+    aes(x = x, y = predicted, group = group),
+    color = "gray80", linewidth = 0.5, alpha = 0.8
+  ) +
+  # Luego las líneas destacadas encima
+  geom_line(
+    data = df %>% filter(is_focus),
+    aes(x = x, y = predicted, color = group),
+    linewidth = 1.3
+  ) +
+  # Etiquetas al final de las destacadas
+  geom_text_repel(
+    data = df_end %>% filter(group %in% focus),
+    aes(x = x, y = predicted, label = group, color = group),
+    nudge_x = 0.25, direction = "y", hjust = 0,
+    size = 3.5, segment.color = NA, show.legend = FALSE
+  ) +
+  scale_color_manual(values = color_map) +
+  labs(
+    x = "Gini (within)",
+    y = "Cohesión social predicha",
+    title = "Efecto within del Gini sobre la cohesión social",
+    subtitle = "Uruguay, Chile y Colombia destacados"
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    plot.margin = margin(5, 60, 5, 5)
+  )
+```
+
+## Efectos Between
+
+```{r}
+# m_gini <- lme4::lmer(
+#   cohesion_general_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) +
+#     pos_politica + ola_s +
+#     pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+#     pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+#     mig_we:wgi_be + edu_be:gini_be + edu_be:gini_we + ola_s:wgi_we +
+#     (1 | country_wave) + (1 + gini_be | pais),
+#   data = datos_fit, weights = wt
+# )
+# 
+# save(m_gini, file = "output/modelo_gini_between.rdata")
+load("output/modelo_gini_between.rdata")
+
+# Ahora sí puedes usar ggeffects sin error:
+ge_gini <- ggpredict(m_gini, terms = c("gini_be [all]", "pais [all]"),
+                    type = "random")
+
+library(scales)   # para hue_pal()
+n <- length(unique(as.data.frame(ge_gini)$group))  # nº de países en el objeto ggeffects
+cols <- hue_pal()(n)                          # genera n colores distintos
+
+# Gráfico personalizado
+plot(ge_gini, show_ci = FALSE, color = cols) +
+  labs(
+    x = "Desigualdad (Gini, efecto between)",
+    y = "Cohesión social predicha",
+    title = ""
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# Convertir a data.frame
+df <- as.data.frame(ge_gini)
+
+# País a destacar
+focus_country <- "Chile"
+
+# Definir colores
+cols <- ifelse(df$group == focus_country, "Chile", "Otros")
+df$highlight <- factor(cols, levels = c("Otros", "Chile"))
+
+ggplot(df, aes(x = x, y = predicted, group = group)) +
+  geom_line(aes(color = highlight, size = highlight), alpha = 0.9) +
+  scale_color_manual(values = c("Otros" = "gray80", "Chile" = "#e41a1c")) +
+  scale_size_manual(values = c("Otros" = 0.6, "Chile" = 1.3)) +
+  labs(
+    x = "Gini (between)",
+    y = "Cohesión social predicha",
+    title = "Efecto between del Gini sobre la cohesión social",
+    subtitle = paste("País destacado:", focus_country)
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+### Comparar con otros países ----
+
+# Países a destacar
+focus <- c("Uruguay", "Chile", "Colombia")
+
+# Etiqueta de énfasis
+df <- df %>%
+  mutate(is_focus = group %in% focus)
+
+# Último punto para etiquetas
+df_end <- df %>%
+  group_by(group) %>%
+  slice_max(x, n = 1) %>%
+  ungroup()
+
+color_map <- c(
+  "Uruguay" = "#5BB5E6",
+  "Chile"   = "#D52B1E",
+  "Colombia" = "#FCD116"
+)
+
+
+# Gráfico
+ggplot() +
+  # Todas las líneas grises primero (background)
+  geom_line(
+    data = df %>% filter(!is_focus),
+    aes(x = x, y = predicted, group = group),
+    color = "gray80", linewidth = 0.5, alpha = 0.8
+  ) +
+  # Luego las líneas destacadas encima
+  geom_line(
+    data = df %>% filter(is_focus),
+    aes(x = x, y = predicted, color = group),
+    linewidth = 1.3
+  ) +
+  # Etiquetas al final de las destacadas
+  geom_text_repel(
+    data = df_end %>% filter(group %in% focus),
+    aes(x = x, y = predicted, label = group, color = group),
+    nudge_x = 0.25, direction = "y", hjust = 0,
+    size = 3.5, segment.color = NA, show.legend = FALSE
+  ) +
+  scale_color_manual(values = color_map) +
+  labs(
+    x = "Gini (betwwen)",
+    y = "Cohesión social predicha",
+    title = "Efecto between del Gini sobre la cohesión social",
+    subtitle = "Uruguay, Chile y Colombia destacados"
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    plot.margin = margin(5, 60, 5, 5)
+  )
+```
+
+# Educación y Cohesión Social
+
+## Evolución % Pob. Educación Terciaria
+
+```{r}
+
+
+olas <- datos_merge_b |>
+  filter(ola>2004) |>
+  group_by(pais, ola) |>
+  summarise(
+    edu_prom  = mean(edu_terciaria, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(grupo = if_else(pais == "Chile", "Chile", "Promedio otros")) |>
+  group_by(grupo, ola) |>
+  summarise(
+    edu_prom  = mean(edu_prom,  na.rm = TRUE),
+    .groups = "drop"
+  )
+
+ggplot(olas, aes(x = ola, y = edu_prom, color = grupo, group = grupo)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  labs(
+    x = "Ola",
+    y = "% Pob. Educ. Terciaria",
+    color = NULL
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| eval: false
+
+# Filtrar antes toda la base
+datos_filtrados <- datos_merge_b %>%
+  filter(pais != "Peru", ola == 2023)
+
+# Seleccionar las variables que terminan en "_ind"
+vars_ind <- datos_filtrados %>%
+  select(ends_with("_ind"))
+
+# Calcular correlaciones con edu_terciaria dentro del mismo subconjunto
+cors <- sapply(vars_ind, function(x) cor(datos_filtrados$edu_terciaria, x, use = "pairwise.complete.obs"))
+
+# Convertir a data.frame ordenado
+cor_df <- data.frame(
+  variable = names(cors),
+  correlacion = as.numeric(cors)
+) %>%
+  arrange(desc(abs(correlacion)))
+
+cor_df
+
+```
+
+```{r}
+datos_merge_b |>
+  filter(ola == 2023 & pais!="Peru") |>
+  group_by(pais) |>
+  summarise(
+    edu_prom = mean(edu_terciaria, na.rm = TRUE),
+    confianza_inst = mean(confianza_inst_ind, na.rm = TRUE)
+  ) |>
+  ggplot(aes(x = edu_prom, y = confianza_inst, label = pais)) +
+  geom_point(color = "#4E79A7", size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "gray40", linetype = "dashed") +
+  geom_text_repel(size = 3, max.overlaps = 20) +
+  labs(
+    x = "Pob. con Educ. Terciaria",
+    y = "Confianza en instituciones (promedio)") +
+  theme_minimal(base_size = 13)
+
+```
+
+------------------------------------------------------------------------
+
+```{r}
+datos_merge_b |>
+  filter(ola == 2023 & pais!="Peru") |>
+  group_by(pais) |>
+  summarise(
+    edu_prom = mean(edu_terciaria, na.rm = TRUE),
+    seguridad = mean(seguridad_ind, na.rm = TRUE)
+  ) |>
+  ggplot(aes(x = edu_prom, y = seguridad, label = pais)) +
+  geom_point(color = "#4E79A7", size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "gray40", linetype = "dashed") +
+  geom_text_repel(size = 3, max.overlaps = 20) +
+  labs(
+    x = "Pob. con Educ. Terciaria",
+    y = "Seguridad Pública (promedio)") +
+  theme_minimal(base_size = 13)
+```
+
+## Efectos Within
+
+```{r}
+# m_edu <- lme4::lmer(
+#   cohesion_general_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) +
+#     pos_politica + ola_s +
+#     pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+#     pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+#     mig_we:wgi_be + edu_be:gini_be + edu_be:gini_we + ola_s:wgi_we +
+#     (1 | country_wave) + (1 + edu_we | pais),
+#   data = datos_fit, weights = wt
+# )
+# 
+# save(m_edu, file = "output/modelo_edu_within.rdata")
+load("output/modelo_edu_within.rdata")
+
+# Predicciones
+ge_edu <- ggpredict(
+  m_edu,
+  terms = c("edu_we [all]", "pais [all]"),
+  type = "random"
+)
+
+# Paleta de colores
+n <- length(unique(as.data.frame(ge_edu)$group))
+cols <- hue_pal()(n)
+
+# Gráfico personalizado
+plot(ge_edu, show_ci = FALSE, color = cols) +
+  labs(
+    x = "Educ. Terciaria (efecto within)",
+    y = "Cohesión social predicha",
+    title = ""
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# Convertir a data.frame
+df <- as.data.frame(ge_edu)
+
+# País a destacar
+focus_country <- "Chile"
+
+# Definir colores
+cols <- ifelse(df$group == focus_country, "Chile", "Otros")
+df$highlight <- factor(cols, levels = c("Otros", "Chile"))
+
+ggplot(df, aes(x = x, y = predicted, group = group)) +
+  geom_line(aes(color = highlight, size = highlight), alpha = 0.9) +
+  scale_color_manual(values = c("Otros" = "gray80", "Chile" = "#e41a1c")) +
+  scale_size_manual(values = c("Otros" = 0.6, "Chile" = 1.3)) +
+  labs(
+    x = "Educ. Terciaria (within)",
+    y = "Cohesión social predicha",
+    title = "Efecto within de la Educ. Terciaria sobre la cohesión social",
+    subtitle = paste("País destacado:", focus_country)
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+### Comparar con otros países ----
+
+# Países a destacar
+focus <- c("Chile", "Honduras", "Canada")
+
+# Etiqueta de énfasis
+df <- df %>%
+  mutate(is_focus = group %in% focus)
+
+# Último punto para etiquetas
+df_end <- df %>%
+  group_by(group) %>%
+  slice_max(x, n = 1) %>%
+  ungroup()
+
+color_map <- c(
+  "Chile"   = "#D52B1E",
+  "Honduras" = "#0073C2",
+  "Canada"  = "#F0A202"
+)
+
+
+# Gráfico
+ggplot() +
+  # Todas las líneas grises primero (background)
+  geom_line(
+    data = df %>% filter(!is_focus),
+    aes(x = x, y = predicted, group = group),
+    color = "gray80", linewidth = 0.5, alpha = 0.8
+  ) +
+  # Luego las líneas destacadas encima
+  geom_line(
+    data = df %>% filter(is_focus),
+    aes(x = x, y = predicted, color = group),
+    linewidth = 1.3
+  ) +
+  # Etiquetas al final de las destacadas
+  geom_text_repel(
+    data = df_end %>% filter(group %in% focus),
+    aes(x = x, y = predicted, label = group, color = group),
+    nudge_x = 0.25, direction = "y", hjust = 0,
+    size = 3.5, segment.color = NA, show.legend = FALSE
+  ) +
+  scale_color_manual(values = color_map) +
+  labs(
+    x = "Educ. Terciaria (within)",
+    y = "Cohesión social predicha",
+    title = "Efecto within de la Educ. Terciaria sobre la cohesión social",
+    subtitle = "Chile, Honduras y Canada destacados"
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    plot.margin = margin(5, 60, 5, 5)
+  )
+```
+
+## Efectos Between
+
+```{r}
+# m_edu <- lme4::lmer(
+#   cohesion_general_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) +
+#     pos_politica + ola_s +
+#     pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+#     pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+#     mig_we:wgi_be + edu_be:gini_be + edu_be:gini_we + ola_s:wgi_we +
+#     (1 | country_wave) + (1 + edu_be | pais),
+#   data = datos_fit, weights = wt
+# )
+# 
+# save(m_edu, file="output/modelo_edu_between.rdata")
+load("output/modelo_edu_between.rdata")
+
+# Ahora sí puedes usar ggeffects sin error:
+ge_edu <- ggpredict(m_edu, terms = c("edu_be [all]", "pais [all]"),
+                    type = "random")
+
+library(scales)   # para hue_pal()
+n <- length(unique(as.data.frame(ge_edu)$group))  # nº de países en el objeto ggeffects
+cols <- hue_pal()(n)                          # genera n colores distintos
+
+# Gráfico personalizado
+plot(ge_edu, show_ci = FALSE, color = cols) +
+  labs(
+    x = "Desigualdad (Edu. Terciaria, efecto between)",
+    y = "Cohesión social predicha",
+    title = ""
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# Convertir a data.frame
+df <- as.data.frame(ge_edu)
+
+# País a destacar
+focus_country <- "Chile"
+
+# Definir colores
+cols <- ifelse(df$group == focus_country, "Chile", "Otros")
+df$highlight <- factor(cols, levels = c("Otros", "Chile"))
+
+ggplot(df, aes(x = x, y = predicted, group = group)) +
+  geom_line(aes(color = highlight, size = highlight), alpha = 0.9) +
+  scale_color_manual(values = c("Otros" = "gray80", "Chile" = "#e41a1c")) +
+  scale_size_manual(values = c("Otros" = 0.6, "Chile" = 1.3)) +
+  labs(
+    x = "Gini (between)",
+    y = "Cohesión social predicha",
+    title = "Efecto between de la Educación Terciaria sobre la cohesión social",
+    subtitle = paste("País destacado:", focus_country)
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+### Comparar con otros países ----
+
+# Países a destacar
+focus <- c("Chile", "Honduras", "Canada")
+
+# Etiqueta de énfasis
+df <- df %>%
+  mutate(is_focus = group %in% focus)
+
+# Último punto para etiquetas
+df_end <- df %>%
+  group_by(group) %>%
+  slice_max(x, n = 1) %>%
+  ungroup()
+
+color_map <- c(
+  "Chile"   = "#D52B1E",
+  "Honduras" = "#0073C2",
+  "Canada"  = "#F0A202"
+)
+
+
+# Gráfico
+ggplot() +
+  # Todas las líneas grises primero (background)
+  geom_line(
+    data = df %>% filter(!is_focus),
+    aes(x = x, y = predicted, group = group),
+    color = "gray80", linewidth = 0.5, alpha = 0.8
+  ) +
+  # Luego las líneas destacadas encima
+  geom_line(
+    data = df %>% filter(is_focus),
+    aes(x = x, y = predicted, color = group),
+    linewidth = 1.3
+  ) +
+  # Etiquetas al final de las destacadas
+  geom_text_repel(
+    data = df_end %>% filter(group %in% focus),
+    aes(x = x, y = predicted, label = group, color = group),
+    nudge_x = 0.25, direction = "y", hjust = 0,
+    size = 3.5, segment.color = NA, show.legend = FALSE
+  ) +
+  scale_color_manual(values = color_map) +
+  labs(
+    x = "Gini (within)",
+    y = "Cohesión social predicha",
+    title = "Efecto within de la Educación Terciaria sobre la cohesión social",
+    subtitle = "Chile, Honduras y Canada destacados"
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    plot.margin = margin(5, 60, 5, 5)
+  )
+```
+
+# Migración y Cohesión Social
+
+## Evolución Población Migrante
+
+```{r}
+
+
+olas <- datos_merge_b |>
+  filter(ola>2004) |>
+  group_by(pais, ola) |>
+  summarise(
+    edu_prom  = mean(percent_pob_migrante, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(grupo = if_else(pais == "Chile", "Chile", "Promedio otros")) |>
+  group_by(grupo, ola) |>
+  summarise(
+    edu_prom  = mean(edu_prom,  na.rm = TRUE),
+    .groups = "drop"
+  )
+
+ggplot(olas, aes(x = ola, y = edu_prom, color = grupo, group = grupo)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  labs(
+    x = "Ola",
+    y = "% Pob. Migrante",
+    color = NULL
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| eval: false
+
+# Filtrar antes toda la base
+datos_filtrados <- datos_merge_b %>%
+  filter(ola == 2023)
+
+# Seleccionar las variables que terminan en "_ind"
+vars_ind <- datos_filtrados %>%
+  select(ends_with("_ind"))
+
+# Calcular correlaciones con edu_terciaria dentro del mismo subconjunto
+cors <- sapply(vars_ind, function(x) cor(datos_filtrados$percent_pob_migrante, x, use = "pairwise.complete.obs"))
+
+# Convertir a data.frame ordenado
+cor_df <- data.frame(
+  variable = names(cors),
+  correlacion = as.numeric(cors)
+) %>%
+  arrange(desc(abs(correlacion)))
+
+cor_df
+
+```
+
+```{r}
+datos_merge_b |>
+  filter(ola == 2023) |>
+  group_by(pais) |>
+  summarise(
+    mig_prom = mean(percent_pob_migrante, na.rm = TRUE),
+    cohesion_horizontal = mean(cohesion_horizontal_ind, na.rm = TRUE)
+  ) |>
+  ggplot(aes(x = mig_prom, y = cohesion_horizontal, label = pais)) +
+  geom_point(color = "#4E79A7", size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "gray40", linetype = "dashed") +
+  geom_text_repel(size = 3, max.overlaps = 20) +
+  labs(
+    x = "% Población Migrante",
+    y = "Cohesión Horizontal") +
+  theme_minimal(base_size = 13)
+
+```
+
+## Efectos Within
+
+```{r}
+# m_mig <- lme4::lmer(
+#   cohesion_horizontal_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) +
+#     pos_politica + ola_s +
+#     pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+#     pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+#     mig_we:wgi_be + edu_be:gini_be + edu_be:gini_we + ola_s:wgi_we +
+#     (1 | country_wave) + (1 + mig_we | pais),
+#   data = datos_fit, weights = wt
+# )
+# 
+# save(m_mig, file = "output/modelo_mig_within.rdata")
+load("output/modelo_mig_within.rdata")
+
+
+# Predicciones
+ge_mig <- ggpredict(
+  m_mig,
+  terms = c("mig_we [all]", "pais [all]"),
+  type = "random"
+)
+
+# Paleta de colores
+n <- length(unique(as.data.frame(ge_mig)$group))
+cols <- hue_pal()(n)
+
+# Gráfico personalizado
+plot(ge_mig, show_ci = FALSE, color = cols) +
+  labs(
+    x = "Población Migrante (efecto within)",
+    y = "Cohesión social predicha",
+    title = ""
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# Convertir a data.frame
+df <- as.data.frame(ge_mig)
+
+# País a destacar
+focus_country <- "Chile"
+
+# Definir colores
+cols <- ifelse(df$group == focus_country, "Chile", "Otros")
+df$highlight <- factor(cols, levels = c("Otros", "Chile"))
+
+ggplot(df, aes(x = x, y = predicted, group = group)) +
+  geom_line(aes(color = highlight, size = highlight), alpha = 0.9) +
+  scale_color_manual(values = c("Otros" = "gray80", "Chile" = "#e41a1c")) +
+  scale_size_manual(values = c("Otros" = 0.6, "Chile" = 1.3)) +
+  labs(
+    x = "Población Migrante (within)",
+    y = "Cohesión social predicha",
+    title = "Efecto within de la Población Migrante sobre la cohesión social",
+    subtitle = paste("País destacado:", focus_country)
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+### Comparar con otros países ----
+
+# Países a destacar
+focus <- c("Chile", "Canada", "Argentina")
+
+# Etiqueta de énfasis
+df <- df %>%
+  mutate(is_focus = group %in% focus)
+
+# Último punto para etiquetas
+df_end <- df %>%
+  group_by(group) %>%
+  slice_max(x, n = 1) %>%
+  ungroup()
+
+color_map <- c(
+  "Chile"   = "#D52B1E",
+  "Argentina" = "#5BB5E6",
+  "Canada" = "#FF6F61"
+)
+
+
+# Gráfico
+ggplot() +
+  # Todas las líneas grises primero (background)
+  geom_line(
+    data = df %>% filter(!is_focus),
+    aes(x = x, y = predicted, group = group),
+    color = "gray80", linewidth = 0.5, alpha = 0.8
+  ) +
+  # Luego las líneas destacadas encima
+  geom_line(
+    data = df %>% filter(is_focus),
+    aes(x = x, y = predicted, color = group),
+    linewidth = 1.3
+  ) +
+  # Etiquetas al final de las destacadas
+  geom_text_repel(
+    data = df_end %>% filter(group %in% focus),
+    aes(x = x, y = predicted, label = group, color = group),
+    nudge_x = 0.25, direction = "y", hjust = 0,
+    size = 3.5, segment.color = NA, show.legend = FALSE
+  ) +
+  scale_color_manual(values = color_map) +
+  labs(
+    x = "Población Migrante (within)",
+    y = "Cohesión social predicha",
+    title = "Efecto within de la Población Migrante sobre la cohesión social",
+    subtitle = "Chile, Canadá y Argentina destacados"
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    plot.margin = margin(5, 60, 5, 5)
+  )
+```
+
+## Efectos Between
+
+```{r}
+# m_dem <- lme4::lmer(
+#   cohesion_horizontal_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) +
+#     pos_politica + ola_s +
+#     pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
+#     pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
+#     mig_we:wgi_be + edu_be:gini_be + edu_be:gini_we + ola_s:wgi_we +
+#     (1 | country_wave) + (1 + mig_be | pais),
+#   data = datos_fit, weights = wt
+# )
+# 
+# save(m_dem, file="output/modelo_mig_between.rdata")
+load("output/modelo_mig_between.rdata")
+
+# Ahora sí puedes usar ggeffects sin error:
+ge_mig <- ggpredict(m_dem, terms = c("mig_be [all]", "pais [all]"),
+                    type = "random")
+
+library(scales)   # para hue_pal()
+n <- length(unique(as.data.frame(ge_mig)$group))  # nº de países en el objeto ggeffects
+cols <- hue_pal()(n)                          # genera n colores distintos
+
+# Gráfico personalizado
+plot(ge_mig, show_ci = FALSE, color = cols) +
+  labs(
+    x = "Población Migrante (efecto between)",
+    y = "Cohesión social predicha",
+    title = ""
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# Convertir a data.frame
+df <- as.data.frame(ge_mig)
+
+# País a destacar
+focus_country <- "Chile"
+
+# Definir colores
+cols <- ifelse(df$group == focus_country, "Chile", "Otros")
+df$highlight <- factor(cols, levels = c("Otros", "Chile"))
+
+ggplot(df, aes(x = x, y = predicted, group = group)) +
+  geom_line(aes(color = highlight, size = highlight), alpha = 0.9) +
+  scale_color_manual(values = c("Otros" = "gray80", "Chile" = "#e41a1c")) +
+  scale_size_manual(values = c("Otros" = 0.6, "Chile" = 1.3)) +
+  labs(
+    x = "Población Migrante (between)",
+    y = "Cohesión social predicha",
+    title = "Efecto between de Población Migrante sobre la cohesión social",
+    subtitle = paste("País destacado:", focus_country)
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+------------------------------------------------------------------------
+
+```{r}
+### Comparar con otros países ----
+
+# Países a destacar
+focus <- c("Chile", "Canada", "Argentina")
+
+# Etiqueta de énfasis
+df <- df %>%
+  mutate(is_focus = group %in% focus)
+
+# Último punto para etiquetas
+df_end <- df %>%
+  group_by(group) %>%
+  slice_max(x, n = 1) %>%
+  ungroup()
+
+color_map <- c(
+  "Chile"   = "#D52B1E",
+  "Argentina" = "#5BB5E6",
+  "Canada" = "#FF6F61"
+)
+
+
+# Gráfico
+ggplot() +
+  # Todas las líneas grises primero (background)
+  geom_line(
+    data = df %>% filter(!is_focus),
+    aes(x = x, y = predicted, group = group),
+    color = "gray80", linewidth = 0.5, alpha = 0.8
+  ) +
+  # Luego las líneas destacadas encima
+  geom_line(
+    data = df %>% filter(is_focus),
+    aes(x = x, y = predicted, color = group),
+    linewidth = 1.3
+  ) +
+  # Etiquetas al final de las destacadas
+  geom_text_repel(
+    data = df_end %>% filter(group %in% focus),
+    aes(x = x, y = predicted, label = group, color = group),
+    nudge_x = 0.25, direction = "y", hjust = 0,
+    size = 3.5, segment.color = NA, show.legend = FALSE
+  ) +
+  scale_color_manual(values = color_map) +
+  labs(
+    x = "Pob. Migrante (between)",
+    y = "Cohesión social predicha",
+    title = "Efecto between de la Población Migrante sobre la cohesión social",
+    subtitle = "Chile, Argentina y Canadá destacados"
+  ) +
+  coord_cartesian(clip = "off") +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    plot.margin = margin(5, 60, 5, 5)
+  )
+```
