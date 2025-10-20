@@ -11,5 +11,11 @@
   },
   "graficos.qmd": {
     "graficos.html": "89db3ab3"
+  },
+  "presentations/conferencia-coes/pres-conferencia-coes.qmd": {
+    "pres-conferencia-coes.html": "93168797"
+  },
+  "presentations/conferencia-coes/context-metods.qmd": {
+    "context-metods.html": "eadfc38b"
   }
 }

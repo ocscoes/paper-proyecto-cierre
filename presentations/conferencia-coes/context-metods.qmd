@@ -1,0 +1,153 @@
+---
+format:
+  revealjs:
+    theme: ocs.scss
+    transition: slide
+    transition-speed: slow
+    slide-number: true
+    show-slide-number: print
+editor: source  
+---
+
+# Concepto {data-background-color="#1b241f"}
+
+<br>
+
+**_¿De qué hablamos cuando hablamos de cohesión social?_**
+
+## 
+
+::::: columns
+::: {.column width="35%"}
+
+<br>
+
+![](images/ocs-transparent2.png){width="100%" fig-align="right"}
+:::
+
+:::{.column width="10%"}
+
+:::
+
+::: {.column width="55%" style="font-size: 25px; text-align: center; margin: 0 auto;"}
+
+<br>
+
+-   <div style="margin-bottom: 1.5em;">[El Observatorio de Cohesión Social (OCS)](https://ocs-coes.com/){target="_blank"} es un proyecto enmarcado en el FONDAP° 1523A0005: [Centro de Estudios de Conflicto y Cohesión Social](https://coes.cl/){target="_blank"}</div>
+
+-   <div style="margin-bottom: 1.5em;">Surge el año 2020 con el objetivo de contribuir al análisis de la cohesión social en Chile y América latina</div>
+
+-  <div style="margin-bottom: 1.5em;">Se basa en la experiencia de proyectos internacionales de conceptualización y medición de cohesión social</div>
+
+:::
+:::::
+
+## 
+
+### Cohesión social
+
+<br>
+
+::: {.incremental .highlight-last style="font-size: 35px;"}
+
+_"Social cohesion is a state of aﬀairs concerning both the **vertical** and the **horizontal** interactions among members of society as characterized by a set of attitudes and norms that includes **trust**, a sense of **belonging** and the willingness to **participate and help**, as well as their behavioural manifestations". (Chan et al., 2006, p. 290)._
+:::
+
+<br>
+
+::: {.highlight-last style="font-size: 25px;"}
+Chan, J., To, H.-P., & Chan, E. (2006). Reconsidering Social Cohesion: Developing a Definition and Analytical Framework for Empirical Research. Social Indicators Research, 75(2), 273–302.
+:::
+
+# Antecedentes {data-background-color="#1b241f"}
+
+##
+
+:::{.incremental style="font-size: 30px;"}
+- <div style="margin-bottom: 1.5em;">La cohesión social ha cobrado una creciente relevancia debido a la inestabilidad política, la desigualdad persistente y los conflictos sociales que han caracterizado a los últimos años (Salazar-xirinachs, 2023).</div>
+  
+- <div style="margin-bottom: 1.5em;">En Latinoamérica, se han concentrado los esfuerzos en estudiar la cohesión social desde su dimensión institucional orientada a las políticas públicas (CEPAL).</div>
+
+- <div style="margin-bottom: 1.5em;">No obstante, también existe una vertiente enfocada en la operacionalización de la cohesión social para medir y comprender empíricamente este concepto (Ecosocial; OCS).</div>
+:::
+
+:::{.notes}
+Punto uno: en los últimos años se han presenciado en distintas partes del mundo procesos sociales que han reflejado una inestabilidad política transversal a través conflictos sociales que encuentran su razón en la desigualdad persistente y la corrupción. En este contexto, se ha vuelto relevante comprender estos fenómenos en el marco de los vínculos sociales.
+
+Punto dos: En la región, tanto individualidades como centros de investigación han concentrado sus esfuerzos en estudiar la cohesión social como un fenómeno mismo, pero también como un determinante en los procesos sociales, culturales y políticos. 
+
+La cohesión social se ha estudiado desde una vereda institucional, orientada en el abordaje de las políticas públicas. Aquí la CEPAL emerge como el principal experto en la materia a partir de la discusión entre especialistas y autoridades, investigando en cómo la implementación de dichas políticas puede subsanar los malestares sociales relacionados al vínculo social
+
+Por otro lado, existen estudios que se han enfocado en la dimensión empírica de la cohesión social, intentando operacionalizar el concepto para que sea medible. En este contexto, se encuentra Ecosocial, un estudio que buscó documentar el estado de la cohesión social en 7 países de América Latina. 
+
+En esta línea, también se encuentra el Observatorio de Cohesión social (el cual es parte de COES), en donde se ha estudiado la cohesión social desde diversas encuestas secundarias, pero también se han generado marcos de medición propios que apuntan a comprender la cohesión social desde sus distintas dimensiones. 
+:::
+
+# Factores asociados {data-background-color="#1b241f"}
+
+##
+
+:::{.incremental style="font-size: 30px;"}
+- <div style="margin-bottom: 1.5em;">A nivel individual, el aumento de la cobertura educativa ha impactado positivamente en las expectativas sobre la movilidad social que tienen las personas.</div>
+
+- <div style="margin-bottom: 1.5em;">Ahora bien, la literatura indica que, elementos estructurales tales como el desarrollo económico y la presencia de instituciones sólidas y eficaces, pueden determinar la calidad del vínculo social en un país.</div>
+
+- <div style="margin-bottom: 1.5em;">Además, posterior a las olas migratorias de los últimos años, en el país se ha evidenciado un deterioramiento de las relaciones entre migrantes y no-migrantes.</div>
+:::
+
+# Hipótesis {data-background-color="#1b241f"}
+
+##
+
+:::{.incremental style="font-size: 30px;"}
+
+- $H_{1}$: Los países con un mayor desarrollo económico presentarán mayores niveles de cohesión social
+
+- $H_{2}$: Países con mayores niveles de desigualdad presentarán menores niveles de cohesión social
+
+- $H_{3}$: Individuos con mayor nivel educativo mostrarán mayores nivel de cohesión social
+
+- $H_{4}$: Países con mayores niveles de gobernanza presentarán mayores niveles de cohesión social
+
+- $H_{5}$: Aumentos en la proporción de población migrante en un país estarán asociados a disminuciones en los niveles de cohesión social
+:::
+
+# Metodología {data-background-color="#1b241f"}
+
+## Datos y métodos
+
+::::: columns
+::: {.column width="50%" style="font-size: 30px;"}
+
+- <div style="margin-bottom: 1.5em;">Los datos utilizados son de la encuesta del [Latin American Public Opinion Project](https://ropercenter.cornell.edu/latin-american-public-opinion-project-lapop)</div>
+
+- <div style="margin-bottom: 1.5em;">La encuesta tiene por objetivo recolectar datos la opinión pública sobre democracia y gobernanza en el continente americano, aplicándose de manera regular desde 2004.</div>
+
+- <div style="margin-bottom: 1.5em;">Esta investigación contiene un N = 238.257 individuos dentro de 25 países considerando desde 2004 hasta 2023.</div>
+
+:::
+
+::: {.column width="50%" style="font-size: 30px;"}
+
+-   <div style="margin-bottom: 1.5em;">Variables dependientes: índice de cohesión vertical e índice de cohesión horizontal.</div>
+
+-   <div style="margin-bottom: 1.5em;">Variables independientes individuales: nivel educativo.</div>
+
+-  <div style="margin-bottom: 1.5em;">Variables independientes contextuales: PIB per cápita, Índice Gini, Índice de Gobernanza, Diversidad cultural.</div>
+
+:::
+:::::
+
+## Marco de medición
+
+![](images/esquema-al.png)
+
+## Método
+
+:::{.incremental}
+
+- Para validar el modelo construido, se aplica un análisis factorial confirmatorio
+
+- Posteriormente, gracias a estructura jerárquica de los datos, se estiman modelos de regresión multinivel híbridos.
+  
+- $y_{jti} = \beta_{0}(t) + \beta_{1}X_{jti} + \gamma_{we}(Z_{jt}-\bar{Z}_{j}) + \gamma_{be}\bar{Z}_{j} + v_j + u_{jt} + e_{jti}$
