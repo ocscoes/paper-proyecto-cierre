@@ -6,8 +6,8 @@ format:
     transition-speed: slow
     slide-number: true
     show-slide-number: print
+    fig-cap-location: top
 editor: source  
-bibliography: input/book-ocs.bib
 ---
 
 
@@ -15,21 +15,13 @@ bibliography: input/book-ocs.bib
 
 ```{r}
 library(pacman)
-p_load(dplyr,
-       kableExtra,
-       knitr,
+p_load(dplyr, 
        tidyr,
        ggplot2,
        lme4,
        janitor,
-       texreg,
        sjPlot,
        summarytools,
-       lavaan,
-       semPlot,
-       PerformanceAnalytics,
-       stargazer,
-       performance,
        ggeffects,
        ggrepel,
        scales,
@@ -48,10 +40,11 @@ datos_merge_b$country_wave = do.call(paste, c(datos_merge_b[c("pais", "ola")], s
 
 ```{r}
 #| label: fig-cs
-#| fig-cap: Evolución dimensiones Cohesión Social (2004-2023)
+#| fig-cap: Evolución dimensiones Cohesión Social en América Latina (2004-2023)
 #| out-width: 100%
 #| fig-align: center
-#| fig-width: 9
+#| fig-width: 12
+#| fig-height: 15
 #| fig-asp: 0.50
 
 
@@ -107,7 +100,8 @@ plot_ly(
 #| fig-cap: Evolución dimensiones Cohesión Social en Chile y América Latina (2004-2023)
 #| out-width: 100%
 #| fig-align: center
-#| fig-width: 9
+#| fig-width: 12
+#| fig-height: 10
 #| fig-asp: 0.50   # prueba 0.50–0.55
 
 
@@ -221,21 +215,24 @@ fig <- plot_ly() |>
     hovertemplate = paste0("Indicador: Cohesión Vertical — ", pais_destacado,
                            "<br>Ola: %{x}<br>Promedio: %{y:.2f}<extra></extra>")
   ) |>
-  layout(
-    xaxis = list(title = "Ola"),
-    yaxis = list(title = "Promedio", range = c(0, 10)),
-    legend = list(
-      orientation = "h",
-      x = 0.5, xanchor = "center",
-      y = -0.30, yanchor = "bottom"
-    ),
-    margin = list(b=130),
-    template = "plotly_white",
-    autosize = TRUE
-  ) |>
-  config(responsive = TRUE)
+layout(
+  xaxis = list(title = "Ola"),
+  yaxis = list(title = "Promedio", range = c(0, 10)),
+  legend = list(
+    orientation = "h",
+    x = 0.5, xanchor = "center",
+    y = -0.30, yanchor = "bottom",
+    traceorder = "normal",
+    itemwidth = 100   # <— controla el número de columnas por fila
+  ),
+  margin = list(b = 130),
+  template = "plotly_white",
+  autosize = TRUE
+) |>
+config(responsive = TRUE)
 
 fig
+
 
 ```
 
@@ -243,10 +240,11 @@ fig
 
 ```{r}
 #| label: fig-ch
-#| fig-cap: Evolución dimensiones Cohesión Horizontal (2004-2023)
+#| fig-cap: Evolución dimensiones Cohesión Horizontal en América Latina (2004-2023)
 #| out-width: 100%
 #| fig-align: center
-#| fig-width: 9
+#| fig-width: 12
+#| fig-height: 15
 #| fig-asp: 0.50   # prueba 0.50–0.55
 
 
@@ -284,7 +282,7 @@ plot_ly(
     legend = list(
       orientation = "h",
       x = 0.5, xanchor = "center",
-      y = -0.30, yanchor = "bottom"
+      y = -0.30, yanchor = "top"
     ),
     margin = list(b=130),
     template = "plotly_white",
@@ -304,7 +302,8 @@ plot_ly(
 #| fig-cap: Evolución dimensiones Cohesión Horizontal en Chile y América Latina (2004-2023)
 #| out-width: 100%
 #| fig-align: center
-#| fig-width: 9
+#| fig-width: 12
+#| fig-height: 10
 #| fig-asp: 0.50   # prueba 0.50–0.55
 
 
@@ -363,19 +362,22 @@ fig <- plot_ly() |>
     hovertemplate = paste0("Indicador: Seguridad Pública — ", pais_destacado,
                            "<br>Ola: %{x}<br>Promedio: %{y:.2f}<extra></extra>")
   )  |>
-  layout(
-    xaxis = list(title = "Ola"),
-    yaxis = list(title = "Promedio", range = c(0, 10)),
-    legend = list(
-      orientation = "h",
-      x = 0.5, xanchor = "center",
-      y = -0.30, yanchor = "bottom"
-    ),
-    margin = list(b=130),
-    template = "plotly_white",
-    autosize = TRUE
-  ) |>
-  config(responsive = TRUE)
+layout(
+  xaxis = list(title = "Ola"),
+  yaxis = list(title = "Promedio", range = c(0, 10)),
+  legend = list(
+    orientation = "h",
+    x = 0.5, xanchor = "center",
+    y = -0.30, yanchor = "bottom",
+    traceorder = "normal",
+    itemwidth = 150   # <— controla el número de columnas por fila
+  ),
+  margin = list(b = 130),
+  template = "plotly_white",
+  autosize = TRUE
+) |>
+config(responsive = TRUE)
+
 
 fig
 ```
@@ -388,7 +390,8 @@ fig
 #| fig-cap: Evolución dimensiones Cohesión Vertical en América Latina (2004-2023)
 #| out-width: 100%
 #| fig-align: center
-#| fig-width: 9
+#| fig-width: 12
+#| fig-height: 15
 #| fig-asp: 0.50   # prueba 0.50–0.55
 
 
@@ -442,7 +445,8 @@ plot_ly(
 #| fig-cap: Evolución dimensiones Cohesión Vertical en Chile y América Latina (2004-2023)
 #| out-width: 100%
 #| fig-align: center
-#| fig-width: 9
+#| fig-width: 12
+#| fig-height: 10
 #| fig-asp: 0.50   # prueba 0.50–0.55
 
 
@@ -501,31 +505,37 @@ fig <- plot_ly() |>
     hovertemplate = paste0("Indicador: Actitudes hacia la democracia — ", pais_destacado,
                            "<br>Ola: %{x}<br>Promedio: %{y:.2f}<extra></extra>")
   )  |>
-  layout(
-    xaxis = list(title = "Ola"),
-    yaxis = list(title = "Promedio", range = c(0, 10)),
-    legend = list(
-      orientation = "h",
-      x = 0.5, xanchor = "center",
-      y = -0.30, yanchor = "bottom"
-    ),
-    margin = list(b=130),
-    template = "plotly_white",
-    autosize = TRUE
-  ) |>
-  config(responsive = TRUE)
+layout(
+  xaxis = list(title = "Ola"),
+  yaxis = list(title = "Promedio", range = c(0, 10)),
+  legend = list(
+    orientation = "h",
+    x = 0.5, xanchor = "center",
+    y = -0.30, yanchor = "bottom",
+    traceorder = "normal",
+    itemwidth = 150   # <— controla el número de columnas por fila
+  ),
+  margin = list(b = 130),
+  template = "plotly_white",
+  autosize = TRUE
+) |>
+config(responsive = TRUE)
+
 
 fig
 ```
-# Modelo Multinivel
+
+# Modelo Multinivel{data-background-color="#1b241f"}
 
 ```{r}
 #| label: preparacion-datos
+#| eval: false
 
 ## Estandarizar continuos tras separar W/B (recomendado)
 z <- function(x) as.numeric(scale(x))
 
 datos_fit <- datos_merge_b %>%
+  filter(edad >= 18) |>
   mutate(
     pib_we  = z(pib_we),   gini_we = z(gini_we), wgi_we = z(wgi_we), dem_we = z(dem_we),
     mig_we  = z(mig_we),   edu_we = z(edu_we),
@@ -533,25 +543,34 @@ datos_fit <- datos_merge_b %>%
     mig_be  = z(mig_be),   edu_be = z(edu_be),
     edad_c = scale(edad) %>% as.numeric(),
     ola_s = as.numeric(scale(ola, center = TRUE, scale = TRUE)),
+    
     nivel_educ   = forcats::fct_drop(factor(nivel_educ)),
-    sexo         = forcats::fct_drop(factor(sexo)),
     pos_politica = forcats::fct_drop(factor(pos_politica)),
+    sexo         = forcats::fct_drop(factor(sexo)),
     pais         = forcats::fct_drop(factor(pais)),
-    country_wave = forcats::fct_drop(factor(country_wave))
+    country_wave = forcats::fct_drop(factor(country_wave)),
+
+    # --- cambiar categoría de referencia ---
+    nivel_educ   = forcats::fct_relevel(nivel_educ, "Tertiary"),   # ejemplo
+    pos_politica = forcats::fct_relevel(pos_politica, "Not declared")         # ejemplo
   ) |>
   select(cohesion_general_ind, cohesion_vertical_ind, cohesion_horizontal_ind,
          nivel_educ, sexo, edad_c, ola_s, pos_politica,
          pib_we, gini_we, dem_we, wgi_we, mig_we, edu_we,
          pib_be, gini_be, dem_be, wgi_be, mig_be, edu_be,
-         country_wave, pais, wt) |> na.omit()
+         country_wave, pais, wt) |>
+  na.omit()
+
 ```
 
 ---
 
 ```{r}
+#| eval: false
 
 
-mh <- lmer(cohesion_horizontal_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + ola_s + 
+mh <- lmer(cohesion_horizontal_ind ~ 1 + ola_s +
+             factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) +
 pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
 pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
 mig_we:wgi_be +
@@ -559,7 +578,8 @@ edu_be:gini_be +
   edu_be:gini_we +
 (1 + pib_we | country_wave) + (1 | pais), data= datos_fit, weights= wt)
 
-mv <- lmer(cohesion_vertical_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + ola_s + 
+mv <- lmer(cohesion_vertical_ind ~ 1 + ola_s +
+             factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) +
 pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
 pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
 mig_we:wgi_be +
@@ -567,7 +587,8 @@ edu_be:gini_be +
   edu_be:gini_we +
 (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
 
-mc <- lmer(cohesion_general_ind ~ 1 + factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) + ola_s + 
+mc <- lmer(cohesion_general_ind ~ 1 + ola_s +
+             factor(nivel_educ) + factor(sexo) + edad_c + I(edad_c^2) + factor(pos_politica) +
 pib_we + gini_we + dem_we + wgi_we + mig_we + edu_we +
 pib_be + gini_be + dem_be + wgi_be + mig_be + edu_be +
 mig_we:wgi_be +
@@ -581,13 +602,14 @@ save(mc, file= "output/modelo_completo.rdata")
 
 ```
 
-```{r}
-#| label: fig-coef
-#| fig-cap: Coeficientes Modelos de Cohesión Social
+## Coeficientes Modelos Multinivel
 
-# load("output/modelo_horizontal.rdata")
-# load("output/modelo_vertical.rdata")
-# load("output/modelo_completo.rdata")
+```{r}
+
+
+load("output/modelo_horizontal.rdata")
+load("output/modelo_vertical.rdata")
+load("output/modelo_completo.rdata")
 
 # sjPlot::tab_model(mh, mv, mc,
 #                   show.ci = FALSE)
@@ -616,21 +638,21 @@ p <- sjPlot::plot_models(mh, mv, mc,
                             "Gini (between)",
                             "Pob. Migrante (within)",
                             "Democracia (within)",
-                          "Ola",
-                        "Sin posicion (ref=Izq.)",
-                        "Derecha (ref=Izq.)",
-                        "Centro (ref=Izq.)",
+                        "Derecha (ref=Sin posición)",
+                        "Centro (ref=Sin posición)",
+                        "Izquierda (ref=Sin posición)",
                         "Edad",
                         "Hombre (ref=Mujer)",
-                        "Educ. Terciaria (ref=Primaria)",
-                        "Educ. Secundaria (ref=Primaria)"),
+                        "Educ. Secundaria (ref=Terciaria)",
+                        "Educ. Primaria (ref=Terciaria)",
+                        "Ola"),
                     show.p = T,
                     show.legend = F,
                     show.values = T
                     )
 
 
-p +
+p <- p +
   labs(
     caption = "Nota: Se muestran solo los efectos estadísticamente significativos. \n* p < 0.05; ** p < 0.01; *** p < 0.001"
   ) +
@@ -639,34 +661,40 @@ p +
     plot.caption = element_text(hjust = 0, face = "italic", size = 9),
     axis.text = element_text(size = 10))
 
+print(p)
+
 ```
 
-## Discusión
+# Discusión y Conclusiones {data-background-color="#1b241f"}
 
-- El análisis evidencia un descenso significativo en los niveles de cohesión social en América Latina durante las últimas dos décadas, tanto en su dimensión horizontal como en la vertical.
+## La Cohesión Social en Chile y América Latina
 
-- Chile ilustra claramente esta tendencia: en la última década se observan caídas pronunciadas en indicadores como la Seguridad Pública, la Confianza Interpersonal y la Confianza en las Instituciones.
+- <div style="margin-bottom: 2em;">Descenso sostenido de la cohesión social en América Latina</div>
 
-----
+- <div style="margin-bottom: 2em;">Chile como caso ilustrativo</div>
 
-- Los modelos multinivel muestran que factores individuales como el nivel educativo, la edad y la posición política inciden de manera significativa sobre la cohesión social.
+- <div style="margin-bottom: 2em;">Factores individuales: educación, edad, género y posición política</div>
 
-- No se observa un efecto significativo del desarrollo económico (PIB per cápita) sobre la cohesión social; sin embargo, la evidencia sí apunta a que los países más desiguales presentan menores niveles de cohesión social.
 
----
+## Factores Macroestructurales de la Cohesión Social
 
-- De manera contraintuitiva, los países con una mayor proporción de población con educación terciaria tienden a exhibir niveles más bajos de cohesión social.
+- <div style="margin-bottom: 1.5em;">Factores económicos de la cohesión social</div>
+- <div style="margin-bottom: 1.5em;">Democracia, Gobernaza y Cohesión Social</div>
+- <div style="margin-bottom: 1.5em;">Efectos de la expansión de la educación terciaria sobre la cohesión social</div>
+- <div style="margin-bottom: 1.5em;">Migración y Cohesión horizontal</div>
 
-- Las caídas en la calidad democrática se asocian significativamente con menores niveles de cohesión social, mientras que mejores niveles de gobernanza se vinculan a mayor cohesión.
 
-- Finalmente, el aumento de la población migrante se relaciona con menor cohesión horizontal, aunque muestra un efecto neutro en la cohesión vertical.
 
 ## Lo que sigue
 
-- Profundizar en el análisis de los determinantes macroestructurales de la cohesión social en América Latina:
-   - Probar interacciones que no hayan sido incluidas en el modelo
-   - Explorar las pendientes aleatorias de algunas variables de interés
+- <div style="margin-bottom: 2em;">Determinantes macroestructurales
+  - Interacciones
+  - Pendientes aleatorias
+  </div>
    
-- Explorar hipótesis para los resultados no esperados del análisis. ¿Porqué mayores niveles de educación y de democracia pueden estar asociados a menores niveles de cohesión social?
+-  <div style="margin-bottom: 2em;">Educación, Democracia y Cohesión Social</div>
 
+-  Relevancia académica y política
+
+## Referencias
 
