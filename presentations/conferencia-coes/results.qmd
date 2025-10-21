@@ -1,3 +1,16 @@
+---
+format:
+  revealjs:
+    theme: ocs.scss
+    transition: slide
+    transition-speed: slow
+    slide-number: true
+    show-slide-number: print
+editor: source  
+bibliography: input/book-ocs.bib
+---
+
+
 # Resultados {data-background-color="#1b241f"}
 
 ```{r}
@@ -36,6 +49,11 @@ datos_merge_b$country_wave = do.call(paste, c(datos_merge_b[c("pais", "ola")], s
 ```{r}
 #| label: fig-cs
 #| fig-cap: Evolución dimensiones Cohesión Social (2004-2023)
+#| out-width: 100%
+#| fig-align: center
+#| fig-width: 9
+#| fig-asp: 0.50
+
 
 olas <- datos_merge_b |>
   group_by(ola) |>
@@ -67,11 +85,16 @@ plot_ly(
   layout(
     xaxis = list(title = "Ola"),
     yaxis = list(title = "Promedio", range = c(0, 10)),
-    legend = list(orientation = "h", x = 0.3, y = -0.2),
-    margin = list(b = 60, t = 20),
-    template = "plotly_white"
-  )
-
+    legend = list(
+      orientation = "h",
+      x = 0.5, xanchor = "center",
+      y = -0.30, yanchor = "bottom"
+    ),
+    margin = list(b=130),
+    template = "plotly_white",
+    autosize = TRUE
+  ) |>
+  config(responsive = TRUE)
 
 
 
@@ -82,6 +105,11 @@ plot_ly(
 ```{r}
 #| label: fig-cs-chile
 #| fig-cap: Evolución dimensiones Cohesión Social en Chile y América Latina (2004-2023)
+#| out-width: 100%
+#| fig-align: center
+#| fig-width: 9
+#| fig-asp: 0.50   # prueba 0.50–0.55
+
 
 # --- 1) Tablas (como ya las venías construyendo) ---
 olas_total <- datos_merge_b |>
@@ -196,19 +224,31 @@ fig <- plot_ly() |>
   layout(
     xaxis = list(title = "Ola"),
     yaxis = list(title = "Promedio", range = c(0, 10)),
-    legend = list(orientation = "h", x = 0.2, y = -0.2),
-    margin = list(b = 70, t = 20),
-    template = "plotly_white")
+    legend = list(
+      orientation = "h",
+      x = 0.5, xanchor = "center",
+      y = -0.30, yanchor = "bottom"
+    ),
+    margin = list(b=130),
+    template = "plotly_white",
+    autosize = TRUE
+  ) |>
+  config(responsive = TRUE)
 
 fig
 
 ```
 
-## Cohesión Horizontal
+---
 
 ```{r}
 #| label: fig-ch
 #| fig-cap: Evolución dimensiones Cohesión Horizontal (2004-2023)
+#| out-width: 100%
+#| fig-align: center
+#| fig-width: 9
+#| fig-asp: 0.50   # prueba 0.50–0.55
+
 
 olas <- datos_merge_b |>
   group_by(ola) |>
@@ -241,10 +281,16 @@ plot_ly(
   layout(
     xaxis = list(title = "Ola"),
     yaxis = list(title = "Promedio", range = c(0, 10)),
-    legend = list(orientation = "h", x = 0.3, y = -0.2),
-    margin = list(b = 60, t = 20),
-    template = "plotly_white"
-  )
+    legend = list(
+      orientation = "h",
+      x = 0.5, xanchor = "center",
+      y = -0.30, yanchor = "bottom"
+    ),
+    margin = list(b=130),
+    template = "plotly_white",
+    autosize = TRUE
+  ) |>
+  config(responsive = TRUE)
 
 
 
@@ -256,6 +302,11 @@ plot_ly(
 ```{r}
 #| label: fig-ch-chile
 #| fig-cap: Evolución dimensiones Cohesión Horizontal en Chile y América Latina (2004-2023)
+#| out-width: 100%
+#| fig-align: center
+#| fig-width: 9
+#| fig-asp: 0.50   # prueba 0.50–0.55
+
 
 olas_chile <- datos_merge_b |>
   filter(pais=="Chile") |>
@@ -315,9 +366,16 @@ fig <- plot_ly() |>
   layout(
     xaxis = list(title = "Ola"),
     yaxis = list(title = "Promedio", range = c(0, 10)),
-    legend = list(orientation = "h", x = 0.2, y = -0.2),
-    margin = list(b = 70, t = 20),
-    template = "plotly_white")
+    legend = list(
+      orientation = "h",
+      x = 0.5, xanchor = "center",
+      y = -0.30, yanchor = "bottom"
+    ),
+    margin = list(b=130),
+    template = "plotly_white",
+    autosize = TRUE
+  ) |>
+  config(responsive = TRUE)
 
 fig
 ```
@@ -328,6 +386,11 @@ fig
 ```{r}
 #| label: fig-cv
 #| fig-cap: Evolución dimensiones Cohesión Vertical en América Latina (2004-2023)
+#| out-width: 100%
+#| fig-align: center
+#| fig-width: 9
+#| fig-asp: 0.50   # prueba 0.50–0.55
+
 
 olas <- datos_merge_b |>
   group_by(ola) |>
@@ -360,10 +423,16 @@ plot_ly(
   layout(
     xaxis = list(title = "Ola"),
     yaxis = list(title = "Promedio", range = c(0, 10)),
-    legend = list(orientation = "h", x = 0.3, y = -0.2),
-    margin = list(b = 60, t = 20),
-    template = "plotly_white"
-  )
+    legend = list(
+      orientation = "h",
+      x = 0.5, xanchor = "center",
+      y = -0.30, yanchor = "bottom"
+    ),
+    margin = list(b=130),
+    template = "plotly_white",
+    autosize = TRUE
+  ) |>
+  config(responsive = TRUE)
 ```
 
 ------------------------------------------------------------------------
@@ -371,6 +440,11 @@ plot_ly(
 ```{r}
 #| label: fig-cv-chile
 #| fig-cap: Evolución dimensiones Cohesión Vertical en Chile y América Latina (2004-2023)
+#| out-width: 100%
+#| fig-align: center
+#| fig-width: 9
+#| fig-asp: 0.50   # prueba 0.50–0.55
+
 
 olas_chile <- datos_merge_b |>
   filter(pais=="Chile") |>
@@ -430,9 +504,16 @@ fig <- plot_ly() |>
   layout(
     xaxis = list(title = "Ola"),
     yaxis = list(title = "Promedio", range = c(0, 10)),
-    legend = list(orientation = "h", x = 0.2, y = -0.2),
-    margin = list(b = 70, t = 20),
-    template = "plotly_white")
+    legend = list(
+      orientation = "h",
+      x = 0.5, xanchor = "center",
+      y = -0.30, yanchor = "bottom"
+    ),
+    margin = list(b=130),
+    template = "plotly_white",
+    autosize = TRUE
+  ) |>
+  config(responsive = TRUE)
 
 fig
 ```
