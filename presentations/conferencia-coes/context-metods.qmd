@@ -7,6 +7,7 @@ format:
     slide-number: true
     show-slide-number: print
 editor: source  
+bibliography: input/book-ocs.bib
 ---
 
 # Concepto {data-background-color="#1b241f"}

@@ -27,7 +27,27 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="context-metods_files/libs/revealjs/dist/theme/quarto-28d8993d9f218ece1dca30c4a63c0a4f.css">
   <link href="context-metods_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="context-metods_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -181,10 +201,10 @@ Se basa en la experiencia de proyectos internacionales de conceptualización y m
 <div style="font-size: 30px;">
 <ul>
 <li class="fragment"><div style="margin-bottom: 1.5em;">
-La cohesión social ha cobrado una creciente relevancia debido a la inestabilidad política, la desigualdad persistente y los conflictos sociales que han caracterizado a los últimos años <span class="citation" data-cites="salazar-xirinachs_repensar_2023">[@salazar-xirinachs_repensar_2023]</span>.
+La cohesión social ha cobrado una creciente relevancia debido a la inestabilidad política, la desigualdad persistente y los conflictos sociales que han caracterizado a los últimos años <span class="citation" data-cites="salazar-xirinachs_repensar_2023">(<a href="#/método" role="doc-biblioref" onclick="">Salazar-Xirinachs 2023</a>)</span>.
 </div></li>
 <li class="fragment"><div style="margin-bottom: 1.5em;">
-En Latinoamérica, se han concentrado los esfuerzos en estudiar la cohesión social desde su dimensión institucional orientada a las políticas públicas <span class="citation" data-cites="undp_trapped_2023">[@undp_trapped_2023]</span>.
+En Latinoamérica, se han concentrado los esfuerzos en estudiar la cohesión social desde su dimensión institucional orientada a las políticas públicas <span class="citation" data-cites="undp_trapped_2023">(<a href="#/método" role="doc-biblioref" onclick="">United Nations Development Programme 2023</a>)</span>.
 </div></li>
 <li class="fragment"><div style="margin-bottom: 1.5em;">
 No obstante, también existe una vertiente enfocada en la operacionalización de la cohesión social para medir y comprender actitudinalmente este concepto.
@@ -237,13 +257,13 @@ Estudios relevantes de cohesión social a nivel internacional: Social Cohesion R
 <div style="font-size: 30px;">
 <ul>
 <li class="fragment"><div style="margin-bottom: 1.5em;">
-Factores individuales: el aumento de la cobertura educativa ha impactado positivamente en las expectativas sobre la movilidad social que tienen las personas <span class="citation" data-cites="somma_paradojas_2015">[@somma_paradojas_2015]</span>.
+Factores individuales: el aumento de la cobertura educativa ha impactado positivamente en las expectativas sobre la movilidad social que tienen las personas <span class="citation" data-cites="somma_paradojas_2015">(<a href="#/método" role="doc-biblioref" onclick="">Somma and Valenzuela 2015</a>)</span>.
 </div></li>
 <li class="fragment"><div style="margin-bottom: 1.5em;">
-Factores macro: el desarrollo económico y la presencia de instituciones sólidas y eficaces, pueden determinar la calidad del vínculo social en un país <span class="citation" data-cites="janmaat_social_2010 delhey_social_2018 delhey_social_2023">[@janmaat_social_2010; @delhey_social_2018; @delhey_social_2023]</span>.
+Factores macro: el desarrollo económico y la presencia de instituciones sólidas y eficaces, pueden determinar la calidad del vínculo social en un país <span class="citation" data-cites="janmaat_social_2010 delhey_social_2018 delhey_social_2023">(<a href="#/método" role="doc-biblioref" onclick="">Janmaat 2010</a>; <a href="#/método" role="doc-biblioref" onclick="">Delhey et al. 2018</a>; <a href="#/método" role="doc-biblioref" onclick="">Delhey, Dragolov, and Boehnke 2023</a>)</span>.
 </div></li>
 <li class="fragment"><div style="margin-bottom: 1.5em;">
-Además, posterior a las olas migratorias de los últimos años, en el país se ha evidenciado un deterioramiento de las relaciones entre migrantes y no-migrantes <span class="citation" data-cites="castillo_social_2023">[@castillo_social_2023]</span>.
+Además, posterior a las olas migratorias de los últimos años, en el país se ha evidenciado un deterioramiento de las relaciones entre migrantes y no-migrantes <span class="citation" data-cites="castillo_social_2023">(<a href="#/método" role="doc-biblioref" onclick="">Castillo et al. 2023</a>)</span>.
 </div></li>
 </ul>
 </div>
@@ -335,7 +355,7 @@ Variables independientes contextuales: PIB per cápita, Índice Gini, Índice de
           display:block!important;
       }</style></aside>
 </section>
-<section id="método" class="slide level2">
+<section id="método" class="slide level2 smaller scrollable">
 <h2>Método</h2>
 <div style="font-size: 35px;">
 <ul>
@@ -351,6 +371,29 @@ Posteriormente, gracias a estructura jerárquica de los datos, se estiman modelo
 </ul>
 </div>
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-castillo_social_2023" class="csl-entry" role="listitem">
+Castillo, Juan Carlos, Macarena Bonhomme, Daniel Miranda, and Julio Iturra. 2023. <span>“Social Cohesion and Attitudinal Changes Toward Migration: <span>A</span> Longitudinal Perspective Amid the <span>COVID-19</span> Pandemic.”</span> <em>Frontiers in Sociology</em> 7 (January): 1009567. <a href="https://doi.org/10.3389/fsoc.2022.1009567">https://doi.org/10.3389/fsoc.2022.1009567</a>.
+</div>
+<div id="ref-delhey_social_2018" class="csl-entry" role="listitem">
+Delhey, Jan, Klaus Boehnke, Georgi Dragolov, Zsófia S. Ignácz, Mandi Larsen, Jan Lorenz, and Michael Koch. 2018. <span>“Social <span>Cohesion</span> and <span>Its Correlates</span>: A <span>Comparison</span> of <span>Western</span> and <span>Asian Societies</span>.”</span> <em>Comparative Sociology</em> 17 (3-4): 426–55. <a href="https://doi.org/10.1163/15691330-12341468">https://doi.org/10.1163/15691330-12341468</a>.
+</div>
+<div id="ref-delhey_social_2023" class="csl-entry" role="listitem">
+Delhey, Jan, Georgi Dragolov, and Klaus Boehnke. 2023. <span>“Social <span>Cohesion</span> in <span>International Comparison</span>: A <span>Review</span> of <span>Key Measures</span> and <span>Findings</span>.”</span> <em>KZfSS K<span>ö</span>lner Zeitschrift f<span>ü</span>r Soziologie Und Sozialpsychologie</em> 75 (S1): 95–120. <a href="https://doi.org/10.1007/s11577-023-00891-6">https://doi.org/10.1007/s11577-023-00891-6</a>.
+</div>
+<div id="ref-janmaat_social_2010" class="csl-entry" role="listitem">
+Janmaat, Jan Germen. 2010. <span>“Social <span>Cohesion</span> as a <span class="nocase">Real-life Phenomenon</span>: <span>Assessing</span> the <span>Explanatory Power</span> of the <span>Universalist</span> and <span>Particularist Perspectives</span>.”</span> <em>Social Indicators Research</em> 100 (1): 61–83. <a href="https://doi.org/10.1007/s11205-010-9604-9">https://doi.org/10.1007/s11205-010-9604-9</a>.
+</div>
+<div id="ref-salazar-xirinachs_repensar_2023" class="csl-entry" role="listitem">
+Salazar-Xirinachs, José Manuel. 2023. <span>“<span>Repensar, reimaginar, transformar: los <span>‘qu<span>é</span>’</span> y los <span>‘c<span>ó</span>mo’</span> para avanzar hacia un modelo de desarrollo m<span>á</span>s productivo, inclusivo y sostenible</span>.”</span> <em>Revista de la CEPAL</em> 2023 (141): 11–43. <a href="https://doi.org/10.18356/16820908-2023-141-2">https://doi.org/10.18356/16820908-2023-141-2</a>.
+</div>
+<div id="ref-somma_paradojas_2015" class="csl-entry" role="listitem">
+Somma, Nicolás M, and Eduardo Valenzuela. 2015. <span>“Las <span>Paradojas</span> de <span class="nocase">La Cohesi<span class="nocase">ó</span>n Social En Am<span class="nocase">é</span>rica Latina</span>.”</span> <em>Revista Del CLAD Reforma y Democracia</em>, no. 61: 43–74.
+</div>
+<div id="ref-undp_trapped_2023" class="csl-entry" role="listitem">
+United Nations Development Programme. 2023. <em>Trapped: <span>High Inequality</span> and <span>Low Growth</span> in <span>Latin America</span> and the <span>Caribbean</span>: <span>Regional Human Development Report</span> 2021</em>. United Nations. <a href="https://doi.org/10.18356/9789210057844">https://doi.org/10.18356/9789210057844</a>.
+</div>
+</div>
 </section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
