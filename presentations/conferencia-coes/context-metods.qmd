@@ -15,7 +15,7 @@ editor: source
 
 **_¿De qué hablamos cuando hablamos de cohesión social?_**
 
-## Contexto
+## 
 
 ::::: columns
 ::: {.column width="35%"}
@@ -64,11 +64,11 @@ Chan, J., To, H.-P., & Chan, E. (2006). Reconsidering Social Cohesion: Developin
 ##
 
 :::{.incremental style="font-size: 30px;"}
-- <div style="margin-bottom: 1.5em;">La cohesión social ha cobrado una creciente relevancia debido a la inestabilidad política, la desigualdad persistente y los conflictos sociales que han caracterizado a los últimos años (Salazar-xirinachs, 2023).</div>
+- <div style="margin-bottom: 1.5em;">La cohesión social ha cobrado una creciente relevancia debido a la inestabilidad política, la desigualdad persistente y los conflictos sociales que han caracterizado a los últimos años [@salazar-xirinachs_repensar_2023].</div>
   
-- <div style="margin-bottom: 1.5em;">En Latinoamérica, se han concentrado los esfuerzos en estudiar la cohesión social desde su dimensión institucional orientada a las políticas públicas (CEPAL).</div>
+- <div style="margin-bottom: 1.5em;">En Latinoamérica, se han concentrado los esfuerzos en estudiar la cohesión social desde su dimensión institucional orientada a las políticas públicas [@undp_trapped_2023].</div>
 
-- <div style="margin-bottom: 1.5em;">No obstante, también existe una vertiente enfocada en la operacionalización de la cohesión social para medir y comprender empíricamente este concepto (Ecosocial; OCS).</div>
+- <div style="margin-bottom: 1.5em;">No obstante, también existe una vertiente enfocada en la operacionalización de la cohesión social para medir y comprender actitudinalmente este concepto.</div>
 :::
 
 :::{.notes}
@@ -83,74 +83,88 @@ Por otro lado, existen estudios que se han enfocado en la dimensión empírica d
 En esta línea, también se encuentra el Observatorio de Cohesión social (el cual es parte de COES), en donde se ha estudiado la cohesión social desde diversas encuestas secundarias, pero también se han generado marcos de medición propios que apuntan a comprender la cohesión social desde sus distintas dimensiones. 
 :::
 
+## ¿Cómo se ha estudiado la cohesión social?
+
+:::{.incremental style="font-size: 35px;"}
+- <div style="margin-bottom: 1.5em;">Se ha investigado a partir del análisis de datos secundarios, utilizando encuestas para realizar estudios comparativos.</div>
+
+- <div style="margin-bottom: 1.5em;">Estudios relevantes de cohesión social a nivel internacional: Social Cohesion Radar, Ecosocial, VISLATAM.</div>
+:::
+
+##
+
+![](images/esquema-al.png)
+
+[VISLATAM](https://gabrielcortesp.shinyapps.io/visualizador-la/)
+
 # Factores asociados {data-background-color="#1b241f"}
 
 ##
 
 :::{.incremental style="font-size: 30px;"}
-- <div style="margin-bottom: 1.5em;">A nivel individual, el aumento de la cobertura educativa ha impactado positivamente en las expectativas sobre la movilidad social que tienen las personas.</div>
+- <div style="margin-bottom: 1.5em;">Factores individuales: el aumento de la cobertura educativa ha impactado positivamente en las expectativas sobre la movilidad social que tienen las personas [@somma_paradojas_2015].</div>
 
-- <div style="margin-bottom: 1.5em;">Ahora bien, la literatura indica que, elementos estructurales tales como el desarrollo económico y la presencia de instituciones sólidas y eficaces, pueden determinar la calidad del vínculo social en un país.</div>
+- <div style="margin-bottom: 1.5em;">Factores macro: el desarrollo económico y la presencia de instituciones sólidas y eficaces, pueden determinar la calidad del vínculo social en un país [@janmaat_social_2010; @delhey_social_2018; @delhey_social_2023].</div>
 
-- <div style="margin-bottom: 1.5em;">Además, posterior a las olas migratorias de los últimos años, en el país se ha evidenciado un deterioramiento de las relaciones entre migrantes y no-migrantes.</div>
+- <div style="margin-bottom: 1.5em;">Además, posterior a las olas migratorias de los últimos años, en el país se ha evidenciado un deterioramiento de las relaciones entre migrantes y no-migrantes [@castillo_social_2023].</div>
+:::
+
+# Pregunta de investigación {data-background-color="#1b241f"}
+
+## {data-background-color="#1b241f"}
+
+::: {.highlight-last style="font-size:55px; text-align:center; display:flex; justify-content:center; height:80vh;"}
+*¿Cuáles son las trayectorias regionales y nacionales de las dos últimas décadas en el ámbito de la cohesión social?* 
+*¿Cuáles son los principales factores asociados a estos cambios?*
 :::
 
 # Hipótesis {data-background-color="#1b241f"}
 
 ##
 
-:::{.incremental style="font-size: 30px;"}
-
-- <div style="margin-bottom: 1.5em;">$H_{1}$: Los países con un mayor desarrollo económico presentarán mayores niveles de cohesión social</div>
+![](images/hipotesis.png)
 
 
-- <div style="margin-bottom: 1.5em;">$H_{2}$: Países con mayores niveles de desigualdad presentarán menores niveles de cohesión social</div>
+:::{.notes}
+$H_{1}$: Individuos con mayor nivel educativo mostrarán mayores nivel de cohesión social
 
 
-- <div style="margin-bottom: 1.5em;">$H_{3}$: Individuos con mayor nivel educativo mostrarán mayores nivel de cohesión social</div>
+$H_{2}$: Países con mayores niveles de desigualdad presentarán menores niveles de cohesión social
 
 
-- <div style="margin-bottom: 1.5em;">$H_{4}$: Países con mayores niveles de gobernanza presentarán mayores niveles de cohesión social</div>
+$H_{3}$: Los países con un mayor desarrollo económico presentarán mayores niveles de cohesión social
 
 
-- <div style="margin-bottom: 1.5em;">$H_{5}$: Aumentos en la proporción de población migrante en un país estarán asociados a disminuciones en los niveles de cohesión social</div>
+$H_{4}$: Países con mayores niveles de gobernanza presentarán mayores niveles de cohesión social
 
+
+$H_{5}$: Aumentos en la proporción de población migrante en un país estarán asociados a disminuciones en los niveles de cohesión social
+
+Se debe explicar que tanto el valor absoluto en la direccionalidad de la hipótesis como el cambio durante el tiempo (aumento/disminución)
 :::
+
 
 # Metodología {data-background-color="#1b241f"}
 
 ## Datos
 
-:::: columns
-
-::: {.column width="50%" style="font-size: 30px;"}
-<div class="fragment">
+::: {.incremental style="font-size: 35px;"}
   
-- <div style="margin-bottom: 1.5em;">Los datos utilizados son de la encuesta del [Latin American Public Opinion Project.](https://ropercenter.cornell.edu/latin-american-public-opinion-project-lapop)</div>
+- <div style="margin-bottom: 2em;">Los datos provienen principalmente de la encuesta del [Latin American Public Opinion Project.](https://ropercenter.cornell.edu/latin-american-public-opinion-project-lapop) Para complementar se utilizaron datos de Latinobarómetro y la Encuesta Mundial de Valores.</div>
 
-- <div style="margin-bottom: 1.5em;">La encuesta tiene por objetivo recolectar datos la opinión pública sobre democracia y gobernanza en el continente americano, aplicándose de manera regular desde 2004.</div>
-
-- <div style="margin-bottom: 1.5em;">Esta investigación contiene un N = 238.257 individuos dentro de 25 países considerando desde 2004 hasta 2023.</div>
-
-</div>
+- <div style="margin-bottom: 2em;">Esta investigación contiene un N = 179.377 individuos anidados en 174 olas-países en 25 países, considerando desde 2004 hasta 2023.</div>
 :::
 
-::: {.column width="50%" style="font-size: 30px;"}
-<div class="fragment">
-  
-- <div style="margin-bottom: 1.5em;">Variables dependientes: índice de cohesión vertical e índice de cohesión horizontal.</div>
 
-- <div style="margin-bottom: 1.5em;">Variables independientes individuales: nivel educativo.</div>
+## Variables 
 
-- <div style="margin-bottom: 1.5em;">Variables independientes contextuales: PIB per cápita, Índice Gini, Índice de Gobernanza, Diversidad cultural.</div>
+::: {.incremental style="font-size: 35px;"}
+- <div style="margin-bottom: 2em;">Variables dependientes: índice de cohesión vertical e índice de cohesión horizontal.</div>
 
-</div>
+- <div style="margin-bottom: 2em;">Variables independientes individuales: nivel educativo.</div>
+
+- <div style="margin-bottom: 2em;">Variables independientes contextuales: PIB per cápita, Índice Gini, Índice de Gobernanza, Diversidad cultural.</div>
 :::
-::::
-
-## Marco de medición
-
-![](images/esquema-al.png)
 
 :::{.notes}
 el esquema de medición de América Latina se compone por una dimensión vertical y otra horizontal.
