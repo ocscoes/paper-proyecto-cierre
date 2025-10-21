@@ -1,6 +1,7 @@
 ---
 format:
   revealjs:
+    slide-number: true
     logo: images/ocs-transparent.png
     theme: [ocs.scss]
     title-slide-attributes:
@@ -13,42 +14,47 @@ format:
     title-slide-logo: false
 editor: source
 ---
-  
-  # {data-background-color="#ffffff"}
-  
-  :::: columns
+# {data-background-color="#ffffff"}
+
+::: columns
 ::: {.column width="15%"}
 ![](images/coes.png)
-
-
 
 ![](images/ocs-old.jpg)
 
 ![](images/qr-pres-cohesion.png)
 :::
-  
-  ::: {.column .column-right width="85%"}
 
-### **Dos décadas de cambios en la cohesión social en América Latina (2004-2023)**
+::: {.column .column-right width="80%"}
 
-<hr>
-  
-  XII Conferencia COES
+## **Dos décadas de cambios en la cohesión social en América Latina (2004-2023)**
+
+------------------------------------------------------------------------
+
+**Juan Carlos Castillo, Gabriel Cortés & Tomás Urzúa**
+
+<div style="font-size: 25px; text-align: left;">
+
+**Departamento de Sociología, Universidad de Chile**  
+
+**Centro de Estudios de Conflicto y Cohesión Social – COES**  
+
+**Observatorio de Cohesión Social**
+
+</div>
 
 <br>
-  <span style="font-size: 30px;">
-  Juan Carlos Castillo - Universidad de Chile / COES
-</span>
-  
-  
-  
-  <span style="font-size: 30px;">
-  Gabriel Cortés & Tomás Urzúa - Observatorio de Cohesión Social
-</span>
-  
-  <span style="font-size: 20px;">
-  22 de octubre de 2025
-</span>
+
+<div style="font-size: 23px; text-align: left;">
+
+XII Conferencia COES
+
+22 de octubre de 2025
+
+</div>
+
+:::
+::::
 
 {{< include context-metods.qmd >}}
 
