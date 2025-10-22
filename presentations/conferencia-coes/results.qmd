@@ -1,20 +1,21 @@
 ---
 format:
   revealjs:
-    theme: ocs.scss
-    transition: slide
-    transition-speed: slow
     slide-number: true
     show-slide-number: print
-    fig-cap-location: top
-    css: slides.css
-    preload-iframes: true
-    view-distance: 15
-resources:
-  - resize.js
-  - slides.css
-editor: source  
+    logo: images/ocs-transparent.png
+    theme: [ocs.scss]
+    transition: fade            # ← global
+    transition-speed: slow
+    auto-play-media: false
+    view-distance: 100
+    mobile-view-distance: 100
+    fig-cap-location: top        # ← nombre correcto
+    scrollable: false
+editor: source
+bibliography: input/book-ocs.bib
 ---
+
 # Resultados {data-background-color="#1b241f"}
 
 ```{r}
@@ -95,7 +96,7 @@ plot_ly(
  
 ```
 
----
+##
 
 ```{r}
 #| label: fig-cs-chile
@@ -233,7 +234,7 @@ fig
 
 ```
 
----
+##
 
 ```{r}
 #| label: fig-ch
@@ -289,7 +290,7 @@ plot_ly(
 
 ```
 
-------------------------------------------------------------------------
+##
 
 ```{r}
 #| label: fig-ch-chile
@@ -372,7 +373,7 @@ config(responsive = TRUE)
 fig
 ```
 
-------------------------------------------------------------------------
+##
 
 
 ```{r}
@@ -423,7 +424,7 @@ plot_ly(
   config(responsive = TRUE)
 ```
 
-------------------------------------------------------------------------
+##
 
 ```{r}
 #| label: fig-cv-chile

@@ -1,13 +1,4 @@
----
-format:
-  revealjs:
-    theme: ocs.scss
-    transition: slide
-    transition-speed: slow
-    slide-number: true
-    show-slide-number: print
-editor: source  
----
+
 
 # Antecedentes {data-background-color="#1b241f"}
 
