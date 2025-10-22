@@ -13,9 +13,12 @@ format:
     # data-background-size: cover
     auto-play-media: true
     title-slide-logo: false
+    preload-iframes: true
+    view-distance: 50
 editor: source
 bibliography: input/book-ocs.bib
 ---
+
 # {data-background-color="#ffffff"}
 
 ::: columns

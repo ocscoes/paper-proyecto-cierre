@@ -7,10 +7,14 @@ format:
     slide-number: true
     show-slide-number: print
     fig-cap-location: top
+    css: slides.css
+    preload-iframes: true
+    view-distance: 15
+resources:
+  - resize.js
+  - slides.css
 editor: source  
 ---
-
-
 # Resultados {data-background-color="#1b241f"}
 
 ```{r}
@@ -25,7 +29,8 @@ p_load(dplyr,
        ggeffects,
        ggrepel,
        scales,
-       plotly)
+       plotly,
+       htmlwidgets)
 
 load("input/proc/micro-macro-merge.rdata")
 
@@ -36,16 +41,14 @@ datos_merge_b <- datos_merge_b |>
 datos_merge_b$country_wave = do.call(paste, c(datos_merge_b[c("pais", "ola")], sep = "_"))
 ```
 
----
+##
 
 ```{r}
 #| label: fig-cs
 #| fig-cap: Evolución dimensiones Cohesión Social en América Latina (2004-2023)
 #| out-width: 100%
-#| fig-align: center
-#| fig-width: 12
-#| fig-height: 15
-#| fig-asp: 0.50
+#| fig-height: 6
+
 
 
 olas <- datos_merge_b |>
@@ -84,13 +87,12 @@ plot_ly(
       y = -0.30, yanchor = "bottom"
     ),
     margin = list(b=130),
-    template = "plotly_white",
-    autosize = TRUE
+    template = "plotly_white"
   ) |>
   config(responsive = TRUE)
 
 
-
+ 
 ```
 
 ---
@@ -98,12 +100,7 @@ plot_ly(
 ```{r}
 #| label: fig-cs-chile
 #| fig-cap: Evolución dimensiones Cohesión Social en Chile y América Latina (2004-2023)
-#| out-width: 100%
-#| fig-align: center
-#| fig-width: 12
-#| fig-height: 10
-#| fig-asp: 0.50   # prueba 0.50–0.55
-
+#| fig-height: 6
 
 # --- 1) Tablas (como ya las venías construyendo) ---
 olas_total <- datos_merge_b |>
@@ -241,11 +238,8 @@ fig
 ```{r}
 #| label: fig-ch
 #| fig-cap: Evolución dimensiones Cohesión Horizontal en América Latina (2004-2023)
-#| out-width: 100%
-#| fig-align: center
-#| fig-width: 12
-#| fig-height: 15
-#| fig-asp: 0.50   # prueba 0.50–0.55
+#| fig-height: 6
+
 
 
 olas <- datos_merge_b |>
@@ -300,11 +294,7 @@ plot_ly(
 ```{r}
 #| label: fig-ch-chile
 #| fig-cap: Evolución dimensiones Cohesión Horizontal en Chile y América Latina (2004-2023)
-#| out-width: 100%
-#| fig-align: center
-#| fig-width: 12
-#| fig-height: 10
-#| fig-asp: 0.50   # prueba 0.50–0.55
+#| fig-height: 6
 
 
 olas_chile <- datos_merge_b |>
@@ -388,12 +378,7 @@ fig
 ```{r}
 #| label: fig-cv
 #| fig-cap: Evolución dimensiones Cohesión Vertical en América Latina (2004-2023)
-#| out-width: 100%
-#| fig-align: center
-#| fig-width: 12
-#| fig-height: 15
-#| fig-asp: 0.50   # prueba 0.50–0.55
-
+#| fig-height: 6
 
 olas <- datos_merge_b |>
   group_by(ola) |>
@@ -443,11 +428,7 @@ plot_ly(
 ```{r}
 #| label: fig-cv-chile
 #| fig-cap: Evolución dimensiones Cohesión Vertical en Chile y América Latina (2004-2023)
-#| out-width: 100%
-#| fig-align: center
-#| fig-width: 12
-#| fig-height: 10
-#| fig-asp: 0.50   # prueba 0.50–0.55
+#| fig-height: 6
 
 
 olas_chile <- datos_merge_b |>

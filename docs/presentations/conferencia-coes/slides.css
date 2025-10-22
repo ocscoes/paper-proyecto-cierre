@@ -1,0 +1,6 @@
+.reveal .slide .js-plotly-plot,
+.reveal .slide .plotly,
+.reveal .slide .plot-container {
+  width: 100% !important;
+  max-width: 100% !important;
+}
