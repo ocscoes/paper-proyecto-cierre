@@ -1,0 +1,162 @@
+---
+format:
+  revealjs:
+    theme: ocs.scss
+    transition: slide
+    transition-speed: slow
+    slide-number: true
+    show-slide-number: print
+editor: source  
+---
+
+# Antecedentes {data-background-color="#1b241f"}
+
+##
+
+- <div style="margin-bottom: 1.5em; font-size: 30px;">La cohesión social ha cobrado una creciente relevancia debido a la inestabilidad política, la desigualdad persistente y los conflictos sociales que han caracterizado a los últimos años [@salazar-xirinachs_repensar_2023].</div>
+
+:::{.incremental style="font-size: 30px;"}
+  
+- <div style="margin-bottom: 1.5em;">En Latinoamérica, se han concentrado los esfuerzos en estudiar la cohesión social desde su dimensión institucional orientada a las políticas públicas [@undp_trapped_2023].</div>
+
+- <div style="margin-bottom: 1.5em;">No obstante, también existe una vertiente enfocada en la operacionalización de la cohesión social para medir y comprender actitudinalmente este concepto.</div>
+:::
+
+:::{.notes}
+Punto uno: en los últimos años se han presenciado en distintas partes del mundo procesos sociales que han reflejado una inestabilidad política transversal a través conflictos sociales que encuentran su razón en la desigualdad persistente y la corrupción. En este contexto, se ha vuelto relevante comprender estos fenómenos en el marco de los vínculos sociales.
+
+Punto dos: En la región, tanto individualidades como centros de investigación han concentrado sus esfuerzos en estudiar la cohesión social como un fenómeno mismo, pero también como un determinante en los procesos sociales, culturales y políticos. 
+
+La cohesión social se ha estudiado desde una vereda institucional, orientada en el abordaje de las políticas públicas. Aquí la CEPAL emerge como el principal experto en la materia a partir de la discusión entre especialistas y autoridades, investigando en cómo la implementación de dichas políticas puede subsanar los malestares sociales relacionados al vínculo social
+
+Por otro lado, existen estudios que se han enfocado en la dimensión empírica de la cohesión social, intentando operacionalizar el concepto para que sea medible. En este contexto, se encuentra Ecosocial, un estudio que buscó documentar el estado de la cohesión social en 7 países de América Latina. 
+
+En esta línea, también se encuentra el Observatorio de Cohesión social (el cual es parte de COES), en donde se ha estudiado la cohesión social desde diversas encuestas secundarias, pero también se han generado marcos de medición propios que apuntan a comprender la cohesión social desde sus distintas dimensiones. 
+:::
+
+## 
+
+### Cohesión social
+
+<br>
+
+::: {.incremental .highlight-last style="font-size: 35px;"}
+
+_“La cohesión social es un estado de cosas relativo tanto a las interacciones verticales como horizontales entre los miembros de la sociedad, caracterizado por un conjunto de actitudes y normas que incluye la confianza, el sentido de pertenencia y la disposición a participar y ayudar, así como sus manifestaciones conductuales” (Chan et al., 2006, p. 290)._
+:::
+
+<br>
+
+::: {.highlight-last style="font-size: 25px;"}
+Chan, J., To, H.-P., & Chan, E. (2006). Reconsidering Social Cohesion: Developing a Definition and Analytical Framework for Empirical Research. Social Indicators Research, 75(2), 273–302.
+:::
+
+## ¿Cómo se ha estudiado la cohesión social?
+
+- <div style="margin-bottom: 1.5em; font-size: 35px;">Se ha investigado a partir del análisis de datos secundarios, utilizando encuestas para realizar estudios comparativos.</div>
+
+:::{.incremental style="font-size: 35px;"}
+- <div style="margin-bottom: 1.5em;">Estudios relevantes de cohesión social a nivel internacional: Social Cohesion Radar, Ecosocial, VISLATAM.</div>
+:::
+
+##
+
+![](images/esquema-al.png)
+
+[VISLATAM](https://gabrielcortesp.shinyapps.io/visualizador-la/)
+
+# Factores asociados {data-background-color="#1b241f"}
+
+##
+
+- <div style="margin-bottom: 1.5em; font-size: 30px;">Factores individuales: el aumento de la cobertura educativa ha impactado positivamente en las expectativas sobre la movilidad social que tienen las personas [@somma_paradojas_2015].</div>
+
+:::{.incremental style="font-size: 30px;"}
+
+- <div style="margin-bottom: 1.5em;">Factores macro: el desarrollo económico y la presencia de instituciones sólidas y eficaces, pueden determinar la calidad del vínculo social en un país [@janmaat_social_2010; @delhey_social_2018; @delhey_social_2023].</div>
+
+- <div style="margin-bottom: 1.5em;">Además, posterior a las olas migratorias de los últimos años, en el país se ha evidenciado un deterioramiento de las relaciones entre migrantes y no-migrantes [@castillo_social_2023].</div>
+
+:::
+
+# Pregunta de investigación {data-background-color="#1b241f"}
+
+## {data-background-color="#1b241f"}
+
+::: {.highlight-last style="font-size:45px; text-align:center; display:flex; flex-direction:column; justify-content:center; height:80vh; gap:2em;"}
+
+*¿Cuáles son las trayectorias regionales y nacionales de las dos últimas décadas en el ámbito de la cohesión social?*  
+
+*¿Cuáles son los principales factores asociados a estos cambios?*
+
+:::
+
+# Hipótesis {data-background-color="#1b241f"}
+
+##
+
+![](images/hipotesis.png)
+
+
+:::{.notes}
+$H_{1}$: Individuos con mayor nivel educativo mostrarán mayores nivel de cohesión social
+
+
+$H_{2}$: Países con mayores niveles de desigualdad presentarán menores niveles de cohesión social
+
+
+$H_{3}$: Los países con un mayor desarrollo económico presentarán mayores niveles de cohesión social
+
+
+$H_{4}$: Países con mayores niveles de gobernanza presentarán mayores niveles de cohesión social
+
+
+$H_{5}$: Aumentos en la proporción de población migrante en un país estarán asociados a disminuciones en los niveles de cohesión social
+
+Se debe explicar que tanto el valor absoluto en la direccionalidad de la hipótesis como el cambio durante el tiempo (aumento/disminución)
+:::
+
+
+# Metodología {data-background-color="#1b241f"}
+
+## Datos
+
+- <div style="margin-bottom: 2em; font-size: 35px;">Los datos provienen principalmente de la encuesta del [Latin American Public Opinion Project.](https://ropercenter.cornell.edu/latin-american-public-opinion-project-lapop) Para complementar se utilizaron datos de Latinobarómetro y la Encuesta Mundial de Valores.</div>
+
+::: {.incremental style="font-size: 35px;"}
+
+- <div style="margin-bottom: 2em;">Esta investigación contiene un N = 179.377 individuos anidados en 174 olas-países en 25 países, considerando desde 2004 hasta 2023.</div>
+:::
+
+
+## Variables 
+
+- <div style="margin-bottom: 2em; font-size: 35px;">Variables dependientes: índice de cohesión vertical e índice de cohesión horizontal.</div>
+
+::: {.incremental style="font-size: 35px;"}
+
+- <div style="margin-bottom: 2em;">Variables independientes individuales: nivel educativo.</div>
+
+- <div style="margin-bottom: 2em;">Variables independientes contextuales: PIB per cápita, Índice Gini, Índice de Gobernanza, Diversidad cultural.</div>
+:::
+
+:::{.notes}
+el esquema de medición de América Latina se compone por una dimensión vertical y otra horizontal.
+
+ en la dimensión vertical se considera confianza en instituciones que se mide a partir del grado de confianza que se tiene al poder judicial, congreso y los partidos políticos. Actitudes hacia la democracia considera cuánto apoya alguien a la democracia y cuán satisfecho está con ella. Por último, justicia distributiva se mide a partir de la pregunta qué tan justa se percibe la distribución de ingresos en el país.
+
+Cohesión horizontal está medida por seguridad pública, la cual aborda la seguridad subjetiva, es decir, la percepción de la seguridad, y la seguridad objetiva, medida considerando si el encuestado ha sido víctima de delitos o no. Además, confianza interpersonal se comprende como el nivel de confianza que tienen las personas respecto a sus vecinos.
+:::
+
+
+## Método
+
+- <div style="margin-bottom: 1.5em; font-size: 35px;">Para validar el modelo construido, se aplica un análisis factorial confirmatorio.</div>
+
+:::{.incremental style="font-size: 35px;"}
+
+- <div style="margin-bottom: 1.5em;">Posteriormente, gracias a estructura jerárquica de los datos, se estiman modelos de regresión multinivel híbridos.</div>
+  
+- <div style="margin-bottom: 1.5em;">$y_{jti} = \beta_{0}(t) + \beta_{1}X_{jti} + \gamma_{we}(Z_{jt}-\bar{Z}_{j}) + \gamma_{be}\bar{Z}_{j} + v_j + u_{jt} + e_{jti}$</div>
+
+:::
