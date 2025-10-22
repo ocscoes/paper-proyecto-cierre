@@ -1,18 +1,2 @@
-format:
-  revealjs:
-    slide-number: true
-    show-slide-number: print
-    logo: images/ocs-transparent.png
-    theme: [ocs.scss]
-    title-slide-attributes:
-      visibility: false
-      transition: slide
-      transition-speed: slow
-      auto-play-media: true
-    # data-background-image: images/cover.jpg
-    # data-background-size: cover
-    title-slide-logo: false
-    view-distance: 100
-    mobile-view-distance: 100
-editor: source
-bibliography: input/book-ocs.bib
+project:
+  output-dir: docs

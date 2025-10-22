@@ -1,20 +1,4 @@
----
-format:
-  revealjs:
-    slide-number: true
-    show-slide-number: print
-    logo: images/ocs-transparent.png
-    theme: [ocs.scss]
-    transition: fade            # ← global
-    transition-speed: slow
-    auto-play-media: false
-    view-distance: 100
-    mobile-view-distance: 100
-    fig-cap-location: top        # ← nombre correcto
-    scrollable: false
-editor: source
-bibliography: input/book-ocs.bib
----
+
 
 # Resultados {data-background-color="#1b241f"}
 
