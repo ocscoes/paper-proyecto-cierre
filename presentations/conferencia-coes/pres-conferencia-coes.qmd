@@ -14,6 +14,7 @@ format:
     scrollable: false
 editor: source
 bibliography: input/book-ocs.bib
+lang: es
 ---
 
 

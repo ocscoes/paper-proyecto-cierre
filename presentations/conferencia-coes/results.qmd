@@ -80,6 +80,14 @@ plot_ly(
  
 ```
 
+:::{.notes}
+Este primer gráfico muestra la evolución general en las últimas dos décadas de la Cohesión en América Latina, así como de sus dos dimensiones principales.
+
+[Si no se ha hecho, explicar que el índice va de 0 a 10]. Se observa que los niveles generales de Cohesión se han mantenidos en niveles medios, entre 5.3 y 5.8. Es interesante además que hasta 2012 se observa una leve alza seguida de una caída brusca y una leve recuperación post-pandemia. 
+
+Ambas dimensiones siguen una tendencia similar. Peaks en 2012, mínimos en 2016, leve recuperación posterior. Sin embargo, es interesante la brecha que existe entre la dimensión horizontal y la vertical. La primera se encuentra sistemáticamente en niveles más altos. Esto es consistente con las ideas de que apuntan a la debilidad institucional de los Estados latinoamericanos, y que en contraste son las relaciones interpersonales y los contactos las que cobran mayor relevancia. Sería interesante contrastar si esta brecha se mantiene en otras regiones, y si lo hacen en la misma magnitud. 
+:::
+
 ##
 
 ```{r}
@@ -218,6 +226,15 @@ fig
 
 ```
 
+
+:::{.notes}
+Acá las líneas puntuadas comparan la evolución de los indicadores en Chile en comparación a América Latina. En el índice general, Chile aparece como un país promedio, con una tendencia similar a la regional, pero hay algunas diferencias que vale la pena destacar:
+
+- Entre 2008 y 2014 Chile subió muy rápidamente en los indicadores de cohesión horizontal, manteniendose sistemáticamente por sobre el promedio regional. Sin embargo, desde ahí se produce una rápida caída. Hoy por hoy, Chile es un país promedio en términos de cohesión horizontal
+
+- CHile también mantuvo niveles de cohesión vertical sobre el promedio regional. Pero desde 2012 en particular, coincidiendo con el inicio de escandalos de corrupción y del surgimiento de nuevos actores sociales, se observa una caída muy brusca. Hoy, Chile es uno de los países con los indicadores de cohesión vertical más bajos en América Latina.
+:::
+
 ##
 
 ```{r}
@@ -273,6 +290,11 @@ plot_ly(
 
 
 ```
+
+
+:::{.notes}
+Acá vemos la evolución de las dimensiones de Cohesión Horizontal. A nivel regional, se observa mayor variación en la subdimensión de seguridad pública, con una caída entre 2012 y 2018, si bien seguida de una recuperación.  
+:::
 
 ##
 
@@ -357,6 +379,14 @@ config(responsive = TRUE)
 fig
 ```
 
+
+:::{.notes}
+El caso de Chile es llamativo, pues sigue una tendencia similar a la regional, con la tendencia de que no observa la recuperación post-pandemia. Cabe destacar que esto, si bien muestra un deterioro objetivos en las condiciones de seguridad, tiene un fuerte componente subjetivo.
+
+También resalta el comportamiento del indicador de confianza interpersonal. Entre 2010 y 2014 los niveles de confianza interpersonal en Chile estuvieron sobre el promedio regional. Pero desde ahí se registra una caída brusca que no muestra signos de recuperación. 
+:::
+
+
 ##
 
 
@@ -407,6 +437,10 @@ plot_ly(
   ) |>
   config(responsive = TRUE)
 ```
+
+:::{.notes}
+En relación a la cohesión vertical, ambas subdimensiones se mantienen relativamente estables. Si hay que destacar, en ese sentido, que la confianza en las instituciones en al región se ha mantenido constantemente baja, manteniendose en la franja entre 3,3 y 4,1. 
+:::
 
 ##
 
@@ -490,6 +524,11 @@ config(responsive = TRUE)
 
 fig
 ```
+
+
+:::{.notes}
+En Chile, en tanto, se observa una brusca caída, de casi dos puntos, en la confianza en las instituciones. Tal como sucedía en el promedio de de Cohesión Vertical, los niveles de confianza institucional en Chile se encuentran entre las más bajas de la región. 
+:::
 
 # Modelo Multinivel{data-background-color="#1b241f"}
 
@@ -631,6 +670,31 @@ print(p)
 
 ```
 
+:::{.notes}
+Se calcularon modelos para cohesión general, así como horizontal y vertical. En el gráfico solo se muestran los efectos estadísticamente significativos. 
+
+Efecto temporal: Se observan efectos temporales negativos en las tres dimensiones. La erosión es más pronunciada en al cohesión vertical, en línea con la debilidad institucional que se suele achacar a América Latina
+
+Efectos individuales: En general los efectos para variables individuales son todos significativos, aunque no siempre en las direcciones que esperabamos. Destaca por ejemplo, las personas con educación terciaria tienen mayores niveles de cohesión que quienes tienen educación secundaria, pero con quienes tienen educación primaria. 
+
+También vemos que los hombres muestran niveles de cohesión más alto que las mujeres, que la edad tiene un efecto positivo y las personas de derecha por sobre las demás posiciones políticas. 
+
+Efectos within. El principal efecto within es el indice v-dem, que mide la calidad de una democracia. Contra lo que esperabamos, la relación es negativa. Es decir, caídas en la calidad de la democracia dentro de un país están asociadas a aumentos en los niveles de cohesión social. 
+
+Los aumentos de la población migrante tiene un efecto significativo solo para la cohesión horizontal, posiblemente reflejando las tensiones en la vida cotidiana que representan los nuevos flujos migratorios internacionales. 
+
+Pasando a los efectos between, es decir las diferencias estructuales entre países encontramos 3 efectos significativos. Desigualdad, Gobernanza y Educación. Los dos primeros apuntan a la dirección esperada, pero no así la tercera. Es decir:
+
+- Los países con menor desigualdad muestran mayores niveles de cohesión social
+- Los países con mayores niveles de gobernanza muestran mayores niveles de cohesión social
+- Los países con una mayor proporción de personas con educación terciaria muestra menores niveles de cohesión social 
+
+[El índice V-Dem muestra un dimnesión básica de democracia, incluyendo indicadores sobre elecciones libres, prensa libre y libertades civiles
+
+El WGI incluye indicadores sobre rendición de cuenta, estabilidad política, efectividad del gobierno,  calidad regulatoria, corrupción y estado de derecho]
+:::
+
+
 # Discusión y Conclusiones {data-background-color="#1b241f"}
 
 ## La Cohesión Social en Chile y América Latina
@@ -642,6 +706,13 @@ print(p)
 - <div style="margin-bottom: 2em;">Factores individuales: educación, edad, género y posición política</div>
 
 
+:::{.notes}
+Los hallazgos del estudio apuntan a que, controlado por las demás variables, se observa un descenso sostenido de la cohesión social en América Latina, tanto en promedio como en su dimensión de vertical como horizontal. Chile es un caso ilustrativo de esta tendencia, con caídas importantes en seguridad, confianza interpersonal y confianza institucional.
+
+El modelo multinivel muestra efectos significativos de efectos individuales sobre la cohesión social, tal como nivel educativo, edad, género y posición política. 
+:::
+
+
 ## Factores Macroestructurales de la Cohesión Social
 
 - <div style="margin-bottom: 1.5em;">Factores económicos de la cohesión social</div>
@@ -649,7 +720,15 @@ print(p)
 - <div style="margin-bottom: 1.5em;">Efectos de la expansión de la educación terciaria sobre la cohesión social</div>
 - <div style="margin-bottom: 1.5em;">Migración y Cohesión horizontal</div>
 
+:::{.notes}
+Factores económicos: Contra lo esperado, el crecimiento económico no muestra efectos significativos sobre la cohesión social, pero sí la desigualdad, particularmente en la dimensión vertical. Esto es particularmente relevante en América Latina, la región más desigual del mundo.
 
+Sobre los factores políticos, llama la atención los efectos negativo de la democracia sobre la cohesión social. Ahora bien, no se puede hablar de democracia en este estudio sin mencionar que los datos no incluyen a Cuba, y solo parcialmente a Venezuela y Nicaragua. Es díficil defender que el deterioro democrático en Venezuela, que no medimos acá, ha llevado a mayores niveles de cohesión. Pero si tenemos, por ejemplo, el caso de El Salvador, cuyo repunte en los niveles de cohesión - que pueden explorar en vislatam - no deja de ser sorprendente. Es posible que shocks autoritarios puedan generar efectos positivos temporales en la cohesión al dar solución rápida a demandas urgente de la población, como la seguridad.
+
+Sin embargo, los resultados comparativos muestran que los países menos democráticos no son más cohesionados que los más democráticos: el efecto estructural de la democracia es neutro una vez controlados otros factores. En cambio, los países con mejores niveles de gobernanza —es decir, con instituciones más eficaces, estables y predecibles— sí presentan niveles consistentemente más altos de cohesión.
+
+También es contraintuitivo el resultado observado para educación. Es importante aclarar que aquí educación terciaria incluye tanto el nivel universitario pero el técnico-profesional. Esto es una limitación metodológica por el diseño de LAPOP, pues los datos que tenemos en Chile (ver viselsoc) apuntan a que los técnicos profesionales se parecen más al resto de la población que a los universitarios. En cualquier caso, uno podría hipotetizar sobre si mayores niveles de educación se asocian a posturas más críticas, o si vemos procesos de individualismo y privatización, o si el efecto de la educación se ve revertido en contextos de alta desigualdad, por menciones algunas posibles hipótesis
+:::
 
 ## Lo que sigue
 
@@ -661,6 +740,14 @@ print(p)
 -  <div style="margin-bottom: 2em;">Educación, Democracia y Cohesión Social</div>
 
 -  Relevancia académica y política
+
+:::{.notes}
+Lo que sigue es incluir otras formas de análisis para profundizar en lo que hemos expuesto aquí. En particular, podemos incluir en el modelo interacciones entre variables del mismo o de distintos niveles. Asimismo, explorar las pendientes aleatorias de algunas variables de interés, para observar si los efectos aquí expuestos muestran divergencias entre los países de la región, siendo particularmente relevante para nosotros el caso chileno. 
+
+Todo esto, quizás, nos permitiría entender mejor e hipotetizar sobre algunos de los efectos que no esperabamos, como la relación entre cohesión social y educación, o cohesión social o democracia. 
+
+Para cerrar, solo volver a recalcar la relevancia de este estudio, que con sus limitaciones y con lo que falta por hacer ya muestr resultados prometedores. Hay pocos estudios que se enfoque en comprender la cohesión social desde un enfoque longitudinal y multinivel, menos para América Latina, y creemos que los hallazgos que esta investigación pueda entregar son importante para aportar, desde los datos, a la discusió académica y política de la cohesión social. 
+:::
 
 ## Referencias
 
