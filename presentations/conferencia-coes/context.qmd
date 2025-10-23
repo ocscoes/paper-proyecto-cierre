@@ -2,7 +2,7 @@
 format:
   revealjs:
     theme: ocs.scss
-    transition: slide
+    transition: fade
     transition-speed: slow
     slide-number: true
     show-slide-number: print

@@ -2,7 +2,7 @@
 format:
   revealjs:
     theme: ocs.scss
-    transition: slide
+    transition: fade
     transition-speed: slow
     slide-number: true
     show-slide-number: print
@@ -65,7 +65,7 @@ Chan, J., To, H.-P., & Chan, E. (2006). Reconsidering Social Cohesion: Developin
 - <div style="margin-bottom: 1.5em;">Estudios relevantes de cohesión social a nivel internacional: Social Cohesion Radar, Ecosocial, VISLATAM.</div>
 
 :::{.incremental style="font-size: 35px;"}
-- <div style="margin-bottom: 1.5em; font-size: 35px;">Estos estudios han investigado la cohesión social a partir del análisis de datos secundarios, utilizando encuestas para realizar estudios comparativos.</div>
+- <div style="margin-bottom: 1.5em; font-size: 35px;">Estos estudios han contribuido a generar distintos marcos de cohesión social, permitiendo realizar estudios comparativos entre países.</div>
 :::
 
 ## Factores asociados 
