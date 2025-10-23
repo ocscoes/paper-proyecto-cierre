@@ -1,3 +1,15 @@
+---
+format:
+  revealjs:
+    theme: ocs.scss
+    transition: slide
+    transition-speed: slow
+    slide-number: true
+    show-slide-number: print
+editor: source  
+---
+
+
 
 # Contexto {data-background-color="#1b241f"}
 
@@ -25,5 +37,19 @@
 
 -  <div style="margin-bottom: 1.5em;">Se basa en la experiencia de proyectos internacionales de conceptualización y medición de cohesión social</div>
 
+- <div style="margin-bottom: 1.5em;">Este estudio: basado en la experiencia con VISLATAM (N = 179.377 anidados en 174 olas-países en 25 países)</div>
+
 :::
 :::::
+
+
+
+## {data-background-color="#1b241f"}
+
+::: {.highlight-last style="font-size:45px; text-align:center; display:flex; flex-direction:column; justify-content:center; height:80vh; gap:2em;"}
+
+*¿Cuáles son las trayectorias regionales y nacionales en las dos últimas décadas en el ámbito de la cohesión social en América Latina?*  
+
+*¿Cuáles son los principales factores asociados a estos cambios?*
+
+:::
