@@ -6,6 +6,7 @@ format:
     transition-speed: slow
     slide-number: true
     show-slide-number: print
+    fig-cap-location: top
 editor: source  
 ---
 
