@@ -63,6 +63,7 @@ lang: es
 bibliography: "input/bib/book-ocs.bib"
 execute:
   echo: FALSE 
+  warning: false
 ---
 
 ```{r}
@@ -79,10 +80,9 @@ p_load(dplyr,
        summarytools,
        lavaan,
        semPlot,
-       PerformanceAnalytics,
-       stargazer,
-       performance,
-       ggeffects)
+       corrplot,
+       ggeffects,
+       performance)
 ```
 
 
