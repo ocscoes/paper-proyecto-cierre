@@ -14,7 +14,7 @@ Como criterio, se incluyeron en este estudio únicamente los países de la regi�
 
 load("input/proc/micro-macro-merge.rdata")
 
-tab1 <- datos_merge_b |>
+tab1 <- datos_merge |>
   count(pais, name = "f") |>
   arrange(desc(f))
 
@@ -75,7 +75,7 @@ Los indicadores fueron estandarizados de modo que todas las subdimensiones y dim
 #| tbl-cap: Resumen indicadores de Cohesión Social
 
 
-datos_cohesion <- datos_merge_b |>
+datos_cohesion <- datos_merge |>
   select(17:20) |>   
   rename("Confianza Interpersonal" = confianza_it_ind,
           "Seguridad Pública" = seguridad_ind,

@@ -5,14 +5,13 @@
 
 ## cargar base
 
-load("input/proc/datos-completos.rdata")
 load("input/proc/micro-macro-merge.rdata")
 
-datos_merge_b <- datos_merge_b |>
+datos_merge <- datos_merge |>
   mutate(across(where(haven::is.labelled), ~ vctrs::vec_data(.)),
          pais= as.factor(pais))
 
-datos_merge_b$country_wave = do.call(paste, c(datos_merge_b[c("pais", "ola")], sep = "_"))
+datos_merge$country_wave = do.call(paste, c(datos_merge[c("pais", "ola")], sep = "_"))
 
 ```
 
@@ -23,7 +22,7 @@ datos_merge_b$country_wave = do.call(paste, c(datos_merge_b[c("pais", "ola")], s
 #| fig-cap: Evolución dimensiones Cohesión Horizontal (2004-2022)
 
 
-olas <- datos_merge_b |>
+olas <- datos_merge |>
   group_by(ola) |>
   summarise(seguridad_prom = mean(seguridad_ind, na.rm=T),
             confianza_prom = mean(confianza_it_ind, na.rm=T)) |>
@@ -32,7 +31,7 @@ olas <- datos_merge_b |>
     names_to = "indicador",
     values_to = "promedio"
   ) |>
-  mutate(indicador = recode(indicador,
+  mutate(indicador = dplyr::recode(indicador,
                             "confianza_prom" = "Confianza Interpersonal",
                             "seguridad_prom" = "Seguridad Pública"))
 olas |>
@@ -50,7 +49,7 @@ olas |>
 #| label: fig-cv
 #| fig-cap: Evolución dimensiones Cohesión Vertical (2004-2022)
 
-olas <- datos_merge_b |>
+olas <- datos_merge |>
   group_by(ola) |>
   summarise(confianza_prom = mean(confianza_inst_ind, na.rm=T),
             democracia_prom = mean(democracia_ind, na.rm=T)) |>
@@ -59,7 +58,7 @@ olas <- datos_merge_b |>
     names_to = "indicador",
     values_to = "promedio"
   ) |>
-  mutate(indicador = recode(indicador,
+  mutate(indicador = dplyr::recode(indicador,
                             "confianza_prom" = "Confianza en las Instituciones",
                             "democracia_prom" = "Actitudes hacia la democracia"))
 olas |>
@@ -77,12 +76,11 @@ olas |>
 ```{r}
 #| eval: false
 
-
 m1 <- 'ch =~ seguridad_ind + confianza_it_ind
        cv =~ confianza_inst_ind + democracia_ind'
 
 m1_cfa <- cfa(
-  m1, data = datos_merge_b, std.lv = TRUE)
+  m1, data = datos_merge, std.lv = TRUE)
 
 save(m1_cfa, file="output/cfa.rdata")
 ```
@@ -113,7 +111,7 @@ Nota. RMSEA = `r round(fit["rmsea"], 3)`, CFI = `r round(fit["cfi"], 3)`, Chi-cu
 #| label: fig-cs
 #| tab-cap: Evolución dimensiones Cohesión Social (2004-2022)
 
-olas <- datos_merge_b |>
+olas <- datos_merge |>
   group_by(ola) |>
   summarise(horizontal_prom = mean(`cohesion_horizontal_ind`, na.rm=T),
             vertical_prom = mean(`cohesion_vertical_ind`, na.rm=T),
@@ -123,7 +121,7 @@ olas <- datos_merge_b |>
     names_to = "indicador",
     values_to = "promedio"
   ) |>
-  mutate(indicador = recode(indicador,
+  mutate(indicador = dplyr::recode(indicador,
                             horizontal_prom = "Cohesión Horizontal",
                             vertical_prom = "Cohesión Vertical",
                             cohesion_prom = "Cohesión Social"))
@@ -145,11 +143,28 @@ olas |>
 #| eval: false
 
 
+# Separar los efectos
+
+datos_merge <- datos_merge |>
+ mutate(pib_be = mean(log_pib_per_capita_ppa, na.rm=T),
+         gini_be = mean(gini_index, na.rm=T),
+         mig_be = mean(percent_pob_migrante, na.rm=T),
+         dem_be = mean(indice_v_dem, na.rm=T),
+         wgi_be = mean(wgi, na.rm=T),
+         edu_be = mean(edu_terciaria, na.rm=T)) |>
+  ungroup() |>
+  mutate(pib_we = log_pib_per_capita_ppa - pib_be,
+          gini_we = gini_index - gini_be,
+          mig_we = percent_pob_migrante - mig_be,
+          dem_we = indice_v_dem - dem_be,
+          wgi_we = wgi- wgi_be,
+          edu_we = edu_terciaria-edu_be)
+
+# Centrado y limpieza
 
 z <- function(x) as.numeric(scale(x))
 
-datos_fit <- datos_merge_b %>%
-    filter(edad >= 18) |>
+datos_fit <- datos_merge %>%
   mutate(
     pib_we  = z(pib_we),   gini_we = z(gini_we), wgi_we = z(wgi_we), dem_we = z(dem_we),
     mig_we  = z(mig_we),   edu_we = z(edu_we),
@@ -217,7 +232,6 @@ load( "output/modelo_nulo_completo.rdata")
 
 ```{r}
 #| eval: false
-
 
 # Modelo 1: Nivel individual
 m1_h <- lmer(cohesion_horizontal_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola_s + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)

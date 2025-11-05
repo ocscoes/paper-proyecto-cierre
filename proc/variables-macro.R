@@ -90,9 +90,12 @@ gdp_long <- gdp_proc %>%
   ) %>%
   # deja solo los dígitos del nombre de columna (quita X y espacios)
   mutate(year = as.integer(gsub("\\D", "", year))) %>%
-  arrange(country_code, year, indicator_name)    
+  arrange(country_code, year, indicator_name) 
 
-# Imputación con lógica extendida
+
+nas <- gdp_long |> filter(is.na(value))
+
+# Imputación
 gdp_long <- gdp_long %>%
   group_by(country_name, value) %>%
   arrange(year) %>%
@@ -105,7 +108,7 @@ gdp_long <- gdp_long %>%
         !is.na(lead(value)) ~ lead(value),
         TRUE ~ NA_real_
       ),
-      value  # si ya tiene value, se mantiene
+      value
     )
   ) %>%
   ungroup()
@@ -199,7 +202,7 @@ dict <- tibble(
   norm_target = normalize_name(targets)           # p.ej. "trinidad and tobago"
 )
 
-# 4) Sinónimos habituales del geoesquema ONU -> tu etiqueta target
+# 4) Sinónimos habituales 
 synonyms <- tribble(
   ~norm_raw,                               ~norm_target,
   "united states of america",              "united states",
@@ -227,7 +230,6 @@ apply_synonyms <- function(norm_vec) {
   out
 }
 
-# ---------- A) Tu flujo original (OK) ----------
 # migra_std: normaliza y mapea a target
 migra_std <- migra %>%
   mutate(
@@ -245,7 +247,6 @@ no_match <- migra_std %>%
 
 migra <- migra_std %>% filter(!is.na(country_std))
 
-# ---------- B) El flujo que fallaba (arreglado) ----------
 # 1) Normaliza 'pais' proveniente de migra_logistico
 # 2) Mapea a country_std usando dict
 # 3) Recién ahí cruza con iso_dict (idealmente también normalizado)
