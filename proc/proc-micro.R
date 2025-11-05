@@ -86,7 +86,11 @@ rm(dta)
 data2021 <- data2021 %>% mutate(year = wave)
 
 # 5) gm 23 + faltantes 2023
-gm23 <- read_dta("input/orig/gm23.dta")
+# gm23 <- read_dta("input/orig/gm23.dta")
+# save(gm23, file="input/proc/gm23.rdata")
+
+load("input/proc/gm23.rdata")
+
 data2023 <- gm23 %>%
   filter(year == 2023) %>%
   sel_vars(vars) %>%
