@@ -12,7 +12,7 @@ p_load(tidyverse,
 
 # Datos
 
-load(file = "data/base_shiny_completa.rdata")
+load(file = "input/orig/base_shiny_completa.rdata")
 
 df_bivariado <- df %>% filter(País!="Bahamas" & País !="Grenada" & País != "Suriname",
                               !is.nan(Valor))
@@ -137,24 +137,34 @@ df_plot <- gini_prom_ola %>%
   ) %>%
   mutate(
     serie = recode(serie,
-                   gini_prom  = "Promedio países",
+                   gini_prom  = "Promedio LA",
                    gini_chile = "Chile")
   )
 
 # 4) Gráfico
-ggplot(df_plot, aes(x = ola, y = gini, color = serie, linetype = serie)) +
+p <- ggplot(df_plot, aes(x = ola, y = gini, color = serie, linetype = serie)) +
   geom_line(size = 1.1) +
   geom_point(size = 2) +
-  labs(
-    title = "Índice Gini por ola: Chile vs promedio de países",
-    x = "Ola",
+  labs(x = "Ola",
     y = "Índice Gini",
     color = NULL,
     linetype = NULL
   ) +
+  scale_y_continuous(limits = c(0, 50)) +
   theme_minimal(base_size = 12) +
   theme(legend.position = "top")
 
+p
+
+p + scale_y_cut(breaks=c(8, 41.5), which=c(1,2,3), scales=c(3, 0.6, 0.6))
+
+d <- data.frame(
+  x = 1:20,
+  y = c(rnorm(5) + 4, rnorm(5) + 20, rnorm(5) + 5, rnorm(5) + 22)
+)
+p <- ggplot(d, aes(x, y)) + geom_col()
+p
+p + scale_y_cut(breaks=c(7, 18), which=c(1, 3), scales=c(3, 0.5))
 
 # Gráfico de banderas
 

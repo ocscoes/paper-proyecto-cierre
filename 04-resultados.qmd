@@ -146,6 +146,7 @@ olas |>
 # Separar los efectos
 
 datos_merge <- datos_merge |>
+  group_by(pais) |>
  mutate(pib_be = mean(log_pib_per_capita_ppa, na.rm=T),
          gini_be = mean(gini_index, na.rm=T),
          mig_be = mean(percent_pob_migrante, na.rm=T),
@@ -190,6 +191,7 @@ datos_fit <- datos_merge %>%
          country_wave, pais, wt) |>
   na.omit()
 
+save(datos_fit, file="input/proc/datos-fit.rdata")
 
 
 ```
@@ -199,6 +201,8 @@ datos_fit <- datos_merge %>%
 
 ```{r}
 #| eval: false
+
+load("input/proc/datos-fit.rdata")
 
 m0_ch = lmer(cohesion_horizontal_ind ~ 1 + (1 | country_wave) + (1 |pais), data=datos_fit, weights=wt)
 
