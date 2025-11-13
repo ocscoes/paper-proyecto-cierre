@@ -269,9 +269,9 @@ window.Quarto = {
 <h1>Metodología</h1>
 <section id="datos" class="level2">
 <h2 class="anchored" data-anchor-id="datos">Datos</h2>
-<p>La principal fuente de datos para este estudio es la <em>AmericasBarometer</em> del <em>Latin American Public Opinion Project</em> (LAPOP Lab), también conocida como Encuesta LAPOP. La encuesta tiene por objetivo recolectar datos la opinión pública sobre democracia y gobernanza en el continente americano. El diseño de la encuesta es probalístico y representativo de la población adulta de cada país <span class="citation" data-cites="lapoplab_americasbarometer_2023">(<a href="#ref-lapoplab_americasbarometer_2023" role="doc-biblioref">LAPOP LAb 2023</a>)</span>.</p>
-<p>La encuesta se ha realizado de manera regular desde el año 2004. A la fecha, se han realizado 9 olas que han incluido entre 11 a 23 países, sumando un total sobre 400.000 entrevistas en dos décadas. El cuestionario se administra a través de encuestas cara a cara, con la excepción de Canadá y Estados Unidos.</p>
-<p>Como criterio, se incluyeron en este estudio únicamente los países de la región que tengan disponible datos para los indicadores principales del estudio en al menos 5 puntos en el tiempo. Como se resume en <a href="#tbl-paises" class="quarto-xref">Tabla&nbsp;1</a>, se incluyen en este estudio un total de 238.257 individuos anidados en 174 olas-paises en 25 países del continente americano.</p>
+<p>La principal fuente de datos para este estudio es la <em>AmericasBarometer</em> del <a href="https://ropercenter.cornell.edu/latin-american-public-opinion-project-lapop"><em>Latin American Public Opinion Project</em> (LAPOP Lab)</a>, también conocida como Encuesta LAPOP. La encuesta tiene por objetivo recolectar datos la opinión pública sobre democracia y gobernanza en el continente americano. El diseño de la encuesta es probalístico y representativo de la población adulta de cada país <span class="citation" data-cites="lapoplab_americasbarometer_2023">(<a href="#ref-lapoplab_americasbarometer_2023" role="doc-biblioref">LAPOP LAb 2023</a>)</span>.</p>
+<p>La encuesta se ha aplicado de manera regular desde el año 2004. A la fecha, se han realizado 9 olas que han incluido entre 11 a 23 países, sumando un total sobre 400.000 entrevistas en dos décadas. El cuestionario se administra a través de encuestas cara a cara, con la excepción de Canadá y Estados Unidos.</p>
+<p>Como criterio, en este estudio se incluyeron únicamente los países de la región que contaban con datos disponibles para los indicadores principales del estudio en, al menos, 5 puntos en el tiempo. Como se resume en <a href="#tbl-paises" class="quarto-xref">Tabla&nbsp;1</a>, se incluyen en este estudio un total de 238.257 individuos anidados en 174 olas-países en 25 países del continente americano.</p>
 <div class="cell">
 <div id="tbl-paises" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -402,9 +402,9 @@ Tabla&nbsp;1: Disponibilidad de datos por olas y países
 </div>
 <p>Para datos contexuales de los países, se recurrió a diversas fuentes de datos que incluyen:</p>
 <ol type="1">
-<li><p>Los datos abiertos del Banco Mundial. Incluye diversos indicadores sobre desarrollo social y económico de la mayoría de los países del mundo. El portal es de datos es accesible en: <a href="https://datos.bancomundial.org/">https://datos.bancomundial.org/</a>.</p></li>
-<li><p><em>The Worlwide Governance Indicators</em> del Banco Mundial. Se trata de una encuesta a expertos que recopila datos primeros sobre diveros indicadores de gobernanza, cubriendo múltiple países con información actualizada entre 1996 y 2003. Los datos son accesibles en: <a href="https://www.worldbank.org/en/publication/worldwide-governance-indicators">https://www.worldbank.org/en/publication/worldwide-governance-indicators</a>.</p></li>
-<li><p><em>The V-Dem Dataset</em> que recoge un conjunto multidimensional de datos que busca medir la calidad de la democracia alrededor del mundo. La base de datos es accesible mediante el paquete de R <code>vdemdata</code> <span class="citation" data-cites="maerz_vdemdata_2025">(<a href="#ref-maerz_vdemdata_2025" role="doc-biblioref">Maerz et&nbsp;al. 2025</a>)</span></p></li>
+<li><p>Los datos abiertos del Banco Mundial. Incluye diversos indicadores sobre desarrollo social y económico de la mayoría de los países del mundo. El portal de datos es accesible en: <a href="https://datos.bancomundial.org/">https://datos.bancomundial.org/</a>.</p></li>
+<li><p><em>The Worlwide Governance Indicators</em> del Banco Mundial. Se trata de una encuesta a expertos que recopila datos sobre diversos indicadores de gobernanza, cubriendo múltiples países con información actualizada entre 1996 y 2003. Los datos se encuentran disponibles en: <a href="https://www.worldbank.org/en/publication/worldwide-governance-indicators">https://www.worldbank.org/en/publication/worldwide-governance-indicators</a>.</p></li>
+<li><p><em>The V-Dem Dataset</em>. Recoge un conjunto multidimensional de datos que busca medir la calidad de la democracia alrededor del mundo. La base de datos es accesible mediante el paquete de R <code>vdemdata</code> <span class="citation" data-cites="maerz_vdemdata_2025">(<a href="#ref-maerz_vdemdata_2025" role="doc-biblioref">Maerz et&nbsp;al. 2025</a>)</span></p></li>
 </ol>
 </section>
 <section id="variables" class="level2">
@@ -412,23 +412,23 @@ Tabla&nbsp;1: Disponibilidad de datos por olas y países
 <section id="variables-dependientes" class="level3">
 <h3 class="anchored" data-anchor-id="variables-dependientes">Variables Dependientes</h3>
 <p>Se construyó un <strong>índice de Cohesión Social</strong> que se compone de dos dimensiones que, a su vez, son índices sumativos construidos a partir de indicadores de LAPOP. La selección de indicadores, subdimensiones y dimensiones está basado en el trabajo previo a nivel agregado del Observatorio de Cohesión Social, accesible aquí: <a href="https://ocscoes.github.io/medicion-cohesion-LA/">https://ocscoes.github.io/medicion-cohesion-LA/</a>.</p>
-<p>El <strong>Índice de Cohesión Horizontal</strong> se compone de dos subdimensiones, <em>Seguridad Urbana</em> y <em>Confianza Interpersonal</em>. Seguridad urbana integra indicadores de seguridad objetiva y seguridad subjetiva. Confianza Interpersonal, en tanto, es un único indicador sobre que tan confiuable son las personas en general. Aunque conceptualmente se entiende que el sentido de pertenencia es un componente importante para la cohesión horizontal, ni LAPOP ni Latinobarómetro cuentan con un indicador que permita medir ese fenómeno de manera adecuada. Por otro lado, si bien se esperaba que la participación comunitaria fuera parte del índice, un análisis factorial exploratorio indicó que no forma parte del mismo concepto latente que las otras dos subsimensiones.</p>
-<p>El <strong>Índice de Cohesión Vertical</strong> se compone de dos dimensiones: <em>Confianza en instituciones</em>, <em>Actitudes hacia la democracia</em>. Confianza en las instituciones integra indicadores relativos a la confianza de los ciudadananos en el congreso, en el poder judicial y en los partidos políticos. Actitudes hacia la democracia se compone de dos indicadores sobre apoyo al sistema democrático y la satisfacción con el funcionamiento de la democracia en su país. Otras variables conceptualmente pertinentes, como participación política o percepciones de justicia, no se incluyeron debido a la falta de indicadores disponibles.</p>
+<p>El <strong>Índice de Cohesión Horizontal</strong> se compone de dos subdimensiones, <em>Seguridad Urbana</em> y <em>Confianza Interpersonal</em>. Seguridad urbana integra indicadores de seguridad objetiva y seguridad subjetiva. Confianza Interpersonal, en tanto, es un único indicador sobre que tan confiable son las personas en general<a href="Aunque%20conceptualmente%20se%20entiende%20que%20el%20sentido%20de%20pertenencia%20es%20un%20componente%20importante%20para%20la%20cohesión%20horizontal,%20ni%20LAPOP%20ni%20Latinobarómetro%20cuentan%20con%20un%20indicador%20que%20permita%20medir%20ese%20fenómeno%20de%20manera%20adecuada.%20Por%20otro%20lado,%20si%20bien%20se%20esperaba%20que%20la%20participación%20comunitaria%20fuera%20parte%20del%20índice,%20un%20análisis%20factorial%20exploratorio%20indicó%20que%20no%20forma%20parte%20del%20mismo%20concepto%20latente%20que%20las%20otras%20dos%20subsimensiones.">¹</a>.</p>
+<p>El <strong>Índice de Cohesión Vertical</strong> se compone de dos dimensiones: <em>Confianza en instituciones</em>, <em>Actitudes hacia la democracia</em>. Confianza en las instituciones integra indicadores relativos a la confianza de los ciudadananos en el congreso, en el poder judicial y en los partidos políticos. Actitudes hacia la democracia se compone de dos indicadores sobre apoyo al sistema democrático y la satisfacción con el funcionamiento de la democracia en su país<a href="Otras%20variables%20conceptualmente%20pertinentes,%20como%20participación%20política%20o%20percepciones%20de%20justicia,%20no%20se%20incluyeron%20debido%20a%20la%20falta%20de%20indicadores%20disponibles.">²</a>.</p>
 <p>Los indicadores fueron estandarizados de modo que todas las subdimensiones y dimensiones de los índices tienen un rango de 0 a 10 con 0 indicando bajos niveles de cohesión social y 10 indicando altos niveles de cohesión.</p>
 </section>
 <section id="variables-independientes" class="level3">
 <h3 class="anchored" data-anchor-id="variables-independientes">Variables Independientes</h3>
-<p>Se incluyeron como variables independientes factores económicos, institucionales y culturales. Reconociendo la estructura jerarquica de los datos, se incluyen predictores a nivel individual, a nivel de olas-país, y a nivel país.</p>
+<p>Se incluyeron como variables independientes factores económicos, institucionales y culturales. Reconociendo la estructura jerárquica de los datos, se consideraron predictores a nivel individual, a nivel de olas-país, y a nivel país.</p>
 <section id="variables-individuales" class="level4">
 <h4 class="anchored" data-anchor-id="variables-individuales">Variables Individuales</h4>
-<p>El principal predictor individual utilizado en este estudio es el <strong>nivel educativo</strong> de las personas. Las múltiples codificaciones de LAPOP para este indicador fueron únificadas para crear una variable de 3 categorías, distinguiendo individuos con educación primeria, secundaria y terciaria.</p>
-<p>Además, se incluyen como variables de control el sexo, la edad y la posición políticas de los individuos.</p>
+<p>El principal predictor individual utilizado en este estudio es el <strong>nivel educativo</strong> de las personas. Las múltiples codificaciones de LAPOP para este indicador fueron únificadas para crear una variable de 3 categorías, distinguiendo individuos con educación primaria, secundaria y terciaria.</p>
+<p>Además, se incluyen como variables de control el sexo, la edad y la posición política de los individuos.</p>
 </section>
 <section id="variables-contextuales" class="level4">
 <h4 class="anchored" data-anchor-id="variables-contextuales">Variables Contextuales</h4>
-<p><em>Prosperidad económica</em> se medirá a través del logaritmo del PIB per cápita a valores de paridad de poder adquisitivo (PPA). <em>Desigualdad económica</em> en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial. Además, se incluirá el porcentaje de individuos con educación terciaria en un país como <em>proxy</em> de <strong>oportunidades educativas</strong>.</p>
-<p>En cuanto a factores institucionales, se incluyó el Índice de Democracia Electoral, o poliarquía, para medir la <em>Calidad democrática de los países</em>. Por otro lado, se incluyó <strong>un índice de gobernanza</strong> (<span class="math inline">\(\alpha\)</span> = 0.96) calculado a partir de los <em>Worldwide Governace Indicators</em> del Banco Mundial <span class="citation" data-cites="kaufmann_worldwide_2024">(<a href="#ref-kaufmann_worldwide_2024" role="doc-biblioref">Kaufmann y Kraay 2024</a>)</span>.</p>
-<p>Se medirá <strong>diversidad cultural</strong> como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logistica.</p>
+<p><strong>Prosperidad económica</strong> se medirá a través del logaritmo del PIB per cápita a valores de paridad de poder adquisitivo (PPA). <strong>Desigualdad económica</strong> en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial. Además, se incluirá el porcentaje de individuos con educación terciaria en un país como <em>proxy</em> de <strong>oportunidades educativas</strong>.</p>
+<p>En cuanto a factores institucionales, se incluyó el Índice de Democracia Electoral, o poliarquía, para medir la <strong>Calidad democrática de los países</strong>. Por otro lado, se incluyó <strong>un índice de gobernanza</strong> (<span class="math inline">\(\alpha\)</span> = 0.96) calculado a partir de los <em>Worldwide Governace Indicators</em> del Banco Mundial <span class="citation" data-cites="kaufmann_worldwide_2024">(<a href="#ref-kaufmann_worldwide_2024" role="doc-biblioref">Kaufmann y Kraay 2024</a>)</span>.</p>
+<p>Se medirá <strong>diversidad cultural</strong> como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logística.</p>
 </section>
 </section>
 </section>
@@ -436,14 +436,14 @@ Tabla&nbsp;1: Disponibilidad de datos por olas y países
 <h2 class="anchored" data-anchor-id="método">Método</h2>
 <section id="análisis-factorial-confirmatorio" class="level3">
 <h3 class="anchored" data-anchor-id="análisis-factorial-confirmatorio">Análisis Factorial Confirmatorio</h3>
-<p>Se realizó un análisis factorial confirmatorio con el fin de poner a prueba el modelo construido por el Observatorio de Cohesión Social <span class="citation" data-cites="observatoriodecohesionsocial_medicion_2025">(<a href="#ref-observatoriodecohesionsocial_medicion_2025" role="doc-biblioref">2025</a>)</span> y la propuesta teórica de Chan, To y Chan. Como se observa en la <a href="#fig-modelo" class="quarto-xref">Figura&nbsp;1</a>, se entiende la Cohesión Social como un constructo latente constituido de dos dimensiones latentes – Cohesión Vertical y Cohesión Horizontal.</p>
+<p>Se realizó un análisis factorial confirmatorio con el fin de poner a prueba el modelo construido por el Observatorio de Cohesión Social <span class="citation" data-cites="observatoriodecohesionsocial_medicion_2025">(<a href="#ref-observatoriodecohesionsocial_medicion_2025" role="doc-biblioref">2025</a>)</span> y la propuesta teórica de <span class="citation" data-cites="chan_reconsidering_2006">Chan, To, y Chan (<a href="#ref-chan_reconsidering_2006" role="doc-biblioref">2006</a>)</span>. Como se observa en la <a href="#fig-modelo" class="quarto-xref">Figura&nbsp;1</a>, se entiende la Cohesión Social como un constructo latente constituido de dos dimensiones latentes – Cohesión Vertical y Cohesión Horizontal.</p>
 <div id="fig-modelo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-modelo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="input/esquema.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-modelo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Esquema Conceputal de Cohesión Social
+Figura&nbsp;1: Esquema Conceptual de Cohesión Social
 </figcaption>
 </figure>
 </div>
@@ -460,50 +460,28 @@ y_{jti} = \beta_{0}(t) + \beta_{1}X_{jti} + \gamma_{we}(Z_{jt}-\bar{Z}_{j}) + \g
 </section>
 <section id="resultados" class="level1">
 <h1>Resultados</h1>
-<section id="descriptivos" class="level2">
-<h2 class="anchored" data-anchor-id="descriptivos">Descriptivos</h2>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-ch" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-ch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-ch-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2: Evolución dimensiones Cohesión Horizontal (2004-2022)
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-cv" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-cv-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3: Evolución dimensiones Cohesión Vertical (2004-2022)
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
 <section id="análisis-factorial-confirmatorio-1" class="level2">
 <h2 class="anchored" data-anchor-id="análisis-factorial-confirmatorio-1">Análisis Factorial Confirmatorio</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/afc-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption>Análisis Factorial Confirmatorio Modelo de Medición de Cohesión Social</figcaption>
+<div id="fig-afc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-afc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-afc-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-afc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Análisis Factorial Confirmatorio Modelo de Medición de Cohesión Social
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Nota. RMSEA = 0.022, CFI = 0.998, Chi-cuadrado = 111.6, gl = 1, p-valor = 0.</p>
+<p><strong>Nota. RMSEA = 0.022, CFI = 0.998, Chi-cuadrado = 111.6, gl = 1, p-valor = 0.</strong></p>
+<p>En <a href="#fig-afc" class="quarto-xref">Figura&nbsp;2</a> se presentan los resultados del análisis factorial confirmatorio hecho a partir del modelo de medición propuesto. En primer lugar, se observa que los indicadores presentan cargas factoriales moderadas, las cuales van del 0.45 al 0.6 dependiendo del caso, lo que sugiere que los indicadores reflejan parcialmente las dimensiones latentes. Los índices de ajuste son de buena calidad, apuntando a una fiabilidad del constructo. Ahora, dado que el modelo cuenta con un solo grado de libertad, las medidas de ajuste global deben interpretarse con precaución. En suma, el modelo ofrece un ajuste aceptable a nivel identificacional, pero la validez de los factores son limitadas, lo que podría solucionarse aumentando el número o la calidad de los indicadores en futuras mediciones.</p>
+</section>
+<section id="descriptivos" class="level2">
+<h2 class="anchored" data-anchor-id="descriptivos">Descriptivos</h2>
+<p>A continuación se presentan los resultados descriptivos sobre los cambios de la cohesión social en América Latina en los últimos 20 años.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-cs" class="quarto-float quarto-figure quarto-figure-center anchored" width="672">
@@ -512,12 +490,43 @@ Figura&nbsp;3: Evolución dimensiones Cohesión Vertical (2004-2022)
 <img src="index_files/figure-html/fig-cs-1.png" id="fig-cs" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-cs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;4
+Figura&nbsp;3
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
+<p>En <a href="#fig-cs" class="quarto-xref">Figura&nbsp;3</a> se visualizan los promedios de cada año para los distintos tipos de cohesión. En primer lugar, se puede observar que la cohesión horizontal mantiene un patrón ascendente entre 2004 y 2012, exceptuando la caída del año 2010. Posterior a esto, la cohesión horizontal se enfrenta a una decaída sostenida hasta el 2018, para luego volver a repuntar e incluso superando su nivel registrado en 2004. La cohesión vertical presenta un patrón de variación parecido al de la cohesión horizontal, evidenciando un alza persistente en el tiempo hasta el año 2012, donde luego sufre una caída abrupta a nivel regional. Este descenso se mantuvo hasta el 2016, donde luego se revertiría esta dinámica, notándose un aumento de la cohesión vertical hasta el último año registrado. Si bien, la última medición de la cohesión vertical muestra niveles superiores al del inicio, sus puntuaciones en general son considerablemente bajas al compararlas con la cohesión horizontal, diferenciándose en todas las olas por aproximadamente 1.5 puntos. En suma, en América Latina se denota una mayor cohesión horizontal por sobre la vertical de manera consistente desde el 2004 hasta el 2022.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ch" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-ch-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Evolución dimensiones Cohesión Horizontal (2004-2022)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>En <a href="#fig-ch" class="quarto-xref">Figura&nbsp;4</a> se presentan los promedios por año de las subdimensiones horizontales, seguridad pública y confianza interpersonal. En la seguridad pública se observa un patrón inestable entre los años 2004 y 2012, marcado por descensos y ascensos alternados. Posterior a 2012 se evidencia un fuerte deterioro en la subdimensión hasta 2018, viéndose un repunte después de este año, sin embargo, la recuperación no logra llegar a los niveles de seguridad que existían en un principio. La confianza interpersonal, por su parte, presenta un aumento hasta el 2010, año en el que sufre una leve caída, pero el año siguiente volviendo a ascender. Post 2012 se observa un patrón similar al de seguridad pública, con un descenso sostenido hasta el año 2018 para luego recuperarse. Una de las principales diferencias entre las dos subdimensiones es que, mientras en 2022 seguridad pública registró un promedio inferior al de la primera ola, los niveles de confianza interpersonal en 2022 fueron mayores que los de 2004.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-cv" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-cv-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: Evolución dimensiones Cohesión Vertical (2004-2022)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>En <a href="#fig-cv" class="quarto-xref">Figura&nbsp;5</a> están graficados los cambios en el tiempo de las dos subdimensiones de cohesión vertical. Actitud hacia la democracia presenta un alza sostenida hasta el 2008, donde luego sufre una caída paulatina, destacándose un descenso abrupto entre 2014 y 2016. Posterior a esto, las afecciones hacia la democracia evidencian nuevamente un ascenso en sus niveles regionales, sin embargo, no logra alcanzar sus niveles iniciales. En confianza en instituciones se observan niveles ascendentes desde 2004 hasta 2012, a excepción de la baja del 2008. Los años siguientes se evidencia un decrecimiento en la confianza institucional hasta el 2016, para luego demostrar un repunte hasta el último año registrado, llegando a superar los niveles de confianza en instituciones del 2004.</p>
 </section>
 <section id="modelos-multinivel" class="level2">
 <h2 class="anchored" data-anchor-id="modelos-multinivel">Modelos Multinivel</h2>
