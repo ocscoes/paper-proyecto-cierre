@@ -2,11 +2,11 @@
 
 ## Datos
 
-La principal fuente de datos para este estudio es la *AmericasBarometer* del *Latin American Public Opinion Project* (LAPOP Lab), también conocida como Encuesta LAPOP. La encuesta tiene por objetivo recolectar datos la opinión pública sobre democracia y gobernanza en el continente americano. El diseño de la encuesta es probalístico y representativo de la población adulta de cada país [@lapoplab_americasbarometer_2023].
+La principal fuente de datos para este estudio es la *AmericasBarometer* del [*Latin American Public Opinion Project* (LAPOP Lab)](https://ropercenter.cornell.edu/latin-american-public-opinion-project-lapop), también conocida como Encuesta LAPOP. La encuesta tiene por objetivo recolectar datos la opinión pública sobre democracia y gobernanza en el continente americano. El diseño de la encuesta es probalístico y representativo de la población adulta de cada país [@lapoplab_americasbarometer_2023].
 
-La encuesta se ha realizado de manera regular desde el año 2004. A la fecha, se han realizado 9 olas que han incluido entre 11 a 23 países, sumando un total sobre 400.000 entrevistas en dos décadas. El cuestionario se administra a través de encuestas cara  a cara, con la excepción de Canadá y Estados Unidos.  
+La encuesta se ha aplicado de manera regular desde el año 2004. A la fecha, se han realizado 9 olas que han incluido entre 11 a 23 países, sumando un total sobre 400.000 entrevistas en dos décadas. El cuestionario se administra a través de encuestas cara  a cara, con la excepción de Canadá y Estados Unidos.  
 
-Como criterio, se incluyeron en este estudio únicamente los países de la región que tengan disponible datos para los indicadores principales del estudio en al menos 5 puntos en el tiempo. Como se resume en @tbl-paises, se incluyen en este estudio un total de 238.257 individuos anidados en 174 olas-paises en 25 países del continente americano. 
+Como criterio, en este estudio se incluyeron únicamente los países de la región que contaban con datos disponibles para los indicadores principales del estudio en, al menos, 5 puntos en el tiempo. Como se resume en @tbl-paises, se incluyen en este estudio un total de 238.257 individuos anidados en 174 olas-países en 25 países del continente americano. 
 
 ```{r}
 #| label: tbl-paises
@@ -37,11 +37,11 @@ tab1_total |>
 
 Para datos contexuales de los países, se recurrió a diversas fuentes de datos que incluyen:
 
-1) Los datos abiertos del Banco Mundial. Incluye diversos indicadores sobre desarrollo social y económico de la mayoría de los países del mundo. El portal es de datos es accesible en: [https://datos.bancomundial.org/](https://datos.bancomundial.org/).
+1) Los datos abiertos del Banco Mundial. Incluye diversos indicadores sobre desarrollo social y económico de la mayoría de los países del mundo. El portal de datos es accesible en: [https://datos.bancomundial.org/](https://datos.bancomundial.org/).
 
-2) *The Worlwide Governance Indicators* del Banco Mundial. Se trata de una encuesta a expertos que recopila datos primeros sobre diveros indicadores de gobernanza, cubriendo múltiple países con información actualizada entre 1996 y 2003. Los datos son accesibles en: [https://www.worldbank.org/en/publication/worldwide-governance-indicators](https://www.worldbank.org/en/publication/worldwide-governance-indicators).
+2) *The Worlwide Governance Indicators* del Banco Mundial. Se trata de una encuesta a expertos que recopila datos sobre diversos indicadores de gobernanza, cubriendo múltiples países con información actualizada entre 1996 y 2003. Los datos se encuentran disponibles en: [https://www.worldbank.org/en/publication/worldwide-governance-indicators](https://www.worldbank.org/en/publication/worldwide-governance-indicators).
 
-3) *The V-Dem Dataset* que recoge un conjunto multidimensional de datos que busca medir la calidad de la democracia alrededor del mundo. La base de datos es accesible mediante el paquete de R `vdemdata` [@maerz_vdemdata_2025]
+3) *The V-Dem Dataset*. Recoge un conjunto multidimensional de datos que busca medir la calidad de la democracia alrededor del mundo. La base de datos es accesible mediante el paquete de R `vdemdata` [@maerz_vdemdata_2025]
 
 ## Variables
 
@@ -61,9 +61,13 @@ library(psych)
 
 Se construyó un **índice de Cohesión Social** que se compone de dos dimensiones que, a su vez, son índices sumativos construidos a partir de indicadores de LAPOP. La selección de indicadores, subdimensiones y dimensiones está basado en el trabajo previo a nivel agregado del Observatorio de Cohesión Social, accesible aquí: [https://ocscoes.github.io/medicion-cohesion-LA/](https://ocscoes.github.io/medicion-cohesion-LA/).
 
-El **Índice de Cohesión Horizontal** se compone de dos subdimensiones, *Seguridad Urbana* y *Confianza Interpersonal*. Seguridad urbana integra indicadores de seguridad objetiva y seguridad subjetiva. Confianza Interpersonal, en tanto, es un único indicador sobre que tan confiuable son las personas en general. Aunque conceptualmente se entiende que el sentido de pertenencia es un componente importante para la cohesión horizontal, ni LAPOP ni Latinobarómetro cuentan con un indicador que permita medir ese fenómeno de manera adecuada. Por otro lado, si bien se esperaba que la participación comunitaria fuera parte del índice, un análisis factorial exploratorio indicó que no forma parte del mismo concepto latente que las otras dos subsimensiones.
+El **Índice de Cohesión Horizontal** se compone de dos subdimensiones, *Seguridad Urbana* y *Confianza Interpersonal*. Seguridad urbana integra indicadores de seguridad objetiva y seguridad subjetiva. Confianza Interpersonal, en tanto, es un único indicador sobre que tan confiable son las personas en general[¹]. 
 
-El **Índice de Cohesión Vertical** se compone de dos dimensiones: *Confianza en instituciones*, *Actitudes hacia la democracia*. Confianza en las instituciones integra indicadores relativos a la confianza de los ciudadananos en el congreso, en el poder judicial y en los partidos políticos. Actitudes hacia la democracia se compone de dos indicadores sobre apoyo al sistema democrático y la satisfacción con el funcionamiento de la democracia en su país. Otras variables conceptualmente pertinentes, como participación política o percepciones de justicia, no se incluyeron debido a la falta de indicadores disponibles. 
+[¹]: Aunque conceptualmente se entiende que el sentido de pertenencia es un componente importante para la cohesión horizontal, ni LAPOP ni Latinobarómetro cuentan con un indicador que permita medir ese fenómeno de manera adecuada. Por otro lado, si bien se esperaba que la participación comunitaria fuera parte del índice, un análisis factorial exploratorio indicó que no forma parte del mismo concepto latente que las otras dos subsimensiones.
+
+El **Índice de Cohesión Vertical** se compone de dos dimensiones: *Confianza en instituciones*, *Actitudes hacia la democracia*. Confianza en las instituciones integra indicadores relativos a la confianza de los ciudadananos en el congreso, en el poder judicial y en los partidos políticos. Actitudes hacia la democracia se compone de dos indicadores sobre apoyo al sistema democrático y la satisfacción con el funcionamiento de la democracia en su país[²]. 
+
+[²]: Otras variables conceptualmente pertinentes, como participación política o percepciones de justicia, no se incluyeron debido a la falta de indicadores disponibles.
 
 Los indicadores fueron estandarizados de modo que todas las subdimensiones y dimensiones de los índices tienen un rango de 0 a 10 con 0 indicando bajos niveles de cohesión social y 10 indicando altos niveles de cohesión. 
 
@@ -91,29 +95,29 @@ stargazer::stargazer(datos_cohesion, type="html")
 
 ### Variables Independientes
 
-Se incluyeron como variables independientes factores económicos, institucionales y culturales. Reconociendo la estructura jerarquica de los datos, se incluyen predictores a nivel individual, a nivel de olas-país, y a nivel país. 
+Se incluyeron como variables independientes factores económicos, institucionales y culturales. Reconociendo la estructura jerárquica de los datos, se consideraron predictores a nivel individual, a nivel de olas-país, y a nivel país. 
 
 #### Variables Individuales
 
-El principal predictor individual utilizado en este estudio es el **nivel educativo** de las personas. Las múltiples codificaciones de LAPOP para este indicador fueron únificadas para crear una variable de 3 categorías, distinguiendo individuos con educación primeria, secundaria y terciaria.
+El principal predictor individual utilizado en este estudio es el **nivel educativo** de las personas. Las múltiples codificaciones de LAPOP para este indicador fueron únificadas para crear una variable de 3 categorías, distinguiendo individuos con educación primaria, secundaria y terciaria.
 
-Además, se incluyen como variables de control el sexo, la edad y la posición políticas de los individuos. 
+Además, se incluyen como variables de control el sexo, la edad y la posición política de los individuos. 
 
 #### Variables Contextuales
 
-*Prosperidad económica* se medirá a través del logaritmo del PIB per cápita a valores de paridad de poder adquisitivo (PPA). *Desigualdad económica* en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial. Además, se incluirá el porcentaje de individuos con educación terciaria en un país como *proxy* de **oportunidades educativas**. 
+**Prosperidad económica** se medirá a través del logaritmo del PIB per cápita a valores de paridad de poder adquisitivo (PPA). **Desigualdad económica** en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial. Además, se incluirá el porcentaje de individuos con educación terciaria en un país como *proxy* de **oportunidades educativas**. 
 
-En cuanto a factores institucionales, se incluyó el Índice de Democracia Electoral, o poliarquía, para medir la *Calidad democrática de los países*. Por otro lado, se incluyó **un índice de gobernanza** ($\alpha$ = 0.96)  calculado a partir de los *Worldwide Governace Indicators* del Banco Mundial [@kaufmann_worldwide_2024].
+En cuanto a factores institucionales, se incluyó el Índice de Democracia Electoral, o poliarquía, para medir la **Calidad democrática de los países**. Por otro lado, se incluyó **un índice de gobernanza** ($\alpha$ = 0.96)  calculado a partir de los *Worldwide Governace Indicators* del Banco Mundial [@kaufmann_worldwide_2024].
 
-Se medirá **diversidad cultural** como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logistica.
+Se medirá **diversidad cultural** como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logística.
 
 ## Método
 
 ### Análisis Factorial Confirmatorio
 
-Se realizó un análisis factorial confirmatorio con el fin de poner a prueba el modelo construido por el Observatorio de Cohesión Social [-@observatoriodecohesionsocial_medicion_2025] y la propuesta teórica de Chan, To y Chan. Como se observa en la @fig-modelo, se entiende la Cohesión Social como un constructo latente constituido de dos dimensiones latentes -- Cohesión Vertical y Cohesión Horizontal.
+Se realizó un análisis factorial confirmatorio con el fin de poner a prueba el modelo construido por el Observatorio de Cohesión Social [-@observatoriodecohesionsocial_medicion_2025] y la propuesta teórica de @chan_reconsidering_2006. Como se observa en la @fig-modelo, se entiende la Cohesión Social como un constructo latente constituido de dos dimensiones latentes -- Cohesión Vertical y Cohesión Horizontal.
 
-![Esquema Conceputal de Cohesión Social](input/esquema.png){#fig-modelo}
+![Esquema Conceptual de Cohesión Social](input/esquema.png){#fig-modelo}
 
 ### Análisis Multinivel
 

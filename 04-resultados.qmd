@@ -15,7 +15,79 @@ datos_merge$country_wave = do.call(paste, c(datos_merge[c("pais", "ola")], sep =
 
 ```
 
+## Análisis Factorial Confirmatorio
+
+```{r}
+#| eval: false
+
+m1 <- 'ch =~ seguridad_ind + confianza_it_ind
+       cv =~ confianza_inst_ind + democracia_ind'
+
+m1_cfa <- cfa(
+  m1, data = datos_merge, std.lv = TRUE)
+
+save(m1_cfa, file="output/cfa.rdata")
+```
+
+
+
+```{r}
+#| label: fig-afc
+#| fig-cap: Análisis Factorial Confirmatorio Modelo de Medición de Cohesión Social
+
+load("output/cfa.rdata")
+
+semPaths(m1_cfa,
+         what = "std",
+        label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+        residuals = FALSE, # no mostrar residuos
+        edge.color = "black") # color flechas
+
+fit <- fitmeasures(m1_cfa, fit.measures = c("rmsea", "cfi", "chisq", "pvalue", "df"))
+```
+
+**Nota. RMSEA = `r round(fit["rmsea"], 3)`, CFI = `r round(fit["cfi"], 3)`, Chi-cuadrado = `r round(fit["chisq"], 2)`, gl = `r fit["df"]`, p-valor = `r round(fit["pvalue"], 3)`.**
+
+En @fig-afc se presentan los resultados del análisis factorial confirmatorio hecho a partir del modelo de medición propuesto. En primer lugar, se observa que los indicadores presentan cargas factoriales moderadas, las cuales van del 0.45 al 0.6 dependiendo del caso, lo que sugiere que los indicadores reflejan parcialmente las dimensiones latentes. Los índices de ajuste son de buena calidad, apuntando a una fiabilidad del constructo. Ahora, dado que el modelo cuenta con un solo grado de libertad, las medidas de ajuste global deben interpretarse con precaución. En suma, el modelo ofrece un ajuste aceptable a nivel identificacional, pero la validez de los factores son limitadas, lo que podría solucionarse aumentando el número o la calidad de los indicadores en futuras mediciones.
+
+
 ## Descriptivos
+
+A continuación se presentan los resultados descriptivos sobre los cambios de la cohesión social en América Latina en los últimos 20 años. 
+
+```{r}
+#| label: fig-cs
+#| tab-cap: Evolución dimensiones Cohesión Social (2004-2022)
+
+olas <- datos_merge |>
+  group_by(ola) |>
+  summarise(horizontal_prom = mean(`cohesion_horizontal_ind`, na.rm=T),
+            vertical_prom = mean(`cohesion_vertical_ind`, na.rm=T),
+            cohesion_prom = mean(`cohesion_general_ind`, na.rm=T)) |>
+  pivot_longer(
+    cols = c(horizontal_prom, vertical_prom, cohesion_prom),
+    names_to = "indicador",
+    values_to = "promedio"
+  ) |>
+  mutate(indicador = dplyr::recode(indicador,
+                            horizontal_prom = "Cohesión Horizontal",
+                            vertical_prom = "Cohesión Vertical",
+                            cohesion_prom = "Cohesión Social"))
+
+
+plot_cs <- olas |>
+  ggplot(aes(x = ola, y = promedio, color = indicador)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  labs(x = "Ola", y = "Promedio", color = NULL) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+plot_cs
+
+```
+
+En @fig-cs se visualizan los promedios de cada año para los distintos tipos de cohesión. En primer lugar, se puede observar que la cohesión horizontal mantiene un patrón ascendente entre 2004 y 2012, exceptuando la caída del año 2010. Posterior a esto, la cohesión horizontal se enfrenta a una decaída sostenida hasta el 2018, para luego volver a repuntar e incluso superando su nivel registrado en 2004. La cohesión vertical presenta un patrón de variación parecido al de la cohesión horizontal, evidenciando un alza persistente en el tiempo hasta el año 2012, donde luego sufre una caída abrupta a nivel regional. Este descenso se mantuvo hasta el 2016, donde luego se revertiría esta dinámica, notándose un aumento de la cohesión vertical hasta el último año registrado. Si bien, la última medición de la cohesión vertical muestra niveles superiores al del inicio, sus puntuaciones en general son considerablemente bajas al compararlas con la cohesión horizontal, diferenciándose en todas las olas por aproximadamente 1.5 puntos. En suma, en América Latina se denota una mayor cohesión horizontal por sobre la vertical de manera consistente desde el 2004 hasta el 2022.
 
 ```{r}
 #| label: fig-ch
@@ -44,6 +116,7 @@ olas |>
 
 ```
 
+En @fig-ch se presentan los promedios por año de las subdimensiones horizontales, seguridad pública y confianza interpersonal. En la seguridad pública se observa un patrón inestable entre los años 2004 y 2012, marcado por descensos y ascensos alternados. Posterior a 2012 se evidencia un fuerte deterioro en la subdimensión hasta 2018, viéndose un repunte después de este año, sin embargo, la recuperación no logra llegar a los niveles de seguridad que existían en un principio. La confianza interpersonal, por su parte, presenta un aumento hasta el 2010, año en el que sufre una leve caída, pero el año siguiente volviendo a ascender. Post 2012 se observa un patrón similar al de seguridad pública, con un descenso sostenido hasta el año 2018 para luego recuperarse. Una de las principales diferencias entre las dos subdimensiones es que, mientras en 2022 seguridad pública registró un promedio inferior al de la primera ola, los niveles de confianza interpersonal en 2022 fueron mayores que los de 2004. 
 
 ```{r}
 #| label: fig-cv
@@ -71,70 +144,7 @@ olas |>
 
 ```
 
-## Análisis Factorial Confirmatorio
-
-```{r}
-#| eval: false
-
-m1 <- 'ch =~ seguridad_ind + confianza_it_ind
-       cv =~ confianza_inst_ind + democracia_ind'
-
-m1_cfa <- cfa(
-  m1, data = datos_merge, std.lv = TRUE)
-
-save(m1_cfa, file="output/cfa.rdata")
-```
-
-
-
-```{r}
-#| label: afc
-#| fig-cap: Análisis Factorial Confirmatorio Modelo de Medición de Cohesión Social
-
-load("output/cfa.rdata")
-
-semPaths(m1_cfa,
-         what = "std",
-        label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
-        residuals = FALSE, # no mostrar residuos
-        edge.color = "black") # color flechas
-
-fit <- fitmeasures(m1_cfa, fit.measures = c("rmsea", "cfi", "chisq", "pvalue", "df"))
-```
-
-
-
-Nota. RMSEA = `r round(fit["rmsea"], 3)`, CFI = `r round(fit["cfi"], 3)`, Chi-cuadrado = `r round(fit["chisq"], 2)`, gl = `r fit["df"]`, p-valor = `r round(fit["pvalue"], 3)`.
-
-
-```{r}
-#| label: fig-cs
-#| tab-cap: Evolución dimensiones Cohesión Social (2004-2022)
-
-olas <- datos_merge |>
-  group_by(ola) |>
-  summarise(horizontal_prom = mean(`cohesion_horizontal_ind`, na.rm=T),
-            vertical_prom = mean(`cohesion_vertical_ind`, na.rm=T),
-            cohesion_prom = mean(`cohesion_general_ind`, na.rm=T)) |>
-  pivot_longer(
-    cols = c(horizontal_prom, vertical_prom, cohesion_prom),
-    names_to = "indicador",
-    values_to = "promedio"
-  ) |>
-  mutate(indicador = dplyr::recode(indicador,
-                            horizontal_prom = "Cohesión Horizontal",
-                            vertical_prom = "Cohesión Vertical",
-                            cohesion_prom = "Cohesión Social"))
-
-olas |>
-  ggplot(aes(x = ola, y = promedio, color=indicador)) +
-  geom_line(linewidth = 1) +
-  geom_point() +
-  labs(x = "Ola", y = "Promedio", color=NULL) +
-  theme_minimal() + 
-  theme(legend.position = "bottom")
-
-```
+En @fig-cv están graficados los cambios en el tiempo de las dos subdimensiones de cohesión vertical. Actitud hacia la democracia presenta un alza sostenida hasta el 2008, donde luego sufre una caída paulatina, destacándose un descenso abrupto entre 2014 y 2016. Posterior a esto, las afecciones hacia la democracia evidencian nuevamente un ascenso en sus niveles regionales, sin embargo, no logra alcanzar sus niveles iniciales. En confianza en instituciones se observan niveles ascendentes desde 2004 hasta 2012, a excepción de la baja del 2008. Los años siguientes se evidencia un decrecimiento en la confianza institucional hasta el 2016, para luego demostrar un repunte hasta el último año registrado, llegando a superar los niveles de confianza en instituciones del 2004. 
 
 ## Modelos Multinivel
 
