@@ -37,7 +37,7 @@ tab1_total |>
 
 Para datos contexuales de los países, se recurrió a diversas fuentes de datos que incluyen:
 
-1) Los datos abiertos del Banco Mundial. Incluye diversos indicadores sobre desarrollo social y económico de la mayoría de los países del mundo. El portal de datos es accesible en: [https://datos.bancomundial.org/](https://datos.bancomundial.org/).
+1) Los datos abiertos del Banco Mundial. Contiene diversos indicadores sobre desarrollo social y económico de la mayoría de los países del mundo. El portal de datos es accesible en: [https://datos.bancomundial.org/](https://datos.bancomundial.org/).
 
 2) *The Worlwide Governance Indicators* del Banco Mundial. Se trata de una encuesta a expertos que recopila datos sobre diversos indicadores de gobernanza, cubriendo múltiples países con información actualizada entre 1996 y 2003. Los datos se encuentran disponibles en: [https://www.worldbank.org/en/publication/worldwide-governance-indicators](https://www.worldbank.org/en/publication/worldwide-governance-indicators).
 
@@ -69,7 +69,7 @@ El **Índice de Cohesión Vertical** se compone de dos dimensiones: *Confianza e
 
 [²]: Otras variables conceptualmente pertinentes, como participación política o percepciones de justicia, no se incluyeron debido a la falta de indicadores disponibles.
 
-Los indicadores fueron estandarizados de modo que todas las subdimensiones y dimensiones de los índices tienen un rango de 0 a 10 con 0 indicando bajos niveles de cohesión social y 10 indicando altos niveles de cohesión. 
+Los indicadores fueron estandarizados de modo que todas las subdimensiones y dimensiones de los índices tienen un rango de 0 a 10, con 0 indicando bajos niveles de cohesión social y 10 indicando altos niveles de cohesión. 
 
 ```{r}
 #| label: tbl-indicadores
@@ -101,13 +101,13 @@ Se incluyeron como variables independientes factores económicos, institucionale
 
 El principal predictor individual utilizado en este estudio es el **nivel educativo** de las personas. Las múltiples codificaciones de LAPOP para este indicador fueron únificadas para crear una variable de 3 categorías, distinguiendo individuos con educación primaria, secundaria y terciaria.
 
-Además, se incluyen como variables de control el sexo, la edad y la posición política de los individuos. 
+Además, se añadieron como variables de control el sexo, la edad y la posición política de los individuos. 
 
 #### Variables Contextuales
 
-**Prosperidad económica** se medirá a través del logaritmo del PIB per cápita a valores de paridad de poder adquisitivo (PPA). **Desigualdad económica** en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial. Además, se incluirá el porcentaje de individuos con educación terciaria en un país como *proxy* de **oportunidades educativas**. 
+**Prosperidad económica** se midió a través del logaritmo del PIB per cápita a valores de paridad de poder adquisitivo (PPA). **Desigualdad económica** en tanto se midió a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial. Además, se incluyó el porcentaje de individuos con educación terciaria en un país como *proxy* de **oportunidades educativas**. 
 
-En cuanto a factores institucionales, se incluyó el Índice de Democracia Electoral, o poliarquía, para medir la **Calidad democrática de los países**. Por otro lado, se incluyó **un índice de gobernanza** ($\alpha$ = 0.96)  calculado a partir de los *Worldwide Governace Indicators* del Banco Mundial [@kaufmann_worldwide_2024].
+En cuanto a factores institucionales, se consideró el Índice de Democracia Electoral, o poliarquía, para medir la **Calidad democrática de los países**. Por otro lado, se incluyó **un índice de gobernanza** ($\alpha$ = 0.96)  calculado a partir de los *Worldwide Governace Indicators* del Banco Mundial [@kaufmann_worldwide_2024].
 
 Se medirá **diversidad cultural** como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logística.
 

@@ -53,11 +53,11 @@ En @fig-afc se presentan los resultados del análisis factorial confirmatorio he
 
 ## Descriptivos
 
-A continuación se presentan los resultados descriptivos sobre los cambios de la cohesión social en América Latina en los últimos 20 años. 
+A continuación se presentan los resultados descriptivos sobre los cambios de la cohesión social en América Latina en las últimas dos décadas.
 
 ```{r}
 #| label: fig-cs
-#| tab-cap: Evolución dimensiones Cohesión Social (2004-2022)
+#| fig-cap: Evolución dimensiones Cohesión Social (2004-2022)
 
 olas <- datos_merge |>
   group_by(ola) |>
@@ -87,7 +87,9 @@ plot_cs
 
 ```
 
-En @fig-cs se visualizan los promedios de cada año para los distintos tipos de cohesión. En primer lugar, se puede observar que la cohesión horizontal mantiene un patrón ascendente entre 2004 y 2012, exceptuando la caída del año 2010. Posterior a esto, la cohesión horizontal se enfrenta a una decaída sostenida hasta el 2018, para luego volver a repuntar e incluso superando su nivel registrado en 2004. La cohesión vertical presenta un patrón de variación parecido al de la cohesión horizontal, evidenciando un alza persistente en el tiempo hasta el año 2012, donde luego sufre una caída abrupta a nivel regional. Este descenso se mantuvo hasta el 2016, donde luego se revertiría esta dinámica, notándose un aumento de la cohesión vertical hasta el último año registrado. Si bien, la última medición de la cohesión vertical muestra niveles superiores al del inicio, sus puntuaciones en general son considerablemente bajas al compararlas con la cohesión horizontal, diferenciándose en todas las olas por aproximadamente 1.5 puntos. En suma, en América Latina se denota una mayor cohesión horizontal por sobre la vertical de manera consistente desde el 2004 hasta el 2022.
+En @fig-cs se visualizan los promedios de cada año para los distintos tipos de cohesión. En primer lugar, se puede observar que la cohesión horizontal mantiene un patrón ascendente entre 2004 y 2012, exceptuando la caída del año 2010. Posterior a esto, la cohesión horizontal se enfrenta a una decaída sostenida hasta el 2018, para luego volver a repuntar e incluso superando su nivel registrado en 2004. La cohesión vertical presenta un patrón de variación parecido al de la cohesión horizontal, evidenciando un alza persistente en el tiempo hasta el año 2012, donde luego sufre una caída abrupta a nivel regional. Este descenso se mantuvo hasta el 2016, donde luego se revertiría esta dinámica, notándose un aumento de la cohesión vertical hasta el último año registrado. Si bien, la última medición de la cohesión vertical muestra niveles superiores al del inicio, sus puntuaciones en general son considerablemente bajas al compararlas con la cohesión horizontal, diferenciándose en todas las olas por aproximadamente 1.5 puntos. En suma, en América Latina se denota una mayor cohesión horizontal por sobre la vertical de manera consistente desde el 2004 hasta el 2022[³]. 
+
+[³]: Cabe mencionar que la cohesión social (recta verde) es el promedio de la cohesión vertical y horizontal, por ello no se detalla su interpretación.
 
 ```{r}
 #| label: fig-ch
