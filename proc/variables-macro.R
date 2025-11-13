@@ -371,18 +371,41 @@ wgi_proc <- wgi |>
   mutate(estimate= as.numeric(estimate)) |>
   group_by(code, year, indicator) |>
   summarise(valores= mean(estimate), .groups = "drop") |>
-  pivot_wider(names_from= indicator, values_from=valores) 
+  pivot_wider(names_from= indicator, values_from=valores) |>
+  rename(control_corruption = cc,
+         gov_effectiveness = ge,
+         political_stability = pv,
+         rule_of_law = rl,
+         regulatory_quality= rq,
+         voice_and_accountability= va,
+         codigo_pais = code,
+         ola= year)
 
-items <- setdiff(names(wgi_proc), c("year","code"))
+items <- setdiff(names(wgi_proc), c("ola","codigo_pais"))
 
 a_wgi <- alpha(wgi_proc[3:8])
+a_wgi # alpha=0.96
 
-wgi_proc <- wgi_proc |>
+wgi_mean <- wgi_proc |>
   mutate(wgi=rowMeans(pick(all_of(items)))) |>
-  select(codigo_pais= code,
-         ola= year,
+  select(codigo_pais,
+         ola,
          wgi)
 
+
+# Fragmentacion etnica
+
+qog <- read_delim("input/orig/qog.csv", delim= ";")
+
+olas <- unique((df$ola))
+
+data_qog <- qog |>
+  clean_names() |>
+  filter(ccodealp %in% codigos_pais &
+           year %in% olas) |>
+  select(codigo_pais = ccodealp,
+         ola = year,
+         fe_etfra)
 
 # añadir codigos iso a la base datos principal
 datos_wide <- datos_wide |>
@@ -392,7 +415,7 @@ datos_wide <- datos_wide |>
 # merge
 
 # Los objetos que quieres conservar (ajusta los nombres si hace falta)
-keep <- c("datos_wide", "gdp_long",  "migra_log", "vdem_proc", "wgi_proc")
+keep <- c("datos_wide", "gdp_long",  "migra_log", "vdem_proc", "wgi_proc", "wgi_mean", "data_qog")
 
 # Borra todo lo demás del entorno global
 rm(list = setdiff(ls(envir = .GlobalEnv), keep), envir = .GlobalEnv)
@@ -403,6 +426,8 @@ datos_wide <- datos_wide |>
   left_join(migra_log, by=c("codigo_pais", "ola")) |>
   left_join(vdem_proc, by=c("codigo_pais", "ola")) |>
   left_join(wgi_proc, by=c("codigo_pais", "ola")) |>
+  left_join(wgi_mean, by=c("codigo_pais", "ola")) |>
+  left_join(data_qog, by=c("codigo_pais", "ola")) |>
   select(ola,
          pais=pais.x,
          codigo_pais,
@@ -431,7 +456,7 @@ resumen <- datos_wide |>
 datos_wide <- datos_wide |>
   dplyr::filter(!is.na(`Cohesión general`), !is.na(ola)) |>
   semi_join(resumen, by="pais") |>
-  select(1:12, 21,24:28)
+  select(1:12, 21,24:35)
 
   
 

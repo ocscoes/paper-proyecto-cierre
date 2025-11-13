@@ -402,7 +402,7 @@ Tabla&nbsp;1: Disponibilidad de datos por olas y países
 </div>
 <p>Para datos contexuales de los países, se recurrió a diversas fuentes de datos que incluyen:</p>
 <ol type="1">
-<li><p>Los datos abiertos del Banco Mundial. Incluye diversos indicadores sobre desarrollo social y económico de la mayoría de los países del mundo. El portal de datos es accesible en: <a href="https://datos.bancomundial.org/">https://datos.bancomundial.org/</a>.</p></li>
+<li><p>Los datos abiertos del Banco Mundial. Contiene diversos indicadores sobre desarrollo social y económico de la mayoría de los países del mundo. El portal de datos es accesible en: <a href="https://datos.bancomundial.org/">https://datos.bancomundial.org/</a>.</p></li>
 <li><p><em>The Worlwide Governance Indicators</em> del Banco Mundial. Se trata de una encuesta a expertos que recopila datos sobre diversos indicadores de gobernanza, cubriendo múltiples países con información actualizada entre 1996 y 2003. Los datos se encuentran disponibles en: <a href="https://www.worldbank.org/en/publication/worldwide-governance-indicators">https://www.worldbank.org/en/publication/worldwide-governance-indicators</a>.</p></li>
 <li><p><em>The V-Dem Dataset</em>. Recoge un conjunto multidimensional de datos que busca medir la calidad de la democracia alrededor del mundo. La base de datos es accesible mediante el paquete de R <code>vdemdata</code> <span class="citation" data-cites="maerz_vdemdata_2025">(<a href="#ref-maerz_vdemdata_2025" role="doc-biblioref">Maerz et&nbsp;al. 2025</a>)</span></p></li>
 </ol>
@@ -414,7 +414,7 @@ Tabla&nbsp;1: Disponibilidad de datos por olas y países
 <p>Se construyó un <strong>índice de Cohesión Social</strong> que se compone de dos dimensiones que, a su vez, son índices sumativos construidos a partir de indicadores de LAPOP. La selección de indicadores, subdimensiones y dimensiones está basado en el trabajo previo a nivel agregado del Observatorio de Cohesión Social, accesible aquí: <a href="https://ocscoes.github.io/medicion-cohesion-LA/">https://ocscoes.github.io/medicion-cohesion-LA/</a>.</p>
 <p>El <strong>Índice de Cohesión Horizontal</strong> se compone de dos subdimensiones, <em>Seguridad Urbana</em> y <em>Confianza Interpersonal</em>. Seguridad urbana integra indicadores de seguridad objetiva y seguridad subjetiva. Confianza Interpersonal, en tanto, es un único indicador sobre que tan confiable son las personas en general<a href="Aunque%20conceptualmente%20se%20entiende%20que%20el%20sentido%20de%20pertenencia%20es%20un%20componente%20importante%20para%20la%20cohesión%20horizontal,%20ni%20LAPOP%20ni%20Latinobarómetro%20cuentan%20con%20un%20indicador%20que%20permita%20medir%20ese%20fenómeno%20de%20manera%20adecuada.%20Por%20otro%20lado,%20si%20bien%20se%20esperaba%20que%20la%20participación%20comunitaria%20fuera%20parte%20del%20índice,%20un%20análisis%20factorial%20exploratorio%20indicó%20que%20no%20forma%20parte%20del%20mismo%20concepto%20latente%20que%20las%20otras%20dos%20subsimensiones.">¹</a>.</p>
 <p>El <strong>Índice de Cohesión Vertical</strong> se compone de dos dimensiones: <em>Confianza en instituciones</em>, <em>Actitudes hacia la democracia</em>. Confianza en las instituciones integra indicadores relativos a la confianza de los ciudadananos en el congreso, en el poder judicial y en los partidos políticos. Actitudes hacia la democracia se compone de dos indicadores sobre apoyo al sistema democrático y la satisfacción con el funcionamiento de la democracia en su país<a href="Otras%20variables%20conceptualmente%20pertinentes,%20como%20participación%20política%20o%20percepciones%20de%20justicia,%20no%20se%20incluyeron%20debido%20a%20la%20falta%20de%20indicadores%20disponibles.">²</a>.</p>
-<p>Los indicadores fueron estandarizados de modo que todas las subdimensiones y dimensiones de los índices tienen un rango de 0 a 10 con 0 indicando bajos niveles de cohesión social y 10 indicando altos niveles de cohesión.</p>
+<p>Los indicadores fueron estandarizados de modo que todas las subdimensiones y dimensiones de los índices tienen un rango de 0 a 10, con 0 indicando bajos niveles de cohesión social y 10 indicando altos niveles de cohesión.</p>
 </section>
 <section id="variables-independientes" class="level3">
 <h3 class="anchored" data-anchor-id="variables-independientes">Variables Independientes</h3>
@@ -422,12 +422,12 @@ Tabla&nbsp;1: Disponibilidad de datos por olas y países
 <section id="variables-individuales" class="level4">
 <h4 class="anchored" data-anchor-id="variables-individuales">Variables Individuales</h4>
 <p>El principal predictor individual utilizado en este estudio es el <strong>nivel educativo</strong> de las personas. Las múltiples codificaciones de LAPOP para este indicador fueron únificadas para crear una variable de 3 categorías, distinguiendo individuos con educación primaria, secundaria y terciaria.</p>
-<p>Además, se incluyen como variables de control el sexo, la edad y la posición política de los individuos.</p>
+<p>Además, se añadieron como variables de control el sexo, la edad y la posición política de los individuos.</p>
 </section>
 <section id="variables-contextuales" class="level4">
 <h4 class="anchored" data-anchor-id="variables-contextuales">Variables Contextuales</h4>
-<p><strong>Prosperidad económica</strong> se medirá a través del logaritmo del PIB per cápita a valores de paridad de poder adquisitivo (PPA). <strong>Desigualdad económica</strong> en tanto se medirá a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial. Además, se incluirá el porcentaje de individuos con educación terciaria en un país como <em>proxy</em> de <strong>oportunidades educativas</strong>.</p>
-<p>En cuanto a factores institucionales, se incluyó el Índice de Democracia Electoral, o poliarquía, para medir la <strong>Calidad democrática de los países</strong>. Por otro lado, se incluyó <strong>un índice de gobernanza</strong> (<span class="math inline">\(\alpha\)</span> = 0.96) calculado a partir de los <em>Worldwide Governace Indicators</em> del Banco Mundial <span class="citation" data-cites="kaufmann_worldwide_2024">(<a href="#ref-kaufmann_worldwide_2024" role="doc-biblioref">Kaufmann y Kraay 2024</a>)</span>.</p>
+<p><strong>Prosperidad económica</strong> se midió a través del logaritmo del PIB per cápita a valores de paridad de poder adquisitivo (PPA). <strong>Desigualdad económica</strong> en tanto se midió a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial. Además, se incluyó el porcentaje de individuos con educación terciaria en un país como <em>proxy</em> de <strong>oportunidades educativas</strong>.</p>
+<p>En cuanto a factores institucionales, se consideró el Índice de Democracia Electoral, o poliarquía, para medir la <strong>Calidad democrática de los países</strong>. Por otro lado, se incluyó <strong>un índice de gobernanza</strong> (<span class="math inline">\(\alpha\)</span> = 0.96) calculado a partir de los <em>Worldwide Governace Indicators</em> del Banco Mundial <span class="citation" data-cites="kaufmann_worldwide_2024">(<a href="#ref-kaufmann_worldwide_2024" role="doc-biblioref">Kaufmann y Kraay 2024</a>)</span>.</p>
 <p>Se medirá <strong>diversidad cultural</strong> como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logística.</p>
 </section>
 </section>
@@ -481,22 +481,23 @@ Figura&nbsp;2: Análisis Factorial Confirmatorio Modelo de Medición de Cohesió
 </section>
 <section id="descriptivos" class="level2">
 <h2 class="anchored" data-anchor-id="descriptivos">Descriptivos</h2>
-<p>A continuación se presentan los resultados descriptivos sobre los cambios de la cohesión social en América Latina en los últimos 20 años.</p>
+<p>A continuación se presentan los resultados descriptivos sobre los cambios de la cohesión social en América Latina en las últimas dos décadas.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-cs" class="quarto-float quarto-figure quarto-figure-center anchored" width="672">
+<div id="fig-cs" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-cs-1.png" id="fig-cs" class="img-fluid figure-img" width="672">
+<img src="index_files/figure-html/fig-cs-1.png" class="img-fluid figure-img" width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-cs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Evolución dimensiones Cohesión Social (2004-2022)
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>En <a href="#fig-cs" class="quarto-xref">Figura&nbsp;3</a> se visualizan los promedios de cada año para los distintos tipos de cohesión. En primer lugar, se puede observar que la cohesión horizontal mantiene un patrón ascendente entre 2004 y 2012, exceptuando la caída del año 2010. Posterior a esto, la cohesión horizontal se enfrenta a una decaída sostenida hasta el 2018, para luego volver a repuntar e incluso superando su nivel registrado en 2004. La cohesión vertical presenta un patrón de variación parecido al de la cohesión horizontal, evidenciando un alza persistente en el tiempo hasta el año 2012, donde luego sufre una caída abrupta a nivel regional. Este descenso se mantuvo hasta el 2016, donde luego se revertiría esta dinámica, notándose un aumento de la cohesión vertical hasta el último año registrado. Si bien, la última medición de la cohesión vertical muestra niveles superiores al del inicio, sus puntuaciones en general son considerablemente bajas al compararlas con la cohesión horizontal, diferenciándose en todas las olas por aproximadamente 1.5 puntos. En suma, en América Latina se denota una mayor cohesión horizontal por sobre la vertical de manera consistente desde el 2004 hasta el 2022.</p>
+<p>En <a href="#fig-cs" class="quarto-xref">Figura&nbsp;3</a> se visualizan los promedios de cada año para los distintos tipos de cohesión. En primer lugar, se puede observar que la cohesión horizontal mantiene un patrón ascendente entre 2004 y 2012, exceptuando la caída del año 2010. Posterior a esto, la cohesión horizontal se enfrenta a una decaída sostenida hasta el 2018, para luego volver a repuntar e incluso superando su nivel registrado en 2004. La cohesión vertical presenta un patrón de variación parecido al de la cohesión horizontal, evidenciando un alza persistente en el tiempo hasta el año 2012, donde luego sufre una caída abrupta a nivel regional. Este descenso se mantuvo hasta el 2016, donde luego se revertiría esta dinámica, notándose un aumento de la cohesión vertical hasta el último año registrado. Si bien, la última medición de la cohesión vertical muestra niveles superiores al del inicio, sus puntuaciones en general son considerablemente bajas al compararlas con la cohesión horizontal, diferenciándose en todas las olas por aproximadamente 1.5 puntos. En suma, en América Latina se denota una mayor cohesión horizontal por sobre la vertical de manera consistente desde el 2004 hasta el 2022[³].</p>
+<p>[³]: Cabe mencionar que la cohesión social (recta verde) es el promedio de la cohesión vertical y horizontal, por ello no se detalla su interpretación.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-ch" class="quarto-float quarto-figure quarto-figure-center anchored">
