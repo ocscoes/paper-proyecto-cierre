@@ -56,6 +56,7 @@ papersize: letter
 colorlinks: true
 lang: es
 bibliography: "input/bib/book-ocs.bib"
+csl: "input/bib/apa.csl"
 execute:
   echo: FALSE 
   warning: false
