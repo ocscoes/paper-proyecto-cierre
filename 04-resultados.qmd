@@ -1,10 +1,15 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Resultados
 
 ```{r}
 #| echo: false
 
 ## cargar base
-
+library(tidyverse)
 load("input/proc/micro-macro-merge.rdata")
 
 datos_merge <- datos_merge |>
@@ -94,8 +99,6 @@ En @fig-cs se visualizan los promedios de cada año para los distintos tipos de 
 ```{r}
 #| label: fig-ch
 #| fig-cap: Evolución dimensiones Cohesión Horizontal (2004-2022)
-
-
 olas <- datos_merge |>
   group_by(ola) |>
   summarise(seguridad_prom = mean(seguridad_ind, na.rm=T),
@@ -148,12 +151,15 @@ olas |>
 
 En @fig-cv están graficados los cambios en el tiempo de las dos subdimensiones de cohesión vertical. Actitud hacia la democracia presenta un alza sostenida hasta el 2008, donde luego sufre una caída paulatina, destacándose un descenso abrupto entre 2014 y 2016. Posterior a esto, las afecciones hacia la democracia evidencian nuevamente un ascenso en sus niveles regionales, sin embargo, no logra alcanzar sus niveles iniciales. En confianza en instituciones se observan niveles ascendentes desde 2004 hasta 2012, a excepción de la baja del 2008. Los años siguientes se evidencia un decrecimiento en la confianza institucional hasta el 2016, para luego demostrar un repunte hasta el último año registrado, llegando a superar los niveles de confianza en instituciones del 2004. 
 
+
+
 ## Modelos Multinivel
 
 ```{r}
 #| label: preparacion-datos
 #| eval: false
 
+datos_merge %>% group_by(pais,ola) %>% summarise(fe_etfra=mean(fe_etfra,na.rm=T))
 
 # Separar los efectos
 
@@ -162,6 +168,7 @@ datos_merge <- datos_merge |>
  mutate(pib_be = mean(log_pib_per_capita_ppa, na.rm=T),
          gini_be = mean(gini_index, na.rm=T),
          mig_be = mean(percent_pob_migrante, na.rm=T),
+         fra_be = mean(fe_etfra, na.rm=T),
          dem_be = mean(indice_v_dem, na.rm=T),
          wgi_be = mean(wgi, na.rm=T),
          edu_be = mean(edu_terciaria, na.rm=T)) |>
@@ -169,6 +176,7 @@ datos_merge <- datos_merge |>
   mutate(pib_we = log_pib_per_capita_ppa - pib_be,
           gini_we = gini_index - gini_be,
           mig_we = percent_pob_migrante - mig_be,
+          fra_we = fe_etfra - fra_be,
           dem_we = indice_v_dem - dem_be,
           wgi_we = wgi- wgi_be,
           edu_we = edu_terciaria-edu_be)
@@ -179,10 +187,10 @@ z <- function(x) as.numeric(scale(x))
 
 datos_fit <- datos_merge %>%
   mutate(
-    pib_we  = z(pib_we),   gini_we = z(gini_we), wgi_we = z(wgi_we), dem_we = z(dem_we),
-    mig_we  = z(mig_we),   edu_we = z(edu_we),
-    pib_be  = z(pib_be),   gini_be = z(gini_be), wgi_be = z(wgi_be), dem_be = z(dem_be),
-    mig_be  = z(mig_be),   edu_be = z(edu_be),
+    # pib_we  = z(pib_we),   gini_we = z(gini_we), wgi_we = z(wgi_we), dem_we = z(dem_we),
+    # mig_we  = z(mig_we),   edu_we = z(edu_we),
+    # pib_be  = z(pib_be),   gini_be = z(gini_be), wgi_be = z(wgi_be), dem_be = z(dem_be),
+    # mig_be  = z(mig_be),   edu_be = z(edu_be),
     edad_c = scale(edad) %>% as.numeric(),
     ola_s = as.numeric(scale(ola, center = TRUE, scale = TRUE)),
     
@@ -198,14 +206,12 @@ datos_fit <- datos_merge %>%
   ) |>
   select(cohesion_general_ind, cohesion_vertical_ind, cohesion_horizontal_ind,
          nivel_educ, sexo, edad_c, ola_s, pos_politica,
-         pib_we, gini_we, dem_we, wgi_we, mig_we, edu_we,
-         pib_be, gini_be, dem_be, wgi_be, mig_be, edu_be,
+         pib_we, gini_we, dem_we, wgi_we, mig_we, edu_we,fra_we,
+         pib_be, gini_be, dem_be, wgi_be, mig_be, edu_be,fra_be,
          country_wave, pais, wt) |>
   na.omit()
 
 save(datos_fit, file="input/proc/datos-fit.rdata")
-
-
 ```
 
 **Modelos Nulos**
@@ -531,5 +537,117 @@ p <- p +
     axis.text = element_text(size = 10))
 
 print(p)
+```
+
+
+```{r}
+library(tidyverse)
+load("input/proc/micro-macro-merge.rdata")
+
+datos_merge <- datos_merge |>
+  mutate(across(where(haven::is.labelled), ~ vctrs::vec_data(.)),
+         pais= as.factor(pais))
+
+datos_merge$country_wave = do.call(paste, c(datos_merge[c("pais", "ola")], sep = "_"))
+
+names(datos_merge)
+datos_merge$fe_etfra <- as.numeric(stringi::stri_replace_all(datos_merge$fe_etfra,regex = ",",replacement = "."))
+
+datos_merge %>% select(cohesion_horizontal_ind,cohesion_vertical_ind,
+                       gini_index,pib_per_capita_ppa,
+                       indice_v_dem,wgi,
+                       percent_pob_migrante,fe_etfra) %>% tab_corr(triangle = "upper")
+
+```
+
+```{r}
+#| label: tbl-modelos-cohesion
+#| results: asis
+#| cache: true
+load("input/proc/datos-fit.rdata")
+library(lme4)
+library(texreg)
+
+# Socioeconomic dimensions------------------------------------------------------
+micro <- lmer(cohesion_horizontal_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola_s + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+macro_gini <- update(micro,. ~ . + gini_be + gini_we)
+macro_gdp <- update(micro,. ~ . + pib_be + pib_we)
+macro_econ <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we)
+h_econ <- list(macro_gini,macro_gdp,macro_econ)
+
+micro <- lmer(cohesion_vertical_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola_s + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+macro_gini <- update(micro,. ~ . + gini_be + gini_we)
+macro_gdp <- update(micro,. ~ . + pib_be + pib_we)
+macro_econ <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we)
+v_econ <- list(macro_gini,macro_gdp,macro_econ)
+
+htmlreg(c(h_econ,v_econ),
+        # file = "output/table001.html",
+        caption.above = T,
+        caption = "Multilevel regression for socioeconomic macro factors and social cohesion", 
+          custom.coef.map = 
+            list(
+              gini_be ="Gini (BE)",
+              gini_we ="Gini (WE)",
+              pib_be = "GDP (BE)", 
+              pib_we = "GDP (WE)"
+            ),custom.header = list("Horizontal"=1:3,"Vertical"=4:6),
+          custom.gof.rows = 
+            list(Controls=c("Yes","Yes","Yes","Yes","Yes","Yes"))
+          )
+
+# Political dimensions------------------------------------------------------
+micro <- lmer(cohesion_horizontal_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola_s + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+macro_dem <- update(micro,. ~ . + dem_be + dem_we)
+macro_wgi <- update(micro,. ~ . + wgi_be + wgi_we)
+macro_pol <- update(micro,. ~ . + dem_be+dem_we+wgi_be + wgi_we)
+h_pol <- list(macro_dem,macro_wgi,macro_pol)
+
+micro <- lmer(cohesion_vertical_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola_s + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+macro_dem  <- update(micro,. ~ . + dem_be + dem_we)
+macro_wgi <- update(micro,. ~ . + wgi_be + wgi_we)
+macro_pol  <- update(micro,. ~ . + dem_be+dem_we+wgi_be + wgi_we)
+v_pol <- list(macro_dem,macro_wgi,macro_pol)
+
+htmlreg(c(h_pol,v_pol),
+        # file = "output/table002.html",
+        caption.above = T,
+        caption = "Multilevel regression for institutional macro factors and social cohesion", 
+          custom.coef.map = 
+            list(
+              dem_be ="Democracy (BE)",
+              dem_we ="Democracy (WE)",
+              wgi_be = "Governace (BE)", 
+              wgi_we = "Governace (WE)"
+            ),custom.header = list("Horizontal"=1:3,"Vertical"=4:6),
+          custom.gof.rows = 
+            list(Controls=c("Yes","Yes","Yes","Yes","Yes","Yes"))          
+          )
+
+# Demographic ------------------------------------------------------------------
+
+micro <- lmer(cohesion_horizontal_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola_s + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+macro_mig <- update(micro,. ~ . + mig_be + mig_we)
+macro_fra <- update(micro,. ~ . + fra_be + fra_we)
+macro_demo <- update(micro,. ~ . + mig_be+mig_we+fra_be + fra_we)
+h_demo <- list(macro_mig,macro_fra,macro_demo)
+
+micro <- lmer(cohesion_vertical_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola_s + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+macro_mig <- update(micro,. ~ . + mig_be + mig_we)
+macro_fra <- update(micro,. ~ . + fra_be + fra_we)
+macro_demo <- update(micro,. ~ . + mig_be+mig_we+fra_be + fra_we)
+v_demo <- list(macro_mig,macro_fra,macro_demo)
+
+htmlreg(c(h_demo,v_demo),
+        # file = "output/table003.html",
+        caption.above = T,
+        caption = "Multilevel regression for demographic macro factors and social cohesion", 
+          custom.coef.map = 
+            list(mig_be ="Migration (BE)",mig_we = "Migration (WE)",
+                 fra_be = "Fractionalization (BE)",fra_we = "Fractionalization (wE)"),
+          ,custom.header = list("Horizontal"=1:3,"Vertical"=4:6),
+          custom.gof.rows = 
+            list(Controls=c("Yes","Yes","Yes","Yes","Yes","Yes"))          
+          )
 ```
 
