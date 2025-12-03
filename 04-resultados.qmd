@@ -625,13 +625,35 @@ corr_macro <-
 
 display(summary(corr_macro),digits = 3,format = "markdown")
 
-# micro <- lmer(cohesion_horizontal_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
-# macro_econ <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we)
-# macro_econ_polit <- update(macro_econ,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we)
-# macro_econ_polit_dem <- update(macro_econ_polit,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we)
-# macro_econ_polit_dem_time <- update(macro_econ_polit,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we+as.numeric(ola)-ola)
-# macro_econ_polit_dem_re <- update(macro_econ_polit,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we-ola + (1 | ola))
-# 
-# v_demo <- list(macro_econ,macro_econ_polit,macro_econ_polit_dem,macro_econ_polit_dem_time,macro_econ_polit_dem_re)
+micro <- lmer(cohesion_horizontal_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+macro_econ <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we)
+macro_econ_polit <- update(macro_econ,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we)
+macro_econ_polit_dem <- update(macro_econ_polit,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we)
+macro_econ_polit_dem_time <- update(macro_econ_polit,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we+as.numeric(ola)-ola)
+macro_econ_polit_dem_re <- update(macro_econ_polit,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we-ola + (1 | ola))
+
+h_demo <- list(macro_econ,macro_econ_polit,macro_econ_polit_dem,macro_econ_polit_dem_time)
+htmlreg(h_demo, file = "output/table004.html")
+
+micro <- lmer(cohesion_vertical_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+macro_econ <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we)
+macro_econ_polit <- update(macro_econ,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we)
+macro_econ_polit_dem <- update(macro_econ_polit,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we)
+macro_econ_polit_dem_time <- update(macro_econ_polit,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we+as.numeric(ola)-ola)
+macro_econ_polit_dem_re <- update(macro_econ_polit,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we-ola + (1 | ola))
+
+v_demo <- list(macro_econ,macro_econ_polit,macro_econ_polit_dem,macro_econ_polit_dem_time)
+htmlreg(v_demo, file = "output/table005.html")
+
+
+micro <- lmer(cohesion_general_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+macro_econ <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we)
+macro_econ_polit <- update(macro_econ,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we)
+macro_econ_polit_dem <- update(macro_econ_polit,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we)
+macro_econ_polit_dem_time <- update(macro_econ_polit,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we+as.numeric(ola)-ola)
+macro_econ_polit_dem_re <- update(macro_econ_polit,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we-ola + (1 | ola))
+
+g_demo <- list(macro_econ,macro_econ_polit,macro_econ_polit_dem,macro_econ_polit_dem_time)
+htmlreg(g_demo, file = "output/table006.html")
 ```
 
