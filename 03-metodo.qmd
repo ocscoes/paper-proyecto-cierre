@@ -12,25 +12,45 @@ Como criterio, en este estudio se incluyeron únicamente los países de la regi�
 #| label: tbl-paises
 #| tbl-cap: Disponibilidad de datos por olas y países
 
-load("input/proc/micro-macro-merge.rdata")
+load("input/proc/datos-fit.rdata")
 
-tab1 <- datos_merge |>
-  count(pais, name = "f") |>
-  arrange(desc(f))
+# tab1 <- datos_merge |>
+#   count(pais, name = "f") |>
+#   arrange(desc(f))
+# 
+# tab1_total <- bind_rows(
+#   tab1,
+#   tibble(pais = "Total", f = sum(tab1$f))
+# )
+# 
+# tab1_total |>
+#   kable(
+#     col.names = c("País", "Frecuencia"),
+#     align = c("l", "r"),
+#     caption = "Casos por país"
+#   ) |>
+#   kable_styling(full_width = FALSE) |>
+#   row_spec(nrow(tab1_total), bold = TRUE)
 
-tab1_total <- bind_rows(
-  tab1,
-  tibble(pais = "Total", f = sum(tab1$f))
-)
 
-tab1_total |>
-  kable(
-    col.names = c("País", "Frecuencia"),
-    align = c("l", "r"),
-    caption = "Casos por país"
+
+
+
+tabla <- datos_fit |>
+  count(
+    pais = haven::as_factor(pais),
+    ola  = haven::as_factor(ola)
   ) |>
-  kable_styling(full_width = FALSE) |>
-  row_spec(nrow(tab1_total), bold = TRUE)
+  pivot_wider(
+    names_from  = ola,
+    values_from = n,
+    values_fill = 0,
+    names_sort = TRUE
+  ) |>
+  adorn_totals("row") |>  # Agrega la fila "Total" al final
+  adorn_totals("col")     # Agrega la columna "Total" a la derecha
+
+tabla
 
 
 ```
