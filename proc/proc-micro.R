@@ -46,22 +46,33 @@ row_mean_if_complete <- function(df, cols, n_req) {
 ## Procesar bases ----
 
 ## Variables
-vars_hor <- c("it1", "aoj11", "vic1ext")
+vars_hor <- c("it1", "aoj11", "vic1ext", "vic1" )
 vars_ver <- c("b13", "b21", "b31", "ing4", "pn4")
 control  <- c("q1", "q1tb", "q1tc_r",
               "q2", "q2y",
               "q3", "q3c", "q3cn",
               "l1", "l1b", "l1n",
-              "ed", "edr", "edre")
+              "ed", "edr", "edre",
+              "q10", "q10new_12", "q10new_14", "q10new_16", "q10new_18", "q10inc", "q10new")
 vars <- c("wave", "year", "pais", "wt", vars_hor, vars_ver, control)
 
 ## Carga de archivos
 
 # 1) Grand Merge 
-load(file = "input/orig/GrandMerge.RData")  
+# load(file = "input/orig/GrandMerge.RData") 
+# 
+# datos <- datos |> mutate(pais_year = paste0(pais,year))
+# subset <- datos |> select(pais, year, starts_with("q10")) |> filter(year==2010)
 
-# 2) LAPOP 2004–2008
+load(file="input/orig/lapop3.RData")
+lapop <- lapop |> mutate(pais_year = paste0(pais,year))
+
+# # 2) LAPOP 2004–2008
 load(file = "input/orig/LAPOP_2004-2008.RData") # <- 'datos0418'
+
+datos0418 <- datos0418 |> mutate(pais_year = paste0(pais,year))
+
+
 
 # 3) Faltantes
 dta <- list.files(path = "input/orig/lapop-faltantes/", pattern = "\\.dta$", full.names = TRUE)
@@ -106,18 +117,38 @@ data2023_f <- data2023_f %>% mutate(year = wave)
 
 
 # Procesa algunos datos faltantes
+
+datos_subset  <- lapop |>
+  anti_join(datos0418,  by="pais_year")
+
 datos0418 <- sel_vars(datos0418, vars)
-datos1618  <- datos0418 %>% filter(wave %in% c(2016, 2018)) %>% mutate(wave = as.numeric(wave))
 
 # Recodificar años
-datos$wave <- NA_real_
-datosselc <- datos %>%
+datos0418$wave <- NA_real_
+datosselc <- datos0418 %>%
   sel_vars(vars) %>%
   remove_all_labels() %>%
   mutate(
     wave = case_when(
       year %in% c(2006, 2007) ~ 2006,
       year %in% c(2008, 2009) ~ 2008,
+      year %in% c(2016,2017) ~ 2016,
+      year %in% c(2018, 2019) ~ 2018,
+      year %in% c(2004, 2010, 2012, 2014) ~ as.numeric(year),
+      TRUE ~ NA_real_
+    )
+  )
+
+datos_subset$wave <- NA_real_
+datos_subset <- datos_subset %>%
+  sel_vars(vars) %>%
+  remove_all_labels() %>%
+  mutate(
+    wave = case_when(
+      year %in% c(2006, 2007) ~ 2006,
+      year %in% c(2008, 2009) ~ 2008,
+      year %in% c(2016,2017) ~ 2016,
+      year %in% c(2018, 2019) ~ 2018,
       year %in% c(2004, 2010, 2012, 2014) ~ as.numeric(year),
       TRUE ~ NA_real_
     )
@@ -126,7 +157,7 @@ datosselc <- datos %>%
 # Merge
 datos <- bind_rows(
   datosselc,
-  datos1618,
+  datos_subset,
   merge_faltante,
   data2021,
   data2023,
@@ -146,6 +177,11 @@ keep <- c("datos", "vars", "vars_hor", "vars_ver", "control",
   "sel_vars", "standarize_data", "row_mean_if_complete")
 
 rm(list = setdiff(ls(), keep))
+
+## recodificar vic1
+
+datos <- datos |> 
+  mutate(vic1ext = coalesce(vic1, vic1ext))
 
 # Invierte dirección si es necesario
 datos <- datos %>%
@@ -195,7 +231,9 @@ datos <- datos %>%
     )
   )
 
-subset <- datos |> select(it1, confianza_it_ind,
+
+# Solo para chequear
+subset <- datos |> select(pais, wave, it1, confianza_it_ind,
                          aoj11, vic1ext, seguridad_ind,
                          cohesion_horizontal_ind,
                          b13, b21, b31, confianza_inst_ind,
@@ -203,6 +241,21 @@ subset <- datos |> select(it1, confianza_it_ind,
                          cohesion_vertical_ind,
                          cohesion_general_ind)
 
+tabla <- subset |>
+  count(
+    pais = haven::as_factor(pais),
+    ola  = haven::as_factor(wave)
+  ) |>
+  pivot_wider(
+    names_from  = ola,
+    values_from = n,
+    values_fill = 0,
+    names_sort = TRUE
+  ) |>
+  adorn_totals("row") |>  # Agrega la fila "Total" al final
+  adorn_totals("col")     # Agrega la columna "Total" a la derecha
+
+tabla
 
 ## Recodifica variables micro ----
 
@@ -246,6 +299,48 @@ datos <- datos |>
                         labels = c("Primary","Secondary","Tertiary"))
   )
 
+# Variable ingresos
+
+### Recodificar q10inc sin los codigos por pais
+
+datos <- datos |>
+  mutate(q10inc_r = q10inc %% 100)
+
+## incorporar q10new 16 y 18
+
+datos <- datos |> 
+  mutate(
+    q10new_16 = if_else(wave == 2016, coalesce(q10new_16, q10new), q10new_16),
+    q10new_18 = if_else(wave == 2018, coalesce(q10new_18, q10new), q10new_18),
+    q10new_12 = if_else(wave == 2012, coalesce(q10new_12, q10new), q10new_12),
+    q10new_14 = if_else(wave == 2014, coalesce(q10new_14, q10new), q10new_14),
+  )
+
+  
+  
+datos <- datos |>
+  mutate(income_ori = case_when(wave <= 2010 ~ as.numeric(q10),
+                                wave == 2012 ~ as.numeric(q10new_12),
+                                wave == 2014 ~ as.numeric(q10new_14),
+                                wave == 2016 ~ as.numeric(q10new_16),
+                                wave == 2018 ~ as.numeric(q10new_18),
+                                wave == 2023 ~ as.numeric(q10inc_r)),
+         income_ori = ifelse(income_ori==0, NA, income_ori)) |>
+  group_by(pais, wave) |>
+  mutate(decile=ntile(income_ori, 10),
+         income = ifelse(wave>=2012, decile, income_ori),
+         income_decile=income)
+
+nas <- datos |>
+  # filter(wave %in% c(2016, 2018)) |>
+  filter(wave !=2021) |>
+  group_by(pais, wave) |>
+  summarise(
+    n_total = n(),
+    n_na = sum(is.na(income_decile)),
+    n_non_na = sum(!is.na(income_decile)),
+    pct_na = mean(is.na(income_decile)) * 100
+  )
 
 ## Limpiar el entorno, seleccionar variables y cargar datos macro ----
 
@@ -254,7 +349,7 @@ load("input/proc/datos-completos.rdata")
 
 datos <- datos |>
   select(pais, ola=wave, wt,
-         sexo, edad, pos_politica, nivel_educ,
+         sexo, edad, pos_politica, nivel_educ, income_decile, 
          all_of(vars_hor),
          all_of(vars_ver),
          ends_with("ind"))
@@ -310,7 +405,7 @@ resumen <- datos_wide |>
 
 
 datos_merge <- datos_merge |>
-  dplyr::filter(!is.na(cohesion_general_ind), !is.na(ola)) |>
+  dplyr::filter(!is.na(cohesion_general_ind)) |>
   semi_join(resumen, by="pais") |>
   filter(ola!=2021)
 
