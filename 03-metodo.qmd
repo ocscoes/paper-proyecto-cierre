@@ -42,7 +42,7 @@ tabla <- datos_fit |>
     Wave  = haven::as_factor(ola)
   ) |>
   pivot_wider(
-    names_from  = ola,
+    names_from  = Wave,
     values_from = n,
     values_fill = 0,
     names_sort = TRUE
@@ -57,9 +57,6 @@ tabla <- datos_fit |>
   )
 
 tabla
-
-
-
 ```
 
 Para datos contexuales de los países, se recurrió a diversas fuentes de datos que incluyen:

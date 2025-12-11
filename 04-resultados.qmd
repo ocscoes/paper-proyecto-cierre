@@ -63,6 +63,7 @@ datos_macro <- datos_merge %>%
       wgi,
     edad_c = scale(edad) %>% as.numeric(),
     ola_s = as.numeric(scale(ola, center = TRUE, scale = TRUE)),
+   income_decile,
     ola,
     nivel_educ   = forcats::fct_drop(factor(nivel_educ)),
     pos_politica = forcats::fct_drop(factor(pos_politica)),
@@ -80,6 +81,7 @@ datos_macro <- datos_merge %>%
       indice_v_dem,
       regulatory_quality,
       voice_and_accountability,wgi,
+      income_decile,
          nivel_educ, sexo, edad_c, ola_s,ola, pos_politica,iso2c,
          country_wave, pais, wt)
 
@@ -137,7 +139,8 @@ datos_merge <- datos_merge |>
          mig_be = mean(percent_pob_migrante, na.rm=T),
          dem_be = mean(indice_v_dem, na.rm=T),
          wgi_be = mean(wgi, na.rm=T),
-         edu_be = mean(edu_terciaria, na.rm=T)) |>
+         # edu_be = mean(edu_terciaria, na.rm=T)
+        ) |>
   ungroup() |>
   mutate(pib_we = log_pib_per_capita_ppa - pib_be,
           # gini_we = gini_index - gini_be,
@@ -145,7 +148,8 @@ datos_merge <- datos_merge |>
           mig_we = percent_pob_migrante - mig_be,
           dem_we = indice_v_dem - dem_be,
           wgi_we = wgi- wgi_be,
-          edu_we = edu_terciaria-edu_be)
+          # edu_we = edu_terciaria-edu_be
+         )
 
 # Centrado y limpieza
 
@@ -172,10 +176,12 @@ datos_fit <- datos_merge %>%
   ) |>
   select(cohesion_general_ind, cohesion_vertical_ind, cohesion_horizontal_ind,
          nivel_educ, sexo, edad_c, ola_s, pos_politica,ola,
-         pib_we, gini_we, dem_we, wgi_we, mig_we, edu_we,
-         pib_be, gini_be, dem_be, wgi_be, mig_be, edu_be,
-         country_wave, pais, wt) |>
+         income_decile,
+         pib_we, gini_we, dem_we, wgi_we, mig_we, 
+         pib_be, gini_be, dem_be, wgi_be, mig_be, 
+         country_wave, pais, wt) %>% 
   na.omit()
+
 
 save(datos_fit, file="input/proc/datos-fit.rdata")
 ```
@@ -197,6 +203,8 @@ save(m1_cfa, file="output/cfa.rdata")
 
 ```{r}
 #| label: fig-afc
+#| fig-width: 10
+#| fig-height: 7
 #| fig-cap: Análisis Factorial Confirmatorio Modelo de Medición de Cohesión Social
 set1 <-  RColorBrewer::brewer.pal(n = 8, name = "Set1")
 options(ggplot2.discrete.fill = set1)
@@ -350,95 +358,201 @@ En @fig-cv están graficados los cambios en el tiempo de las dos subdimensiones 
 
 
 ```{r fig-macro}
-library(ggrepel)
-#| fig-width: 11
-#| fig-height: 21
+#| fig-width: 12
+#| fig-height: 22
 #| fig-cap: "Country-level association of macro-level factors and social cohesion"
+library(ggrepel)
+
 df_sum_la <-  df_sum %>% filter(!iso2c %in% c("US","CA"))
 
-fig_gini_h <- 
+fig_gini_h <-
   ggplot() +
-  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_wid_gini_disp, y = mid_cohesion_horizontal), color = "red") +
-  # geom_smooth(data = df_sum_la, method = lm, se = FALSE, aes(mid_wid_gini_disp, y = mid_cohesion_horizontal), color = "pink") +
-  geom_smooth(data = df_sum, aes(x = wid_gini_disp, y = cohesion_horizontal, color = iso2c, shape = iso2c), method = "lm", se = FALSE,color = "black") +
+  geom_smooth(data = df_sum, method = lm, se = FALSE,
+              aes(mid_wid_gini_disp, y = mid_cohesion_horizontal),
+              color = "red") +
+  geom_smooth(data = df_sum_la, method = lm, se = FALSE,
+              aes(mid_wid_gini_disp, y = mid_cohesion_horizontal),
+              color = "pink") +
+  geom_smooth(data = df_sum,
+              aes(x = wid_gini_disp, y = cohesion_horizontal, color = iso2c, shape = iso2c),
+              method = "lm", se = FALSE, color = "black") +
   geom_point(data = df_sum, aes(x = mid_wid_gini_disp, y = mid_cohesion_horizontal)) +
-  geom_text(data = df_sum, aes(x = mid_wid_gini_disp, y = mid_cohesion_horizontal, label = iso2c), color = "black") +
-  labs(x = "Economic Inequality", y = "Horizontal Cohesion", caption = round(cor(df_sum$mid_wid_gini_disp, df_sum$mid_cohesion_horizontal, use = "complete.obs"), 2))
+  geom_label(data = df_sum, aes(x = mid_wid_gini_disp, y = mid_cohesion_horizontal, label = iso2c),
+            color = "black") +
+  scale_y_continuous(limits = c(2,8))+  
+  labs(x = "Economic Inequality", y = " ", title = "Horizontal Cohesion") +
+  annotate("label",
+           x = Inf, y = Inf,               
+           hjust = 1.08, vjust = 1.7,      
+           label = paste0("r = ", round(cor(df_sum$mid_wid_gini_disp,df_sum$mid_cohesion_horizontal,use = "complete.obs"), 2)),
+           fill = "white",                 
+           color = "black",                
+           label.size = 0.25,family = "serif",
+           size = 3.5)                     
 
-fig_gdp_h <- 
+fig_gdp_h <-
   ggplot() +
-  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_pib_per_capita_ppa, y = mid_cohesion_horizontal), color = "red") +  
+  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_pib_per_capita_ppa, y = mid_cohesion_horizontal), color = "red") +
+  geom_smooth(data = df_sum_la, method = lm, se = FALSE, aes(mid_pib_per_capita_ppa, y = mid_cohesion_horizontal), color = "pink") +
   geom_smooth(data = df_sum, aes(x = pib_per_capita_ppa, y = cohesion_horizontal, color = iso2c, shape = iso2c), method = "lm", se = FALSE,color = "black") +
   geom_point(data = df_sum, aes(x = mid_pib_per_capita_ppa, y = mid_cohesion_horizontal)) +
-  geom_text(data = df_sum, aes(x = mid_pib_per_capita_ppa, y = mid_cohesion_horizontal, label = iso2c), color = "black") +
-  labs(x = "GDP per Capita (PPP)", y = "Horizontal Cohesion", caption = round(cor(df_sum$mid_pib_per_capita_ppa, df_sum$mid_cohesion_horizontal, use = "complete.obs"), 2))
+  geom_label(data = df_sum, aes(x = mid_pib_per_capita_ppa, y = mid_cohesion_horizontal, label = iso2c), color = "black") +
+  scale_y_continuous(limits = c(2,8))+
+  labs(x = "GDP per Capita (PPP)", y = " ", title = " ") + 
+    annotate("label",
+           x = Inf, y = Inf,               
+           hjust = 1.08, vjust = 1.7,      
+           label = paste0("r = ", round(cor(df_sum$mid_pib_per_capita_ppa, df_sum$mid_cohesion_horizontal, use = "complete.obs"), 2)),
+           fill = "white",                 
+           color = "black",                
+           label.size = 0.25,family = "serif",
+           size = 3.5)   
 
-fig_mig_h <- 
+fig_mig_h <-
   ggplot() +
-  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_percent_pob_migrante, y = mid_cohesion_horizontal), color = "red") +  
+  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_percent_pob_migrante, y = mid_cohesion_horizontal), color = "red") +
+  geom_smooth(data = df_sum_la, method = lm, se = FALSE, aes(mid_percent_pob_migrante, y = mid_cohesion_horizontal), color = "pink") +
   geom_smooth(data = df_sum, aes(x = percent_pob_migrante, y = cohesion_horizontal, color = iso2c, shape = iso2c), method = "lm", se = FALSE,color = "black") +
   geom_point(data = df_sum, aes(x = mid_percent_pob_migrante, y = mid_cohesion_horizontal)) +
-  geom_text(data = df_sum, aes(x = mid_percent_pob_migrante, y = mid_cohesion_horizontal, label = iso2c), color = "black") +
-  labs(x = "Migrant Population (%)", y = "Horizontal Cohesion", caption = round(cor(df_sum$mid_percent_pob_migrante, df_sum$mid_cohesion_horizontal, use = "complete.obs"), 2))
+  geom_label(data = df_sum, aes(x = mid_percent_pob_migrante, y = mid_cohesion_horizontal, label = iso2c), color = "black") +
+  scale_y_continuous(limits = c(2,8))+  
+  labs(x = "Migrant Population (%)", y = " ", title = " ") +
+      annotate("label",
+           x = Inf, y = Inf,               
+           hjust = 1.08, vjust = 1.7,      
+           label = paste0("r = ", round(cor(df_sum$mid_percent_pob_migrante, df_sum$mid_cohesion_horizontal, use = "complete.obs"), 2)),
+           fill = "white",                 
+           color = "black",                
+           label.size = 0.25,family = "serif",
+           size = 3.5) 
 
-fig_vdem_h <- 
+fig_vdem_h <-
   ggplot() +
-  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_indice_v_dem, y = mid_cohesion_horizontal), color = "red") +  
+  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_indice_v_dem, y = mid_cohesion_horizontal), color = "red") +
+  geom_smooth(data = df_sum_la, method = lm, se = FALSE, aes(mid_indice_v_dem, y = mid_cohesion_horizontal), color = "pink") +
   geom_smooth(data = df_sum, aes(x = indice_v_dem, y = cohesion_horizontal, color = iso2c, shape = iso2c), method = "lm", se = FALSE,color = "black") +
   geom_point(data = df_sum, aes(x = mid_indice_v_dem, y = mid_cohesion_horizontal)) +
-  geom_text(data = df_sum, aes(x = mid_indice_v_dem, y = mid_cohesion_horizontal, label = iso2c), color = "black") +
+  geom_label(data = df_sum, aes(x = mid_indice_v_dem, y = mid_cohesion_horizontal, label = iso2c), color = "black") +
+  scale_y_continuous(limits = c(2,8))+  
+  labs(x = "Democracy", y = " ", title = " ")+
+        annotate("label",
+           x = Inf, y = Inf,               
+           hjust = 1.08, vjust = 1.7,      
+           label = paste0("r = ", round(cor(df_sum$mid_indice_v_dem, df_sum$mid_cohesion_horizontal, use = "complete.obs"), 2)),
+           fill = "white",                 
+           color = "black",                
+           label.size = 0.25,family = "serif",
+           size = 3.5) 
 
-  labs(x = "Democracy", y = "Horizontal Cohesion", caption = round(cor(df_sum$mid_indice_v_dem, df_sum$mid_cohesion_horizontal, use = "complete.obs"), 2))
-
-fig_wdi_h <- 
+fig_wdi_h <-
   ggplot() +
   geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_wgi, y = mid_cohesion_horizontal), color = "red") +
+  geom_smooth(data = df_sum_la, method = lm, se = FALSE, aes(mid_wgi, y = mid_cohesion_horizontal), color = "pink") +
   geom_smooth(data = df_sum, aes(x = wgi, y = cohesion_horizontal, color = iso2c, shape = iso2c), method = "lm", se = FALSE,color = "black") +
   geom_point(data = df_sum, aes(x = mid_wgi, y = mid_cohesion_horizontal)) +
-  geom_text(data = df_sum, aes(x = mid_wgi, y = mid_cohesion_horizontal, label = iso2c), color = "black") +
-  labs(x = "Governance", y = "Horizontal Cohesion", caption = round(cor(df_sum$mid_wgi, df_sum$mid_cohesion_horizontal, use = "complete.obs"), 2))
+  geom_label(data = df_sum, aes(x = mid_wgi, y = mid_cohesion_horizontal, label = iso2c), color = "black") +
+  scale_y_continuous(limits = c(2,8))+  
+  labs(x = "Governance", y = " ", title = " ") +
+        annotate("label",
+           x = Inf, y = Inf,               
+           hjust = 1.08, vjust = 1.7,      
+           label = paste0("r = ", round(cor(df_sum$mid_wgi, df_sum$mid_cohesion_horizontal, use = "complete.obs"), 2)),
+           fill = "white",                 
+           color = "black",                
+           label.size = 0.25,family = "serif",
+           size = 3.5) 
+  
 
-
-fig_gini_v <- 
+fig_gini_v <-
   ggplot() +
-  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_wid_gini_disp, y = mid_cohesion_vertical), color = "red") +  
+  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_wid_gini_disp, y = mid_cohesion_vertical), color = "red") +
+  geom_smooth(data = df_sum_la, method = lm, se = FALSE, aes(mid_wid_gini_disp, y = mid_cohesion_vertical), color = "pink") +
   geom_smooth(data = df_sum, aes(x = wid_gini_disp, y = cohesion_vertical, color = iso2c, shape = iso2c), method = "lm", se = FALSE, color = "black") +
   geom_point(data = df_sum, aes(x = mid_wid_gini_disp, y = mid_cohesion_vertical)) +
-  geom_text(data = df_sum, aes(x = mid_wid_gini_disp, y = mid_cohesion_vertical, label = iso2c), color = "black") +
-  labs(x = "Economic Inequality", y = "Vertical Cohesion", caption = round(cor(df_sum$mid_wid_gini_disp, df_sum$mid_cohesion_vertical, use = "complete.obs"), 2))
+  geom_label(data = df_sum, aes(x = mid_wid_gini_disp, y = mid_cohesion_vertical, label = iso2c), color = "black") +
+  scale_y_continuous(limits = c(2,8))+  
+  labs(x = "Economic Inequality", y = " ",title = "Vertical Cohesion") +
+          annotate("label",
+           x = Inf, y = Inf,               
+           hjust = 1.08, vjust = 1.7,      
+           label = paste0("r = ", round(cor(df_sum$mid_wid_gini_disp, df_sum$mid_cohesion_vertical, use = "complete.obs"), 2)),
+           fill = "white",                 
+           color = "black",                
+           label.size = 0.25,family = "serif",
+           size = 3.5) 
 
-fig_gdp_v <- 
+fig_gdp_v <-
   ggplot() +
-  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_pib_per_capita_ppa, y = mid_cohesion_vertical), color = "red") +  
+  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_pib_per_capita_ppa, y = mid_cohesion_vertical), color = "red") +
+  geom_smooth(data = df_sum_la, method = lm, se = FALSE, aes(mid_pib_per_capita_ppa, y = mid_cohesion_vertical), color = "pink") +
   geom_smooth(data = df_sum, aes(x = pib_per_capita_ppa, y = cohesion_vertical, color = iso2c, shape = iso2c), method = "lm", se = FALSE, color = "black") +
   geom_point(data = df_sum, aes(x = mid_pib_per_capita_ppa, y = mid_cohesion_vertical)) +
-  geom_text(data = df_sum, aes(x = mid_pib_per_capita_ppa, y = mid_cohesion_vertical, label = iso2c), color = "black") +
-  labs(x = "GDP per Capita (PPP)", y = "Vertical Cohesion", caption = round(cor(df_sum$mid_pib_per_capita_ppa, df_sum$mid_cohesion_vertical, use = "complete.obs"), 2))
+  geom_label(data = df_sum, aes(x = mid_pib_per_capita_ppa, y = mid_cohesion_vertical, label = iso2c), color = "black") +
+  scale_y_continuous(limits = c(2,8))+  
+  labs(x = "GDP per Capita (PPP)", y = " ",title = " ") +
+            annotate("label",
+           x = Inf, y = Inf,               
+           hjust = 1.08, vjust = 1.7,      
+           label = paste0("r = ", round(cor(df_sum$mid_pib_per_capita_ppa, df_sum$mid_cohesion_vertical, use = "complete.obs"), 2)),
+           fill = "white",                 
+           color = "black",                
+           label.size = 0.25,family = "serif",
+           size = 3.5) 
 
-fig_mig_v <- 
+fig_mig_v <-
   ggplot() +
-  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_percent_pob_migrante, y = mid_cohesion_vertical), color = "red") +  
+  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_percent_pob_migrante, y = mid_cohesion_vertical), color = "red") +
+  geom_smooth(data = df_sum_la, method = lm, se = FALSE, aes(mid_percent_pob_migrante, y = mid_cohesion_vertical), color = "pink") +
   geom_smooth(data = df_sum, aes(x = percent_pob_migrante, y = cohesion_vertical, color = iso2c, shape = iso2c), method = "lm", se = FALSE, color = "black") +
   geom_point(data = df_sum, aes(x = mid_percent_pob_migrante, y = mid_cohesion_vertical)) +
-  geom_text(data = df_sum, aes(x = mid_percent_pob_migrante, y = mid_cohesion_vertical, label = iso2c), color = "black") +
-  labs(x = "Migrant Population (%)", y = "Vertical Cohesion", caption = round(cor(df_sum$mid_percent_pob_migrante, df_sum$mid_cohesion_vertical, use = "complete.obs"), 2))
+  geom_label(data = df_sum, aes(x = mid_percent_pob_migrante, y = mid_cohesion_vertical, label = iso2c), color = "black") +
+  labs(x = "Migrant Population (%)", y = " ", title = " ") +
+  scale_y_continuous(limits = c(2,8))+  
+            annotate("label",
+           x = Inf, y = Inf,               
+           hjust = 1.08, vjust = 1.7,      
+           label = paste0("r = ", round(cor(df_sum$mid_percent_pob_migrante, df_sum$mid_cohesion_vertical, use = "complete.obs"), 2)),
+           fill = "white",                 
+           color = "black",                
+           label.size = 0.25,family = "serif",
+           size = 3.5)   
 
-fig_vdem_v <- 
+fig_vdem_v <-
   ggplot() +
-  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_indice_v_dem, y = mid_cohesion_vertical), color = "red") +  
+  geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_indice_v_dem, y = mid_cohesion_vertical), color = "red") +
+  geom_smooth(data = df_sum_la, method = lm, se = FALSE, aes(mid_indice_v_dem, y = mid_cohesion_vertical), color = "pink") +
   geom_smooth(data = df_sum, aes(x = indice_v_dem, y = cohesion_vertical, color = iso2c, shape = iso2c), method = "lm", se = FALSE, color = "black") +
   geom_point(data = df_sum, aes(x = mid_indice_v_dem, y = mid_cohesion_vertical)) +
-  geom_text(data = df_sum, aes(x = mid_indice_v_dem, y = mid_cohesion_vertical, label = iso2c), color = "black") +
-  labs(x = "Democracy", y = "Vertical Cohesion", caption = round(cor(df_sum$mid_indice_v_dem, df_sum$mid_cohesion_vertical, use = "complete.obs"), 2))
+  geom_label(data = df_sum, aes(x = mid_indice_v_dem, y = mid_cohesion_vertical, label = iso2c), color = "black") +
+  scale_y_continuous(limits = c(2,8))+  
+  labs(x = "Democracy", y = " ",title = " ") +
+            annotate("label",
+           x = Inf, y = Inf,               
+           hjust = 1.08, vjust = 1.7,      
+           label = paste0("r = ", round(cor(df_sum$mid_indice_v_dem, df_sum$mid_cohesion_vertical, use = "complete.obs"), 2)),
+           fill = "white",                 
+           color = "black",                
+           label.size = 0.25,family = "serif",
+           size = 3.5)     
 
-fig_wdi_v <- 
+fig_wdi_v <-
   ggplot() +
   geom_smooth(data = df_sum, method = lm, se = FALSE, aes(mid_wgi, y = mid_cohesion_vertical), color = "red") +
+  geom_smooth(data = df_sum_la, method = lm, se = FALSE, aes(mid_wgi, y = mid_cohesion_vertical), color = "pink") +
   geom_smooth(data = df_sum, aes(x = wgi, y = cohesion_vertical, color = iso2c, shape = iso2c), method = "lm", se = FALSE, color = "black") +
   geom_point(data = df_sum, aes(x = mid_wgi, y = mid_cohesion_vertical)) +
-  geom_text(data = df_sum, aes(x = mid_wgi, y = mid_cohesion_vertical, label = iso2c), color = "black") +
-  labs(x = "Governance", y = "Vertical Cohesion", caption = round(cor(df_sum$mid_wgi, df_sum$mid_cohesion_vertical, use = "complete.obs"), 2))
-
+  geom_label(data = df_sum, aes(x = mid_wgi, y = mid_cohesion_vertical, label = iso2c), color = "black") +
+  scale_y_continuous(limits = c(2,8))+  
+  labs(x = "Governance", y = " ",title = " ") +
+            annotate("label",
+           x = Inf, y = Inf,               
+           hjust = 1.08, vjust = 1.7,      
+           label = paste0("r = ", round(cor(df_sum$mid_wgi, df_sum$mid_cohesion_vertical, use = "complete.obs"), 2)),
+           fill = "white",                 
+           color = "black",                
+           label.size = 0.25,family = "serif",
+           size = 3.5)     
+  
 
 set.seed(1234)
 
@@ -490,10 +604,11 @@ library(dplyr)
 datos_fit_la <- datos_fit %>% filter(!pais %in% c("Canada","United States"))
 
 # datos_fit$ola<- factor(datos_fit$ola)
-micro_h <- lmer(cohesion_horizontal_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + I(ola^2)+ (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
-micro_v <- lmer(cohesion_vertical_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + I(ola^2) + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+micro_h <- lmer(cohesion_horizontal_ind ~ 1 + income_decile + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + I(ola^2)+ (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+micro_v <- lmer(cohesion_vertical_ind ~ 1 + income_decile + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + I(ola^2) + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
 
-coef_names<- list("(Intercept)"="(Intercept)",        
+coef_names<- list("(Intercept)"="(Intercept)",
+"income_decile" ="Income decile",                  
 "nivel_educSecondary" = "Secondary", 
 "nivel_educTertiary" = "Tertiary",   
 "sexoMale"="Male (ref.=Female)",            
@@ -513,8 +628,8 @@ coef_names<- list("(Intercept)"="(Intercept)",
 ola = "Time"
 )   
 
-micro_h_la<- update(micro_h, data = datos_fit_la)
-micro_v_la<- update(micro_v, data = datos_fit_la)
+# micro_h_la<- update(micro_h, data = datos_fit_la)
+# micro_v_la<- update(micro_v, data = datos_fit_la)
             
 #screenreg(c(micro_h,micro_v))
 #screenreg(c(micro_h,micro_v,micro_h_la,micro_v_la))
@@ -522,8 +637,8 @@ micro_v_la<- update(micro_v, data = datos_fit_la)
 htmlreg(c(micro_h,micro_v),single.row = F,digits = 3,
        # file = "output/table000.html",
        groups = 
-         list("Education (ref.=Primary)"=2:3,
-              "Political position (ref.=Undefined)"=7:9
+         list("Education (ref.=Primary)"=3:4,
+              "Political position (ref.=Undefined)"=8:10
               # "Time trend (ref.=2004)"=10:17
               ),
         caption.above = T,
@@ -563,7 +678,7 @@ macro_econ <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we)
 # macro_econ_la_v <- update(macro_econ,data=datos_fit_la) #using only LATAM
 v_econ <- list(macro_gini,macro_gdp,macro_econ)
 
-#screenreg(c(h_econ,v_econ))
+# screenreg(c(h_econ,v_econ))
 
 htmlreg(c(h_econ,v_econ),single.row = F,digits = 3,
        # file = "output/table001.html",
@@ -666,8 +781,8 @@ htmlreg(c(h_demo,v_demo),single.row = F,digits = 3,
 ```
 
 ```{r}
-# Full-------------------------------------------------------------------------
 #| cache: true
+#| results: asis
 load("input/proc/datos-fit.rdata")
 library(lme4)
 library(texreg)
@@ -675,13 +790,27 @@ library(dplyr)
 library(correlation)
 datos_fit_la <- datos_fit %>% filter(!pais %in% c("Canada","United States"))
 
+coef_names <- list(
+  ola = "Time",
+  gini_be = "Gini (BE)",
+  gini_we = "Gini (WE)",
+  pib_be = "GDP (BE)",
+  pib_we = "GDP (WE)",
+  dem_be = "Democracy (BE)",
+  dem_we = "Democracy (WE)",
+  wgi_be = "Governace (BE)",
+  wgi_we = "Governace (WE)",
+  mig_be = "Migration (BE)",
+  mig_we = "Migration (WE)"
+)
+
 corr_macro <- 
   correlation::correlation(
     dplyr::select(datos_fit,gini_be,gini_we,pib_be,pib_we,dem_be,dem_we,wgi_be,wgi_we,mig_be,mig_we)) 
 
 display(summary(corr_macro),digits = 3,format = "markdown")
 
-micro <- lmer(cohesion_horizontal_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+micro <- lmer(cohesion_horizontal_ind ~ 1 + income_decile + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
 macro_econ <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we)
 macro_econ_polit <- update(macro_econ,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we)
 macro_dem <- update(micro,. ~ . + mig_be+mig_we)
@@ -690,23 +819,28 @@ macro_econ_polit_dem <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_b
 
 h_demo <- list(macro_econ,macro_econ_polit,macro_dem,macro_econ_dem,macro_econ_polit_dem)
 
-#screenreg(h_demo,digits=3)
-htmlreg(h_demo, file = "output/table004.html")
+# screenreg(h_demo,digits=3,custom.coef.map = coef_names)
+htmlreg(h_demo, digits=3,custom.coef.map = coef_names,
+        caption = "Multilevel regression for macro factors and horizontal social cohesion",
+        # file = "output/table004.html"
+        )
 
-micro <- lmer(cohesion_vertical_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+micro <- lmer(cohesion_vertical_ind ~ 1 + income_decile+ nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
 macro_econ <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we)
 macro_econ_polit <- update(macro_econ,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we)
 macro_dem <- update(micro,. ~ . + mig_be+mig_we)
 macro_econ_dem <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we+mig_be+mig_we)
 macro_econ_polit_dem <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we)
 
-
 v_demo <- list(macro_econ,macro_econ_polit,macro_dem,macro_econ_dem,macro_econ_polit_dem)
 
-#screenreg(v_demo,digits=3)
-htmlreg(v_demo, file = "output/table005.html")
+# screenreg(v_demo,digits=3,digits=3,custom.coef.map = coef_names)
+htmlreg(v_demo, digits=3,custom.coef.map = coef_names,
+        caption = "Multilevel regression for macro factors and vertical social cohesion",
+        # file = "output/table005.html"
+        )
 
-micro <- lmer(cohesion_general_ind ~ 1 + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+micro <- lmer(cohesion_general_ind ~ 1 + income_decile +nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
 macro_econ <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we)
 macro_econ_polit <- update(macro_econ,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we)
 macro_dem <- update(micro,. ~ . + mig_be+mig_we)
@@ -714,7 +848,10 @@ macro_econ_dem <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we+mig_be+mig_
 macro_econ_polit_dem <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we)
 
 g_demo <- list(macro_econ,macro_econ_polit,macro_dem,macro_econ_dem,macro_econ_polit_dem)
-#screenreg(g_demo,digits=3)
-htmlreg(g_demo, file = "output/table006.html")
+# screenreg(g_demo,digits=3,digits=3,custom.coef.map = coef_names)
+htmlreg(g_demo, digits=3,custom.coef.map = coef_names,
+        caption = "Multilevel regression for macro factors and general social cohesion",
+        # file = "output/table006.html"
+        )
 ```
 
