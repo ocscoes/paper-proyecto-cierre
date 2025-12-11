@@ -10,7 +10,7 @@ Como criterio, en este estudio se incluyeron únicamente los países de la regi�
 
 ```{r}
 #| label: tbl-paises
-#| tbl-cap: Disponibilidad de datos por olas y países
+#| tbl-cap: Data availability by waves and countries
 
 load("input/proc/datos-fit.rdata")
 
@@ -38,8 +38,8 @@ load("input/proc/datos-fit.rdata")
 
 tabla <- datos_fit |>
   count(
-    pais = haven::as_factor(pais),
-    ola  = haven::as_factor(ola)
+    Country = haven::as_factor(pais),
+    Wave  = haven::as_factor(ola)
   ) |>
   pivot_wider(
     names_from  = ola,
@@ -48,9 +48,16 @@ tabla <- datos_fit |>
     names_sort = TRUE
   ) |>
   adorn_totals("row") |>  # Agrega la fila "Total" al final
-  adorn_totals("col")     # Agrega la columna "Total" a la derecha
+  adorn_totals("col") |>    # Agrega la columna "Total" a la derecha
+  kable(
+  ) |>
+  kable_styling(
+    full_width = FALSE,
+    bootstrap_options = c("striped")
+  )
 
 tabla
+
 
 
 ```
