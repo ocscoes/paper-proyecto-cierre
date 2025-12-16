@@ -362,7 +362,7 @@ load("input/proc/datos-completos.rdata")
 
 datos <- datos |>
   select(pais, ola=wave, wt,
-         sexo, edad, pos_politica, nivel_educ, ed, income_decile, 
+         sexo, edad, pos_politica, nivel_educ, escolaridad, income_decile, 
          all_of(vars_hor),
          all_of(vars_ver),
          ends_with("ind"))
@@ -421,22 +421,6 @@ datos_merge <- datos_merge |>
   dplyr::filter(!is.na(cohesion_general_ind)) |>
   semi_join(resumen, by="pais") |>
   filter(ola!=2021)
-
-tabla <- datos_merge |>
-  count(
-    pais = haven::as_factor(pais),
-    ola  = haven::as_factor(ola)
-  ) |>
-  pivot_wider(
-    names_from  = ola,
-    values_from = n,
-    values_fill = 0,
-    names_sort = TRUE
-  ) |>
-  adorn_totals("row") |>  # Agrega la fila "Total" al final
-  adorn_totals("col")     # Agrega la columna "Total" a la derecha
-
-tabla
 
 
 save(datos_merge, file = "input/proc/micro-macro-merge.rdata")
