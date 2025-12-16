@@ -52,17 +52,19 @@ control  <- c("q1", "q1tb", "q1tc_r",
               "q2", "q2y",
               "q3", "q3c", "q3cn",
               "l1", "l1b", "l1n",
-              "ed", "edr", "edre",
+              "ed", "edr", "edre", "ed_can", "ed_usa",
               "q10", "q10new_12", "q10new_14", "q10new_16", "q10new_18", "q10inc", "q10new")
 vars <- c("wave", "year", "pais", "wt", vars_hor, vars_ver, control)
 
 ## Carga de archivos
 
 # 1) Grand Merge 
-# load(file = "input/orig/GrandMerge.RData") 
-# 
-# datos <- datos |> mutate(pais_year = paste0(pais,year))
-# subset <- datos |> select(pais, year, starts_with("q10")) |> filter(year==2010)
+load(file = "input/orig/GrandMerge.RData")
+
+datos <- datos |> mutate(pais_year = paste0(pais,year))
+datos <- datos |> filter(pais_year %in% c("402010", "412010",
+                                           "402012", "412012",
+                                           "402014", "412014"))
 
 load(file="input/orig/lapop3.RData")
 lapop <- lapop |> mutate(pais_year = paste0(pais,year))
@@ -71,8 +73,6 @@ lapop <- lapop |> mutate(pais_year = paste0(pais,year))
 load(file = "input/orig/LAPOP_2004-2008.RData") # <- 'datos0418'
 
 datos0418 <- datos0418 |> mutate(pais_year = paste0(pais,year))
-
-
 
 # 3) Faltantes
 dta <- list.files(path = "input/orig/lapop-faltantes/", pattern = "\\.dta$", full.names = TRUE)
@@ -154,6 +154,17 @@ datos_subset <- datos_subset %>%
     )
   )
 
+datos$wave <- NA_real_
+datos <- datos %>%
+  sel_vars(vars) %>%
+  remove_all_labels() %>%
+  mutate(
+    wave = case_when(
+      year %in% c(2010, 2012, 2014) ~ as.numeric(year),
+      TRUE ~ NA_real_
+    )
+  )
+
 # Merge
 datos <- bind_rows(
   datosselc,
@@ -161,7 +172,8 @@ datos <- bind_rows(
   merge_faltante,
   data2021,
   data2023,
-  data2023_f
+  data2023_f,
+  datos
 )
 
 # Copiar etiquetas
@@ -239,7 +251,7 @@ subset <- datos |> select(pais, wave, it1, confianza_it_ind,
                          b13, b21, b31, confianza_inst_ind,
                          ing4, pn4, democracia_ind,
                          cohesion_vertical_ind,
-                         cohesion_general_ind)
+                         cohesion_general_ind) |> na.omit()
 
 tabla <- subset |>
   count(
@@ -296,7 +308,8 @@ datos <- datos |>
     nivel_educ = coalesce(ed_r, edre_r, edr_r),
     nivel_educ = factor(nivel_educ,
                         levels = c(1,2,3),
-                        labels = c("Primary","Secondary","Tertiary"))
+                        labels = c("Primary","Secondary","Tertiary")),
+    escolaridad = ed
   )
 
 # Variable ingresos
@@ -349,7 +362,7 @@ load("input/proc/datos-completos.rdata")
 
 datos <- datos |>
   select(pais, ola=wave, wt,
-         sexo, edad, pos_politica, nivel_educ, income_decile, 
+         sexo, edad, pos_politica, nivel_educ, ed, income_decile, 
          all_of(vars_hor),
          all_of(vars_ver),
          ends_with("ind"))
@@ -409,4 +422,25 @@ datos_merge <- datos_merge |>
   semi_join(resumen, by="pais") |>
   filter(ola!=2021)
 
+tabla <- datos_merge |>
+  count(
+    pais = haven::as_factor(pais),
+    ola  = haven::as_factor(ola)
+  ) |>
+  pivot_wider(
+    names_from  = ola,
+    values_from = n,
+    values_fill = 0,
+    names_sort = TRUE
+  ) |>
+  adorn_totals("row") |>  # Agrega la fila "Total" al final
+  adorn_totals("col")     # Agrega la columna "Total" a la derecha
+
+tabla
+
+
 save(datos_merge, file = "input/proc/micro-macro-merge.rdata")
+
+
+
+
