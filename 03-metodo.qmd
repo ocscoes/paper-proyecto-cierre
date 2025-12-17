@@ -1,12 +1,12 @@
-# Metodología
+# Methodology
 
-## Datos
+## Data
 
-La principal fuente de datos para este estudio es la *AmericasBarometer* del [*Latin American Public Opinion Project* (LAPOP Lab)](https://ropercenter.cornell.edu/latin-american-public-opinion-project-lapop), también conocida como Encuesta LAPOP. La encuesta tiene por objetivo recolectar datos la opinión pública sobre democracia y gobernanza en el continente americano. El diseño de la encuesta es probalístico y representativo de la población adulta de cada país [@lapoplab_americasbarometer_2023].
+The main source of data for this study is the AmericasBarometer of the [Latin American Public Opinion Project](https://ropercenter.cornell.edu/latin-american-public-opinion-project-lapop), also known as the LAPOP Survey. The survey aims to collect data on public opinion about democracy and governance in the Americas. The survey design is probabilistic and representative of the adult population in each country [@lapoplab_americasbarometer_2023].
 
-La encuesta se ha aplicado de manera regular desde el año 2004. A la fecha, se han realizado 9 olas que han incluido entre 11 a 23 países, sumando un total sobre 400.000 entrevistas en dos décadas. El cuestionario se administra a través de encuestas cara  a cara, con la excepción de Canadá y Estados Unidos.  
+The survey has been conducted regularly since 2004. To date, nine waves have been carried out, covering between 11 and 23 countries, with a total of over 400,000 interviews in two decades. The questionnaire is administered through face-to-face surveys, with the exception of Canada and the United States.
 
-Como criterio, en este estudio se incluyeron únicamente los países de la región que contaban con datos disponibles para los indicadores principales del estudio en, al menos, 5 puntos en el tiempo. Como se resume en @tbl-paises, se incluyen en este estudio un total de 238.257 individuos anidados en 174 olas-países en 25 países del continente americano. 
+As a criterion, this study included only those countries in the region that had data available for the main indicators of the study at least five points in time. As summarized in @tbl-paises, this study includes a total of 238,257 individuals nested in 174 country waves in 25 countries in the Americas.
 
 ```{r}
 #| label: tbl-paises
@@ -59,17 +59,17 @@ tabla <- datos_fit |>
 tabla
 ```
 
-Para datos contexuales de los países, se recurrió a diversas fuentes de datos que incluyen:
+For contextual data on countries, various data sources were used, including:
 
-1) Los datos abiertos del Banco Mundial. Contiene diversos indicadores sobre desarrollo social y económico de la mayoría de los países del mundo. El portal de datos es accesible en: [https://datos.bancomundial.org/](https://datos.bancomundial.org/).
+1) Open data from the World Bank. This contains various indicators on social and economic development for most countries in the world. The data portal is accessible at: [https://datos.bancomundial.org/](https://datos.bancomundial.org/).
 
-2) *The Worlwide Governance Indicators* del Banco Mundial. Se trata de una encuesta a expertos que recopila datos sobre diversos indicadores de gobernanza, cubriendo múltiples países con información actualizada entre 1996 y 2003. Los datos se encuentran disponibles en: [https://www.worldbank.org/en/publication/worldwide-governance-indicators](https://www.worldbank.org/en/publication/worldwide-governance-indicators).
+2) The World Bank's Worldwide Governance Indicators. This is a survey of experts that collects data on various governance indicators, covering multiple countries with information updated between 1996 and 2003. The data is available at: [https://www.worldbank.org/en/publication/worldwide-governance-indicators](https://www.worldbank.org/en/publication/worldwide-governance-indicators).
 
-3) *The V-Dem Dataset*. Recoge un conjunto multidimensional de datos que busca medir la calidad de la democracia alrededor del mundo. La base de datos es accesible mediante el paquete de R `vdemdata` [@maerz_vdemdata_2025]
+3) The V-Dem Dataset. It collects a multidimensional set of data that seeks to measure the quality of democracy around the world. The database is accessible through the R package `vdemdata` [@maerz_vdemdata_2025].
 
 ## Variables
 
-### Variables Dependientes
+### Dependent variables
 
 ```{r}
 #| include: false
@@ -83,17 +83,13 @@ library(psych)
 ```
 
 
-Se construyó un **índice de Cohesión Social** que se compone de dos dimensiones que, a su vez, son índices sumativos construidos a partir de indicadores de LAPOP. La selección de indicadores, subdimensiones y dimensiones está basado en el trabajo previo a nivel agregado del Observatorio de Cohesión Social, accesible aquí: [https://ocscoes.github.io/medicion-cohesion-LA/](https://ocscoes.github.io/medicion-cohesion-LA/).
+A Social Cohesion Index was constructed, comprising two dimensions which, in turn, are summary indices constructed from LAPOP indicators. The selection of indicators, sub-dimensions, and dimensions is based on previous work at the aggregate level by the Social Cohesion Observatory, accessible here: [https://ocscoes.github.io/medicion-cohesion-LA/](https://ocscoes.github.io/medicion-cohesion-LA/).
 
-El **Índice de Cohesión Horizontal** se compone de dos subdimensiones, *Seguridad Urbana* y *Confianza Interpersonal*. Seguridad urbana integra indicadores de seguridad objetiva y seguridad subjetiva. Confianza Interpersonal, en tanto, es un único indicador sobre que tan confiable son las personas en general[¹]. 
+The Horizontal Cohesion Index consists of two sub-dimensions: Urban Safety and Interpersonal Trust. Urban Safety includes indicators of objective safety and subjective safety. Interpersonal Trust, meanwhile, is a single indicator of how trustworthy people are in general[¹].
 
-[¹]: Aunque conceptualmente se entiende que el sentido de pertenencia es un componente importante para la cohesión horizontal, ni LAPOP ni Latinobarómetro cuentan con un indicador que permita medir ese fenómeno de manera adecuada. Por otro lado, si bien se esperaba que la participación comunitaria fuera parte del índice, un análisis factorial exploratorio indicó que no forma parte del mismo concepto latente que las otras dos subsimensiones.
+The Vertical Cohesion Index consists of two dimensions: Trust in Institutions and Attitudes toward Democracy. Trust in Institutions includes indicators related to citizens' trust in Congress, the judiciary, and political parties. Attitudes toward Democracy consists of two indicators on support for the democratic system and satisfaction with the functioning of democracy in one's country[²].
 
-El **Índice de Cohesión Vertical** se compone de dos dimensiones: *Confianza en instituciones*, *Actitudes hacia la democracia*. Confianza en las instituciones integra indicadores relativos a la confianza de los ciudadananos en el congreso, en el poder judicial y en los partidos políticos. Actitudes hacia la democracia se compone de dos indicadores sobre apoyo al sistema democrático y la satisfacción con el funcionamiento de la democracia en su país[²]. 
-
-[²]: Otras variables conceptualmente pertinentes, como participación política o percepciones de justicia, no se incluyeron debido a la falta de indicadores disponibles.
-
-Los indicadores fueron estandarizados de modo que todas las subdimensiones y dimensiones de los índices tienen un rango de 0 a 10, con 0 indicando bajos niveles de cohesión social y 10 indicando altos niveles de cohesión. 
+The indicators were standardized so that all sub-dimensions and dimensions of the indices have a range from 0 to 10, with 0 indicating low levels of social cohesion and 10 indicating high levels of cohesion.
 
 ```{r}
 #| label: tbl-indicadores
@@ -117,40 +113,41 @@ stargazer::stargazer(datos_cohesion, type="html")
 
 ```
 
-### Variables Independientes
+### Independent variables
 
-Se incluyeron como variables independientes factores económicos, institucionales y culturales. Reconociendo la estructura jerárquica de los datos, se consideraron predictores a nivel individual, a nivel de olas-país, y a nivel país. 
+Economic, institutional, and cultural factors were included as independent variables. Recognizing the hierarchical structure of the data, predictors were considered at the individual level, at the wave-country level, and at the country level.
 
-#### Variables Individuales
+#### Individual variables
 
-El principal predictor individual utilizado en este estudio es el **nivel educativo** de las personas. Las múltiples codificaciones de LAPOP para este indicador fueron únificadas para crear una variable de 3 categorías, distinguiendo individuos con educación primaria, secundaria y terciaria.
+The main individual predictor used in this study is the educational level of individuals. The multiple LAPOP codes for this indicator were unified to create a variable with three categories, distinguishing between individuals with primary, secondary, and tertiary education.
 
-Además, se añadieron como variables de control el sexo, la edad y la posición política de los individuos. 
+In addition, gender, age, and political position were added as control variables.
 
-#### Variables Contextuales
+#### Contextual variables
 
-**Prosperidad económica** se midió a través del logaritmo del PIB per cápita a valores de paridad de poder adquisitivo (PPA). **Desigualdad económica** en tanto se midió a partir del Índice Gini. Ambos indicadores se extrajeron del banco de datos del Banco Mundial. Además, se incluyó el porcentaje de individuos con educación terciaria en un país como *proxy* de **oportunidades educativas**. 
+Economic prosperity was measured using the logarithm of GDP per capita at purchasing power parity (PPP) values. Economic inequality was measured using the Gini index. Both indicators were extracted from the World Bank database. In addition, the percentage of individuals with tertiary education in a country was included as a proxy for educational opportunities.
 
-En cuanto a factores institucionales, se consideró el Índice de Democracia Electoral, o poliarquía, para medir la **Calidad democrática de los países**. Por otro lado, se incluyó **un índice de gobernanza** ($\alpha$ = 0.96)  calculado a partir de los *Worldwide Governace Indicators* del Banco Mundial [@kaufmann_worldwide_2024].
+In terms of institutional factors, the Electoral Democracy Index, or polyarchy, was used to measure the democratic quality of countries. On the other hand, a governance index ($\alpha$ = 0.96)  calculated from the World Bank's Worldwide Governance Indicators was included [@kaufmann_worldwide_2024].
 
-Se medirá **diversidad cultural** como el porcentaje de población migrante sobre la población total del país, usando datos del Banco Mundial. Dado que la serie está disponible cada cinco año, se construyó una serie anual imputando los años intermedios mediante una interpolación logística.
+Cultural diversity will be measured as the percentage of the migrant population relative to the total population of the country, using data from the World Bank. Given that the series is available every five years, an annual series was constructed by imputing the intermediate years using logistic interpolation.
 
-## Método
+## Method
 
-### Análisis Factorial Confirmatorio
+### Confirmatory factor analysis
 
-Se realizó un análisis factorial confirmatorio con el fin de poner a prueba el modelo construido por el Observatorio de Cohesión Social [-@observatoriodecohesionsocial_medicion_2025] y la propuesta teórica de @chan_reconsidering_2006. Como se observa en la @fig-modelo, se entiende la Cohesión Social como un constructo latente constituido de dos dimensiones latentes -- Cohesión Vertical y Cohesión Horizontal.
+A confirmatory factor analysis was performed to test the model constructed by the Social Cohesion Observatory [-@observatoriodecohesionsocial_medicion_2025] and the theoretical proposal by @chan_reconsidering_2006. As can be seen in @fig-modelo, social cohesion is understood as a latent construct consisting of two latent dimensions: vertical cohesion and horizontal cohesion.
 
-![Esquema Conceptual de Cohesión Social](input/esquema.png){#fig-modelo}
+![Conceptual Framework for Social Cohesion](input/esquema.png){#fig-modelo}
 
-### Análisis Multinivel
+### Multilevel analysis
 
-Dada la estructura jerárquica de los datos, se estimaron modelos de regresión multinivel híbridos. Esta técnica permite utilizar datos a nivel individual para descomponer los efectos a nivel país en sus componentes entre países (*efectos between*) y dentro de un país en el tiempo (*efectos within*) [@schmidt-catran_random_2016; @fairbrother_two_2014]. Los modelos fueron estimados usando el paquete de R `lme4` [@bates_fitting_2015].
+Given the hierarchical structure of the data, hybrid multilevel regression models were estimated. This technique allows individual-level data to be used to decompose country-level effects into their components between countries (between effects) and within a country over time (within effects) [@schmidt-catran_random_2016; @fairbrother_two_2014]. The models were estimated using the R package `lme4` [@bates_fitting_2015].
 
-El modelo propuesto se podría expresar formalmente como:
+The proposed model could be formally expressed as:
 
 $$
 y_{jti} = \beta_{0}(t) + \beta_{1}X_{jti} + \gamma_{we}(Z_{jt}-\bar{Z}_{j}) + \gamma_{be}\bar{Z}_{j} + v_j + u_{jt} + e_{jti}
 $$
-El modelo integra 3 niveles con individuos $i$ anidados en olas-países $t$ anidados países $j$. $X_{jti}$ representa variables de nivel individual mientras que $Z_{jt}$ son variables contextuales a nivel ola-país. Dado que $Z_{jt}$ contiene varianza tanto de nivel 2 como de nivel 3, se descompuso en el promedio de la variable a lo largo de todas sus olas ($\bar{Z}_{j}$) y en la desviación intra-país en una ola dada ($Z_{jt}-\bar{Z}_{j}$). De tal forma, $\gamma_{we}$ representa en el efecto *within*, es decir, el efecto del cambio en un país en el tiempo; mientras que $\gamma_{be}$ representa el efecto *between*, es decir, las diferencias estructurales entre países. Además, $\beta_{0}(t)$ controla cambios en el tiempos no explicados por el modelo. Por último, $v_j$, $u_{jt}$ y $e_{jti}$ representan los errores a nivel país, ola-país e individual.  
+The model integrates three levels with individuals $i$ nested in waves-countries $t$ nested in countries $j$. $X_{jti}$  represents individual-level variables, while $Z_{jt}$ are contextual variables at the wave-country level. Given that $Z_{jt}$ contains variance at both level 2 and level 3, it was broken down into the average of the variable across all its waves ($\bar{Z}_{j}$) and the intra-country deviation in a given wave ($Z_{jt}-\bar{Z}_{j}$). Thus, $\gamma_{we}$ represents the within effect, that is, the effect of change in a country over time, while $\gamma_{be}$ represents the between effect, that is, the structural differences between countries. In addition, $\beta_{0}(t)$ controls for changes over time not explained by the model. Finally, $v_j$, $u_{jt}$ and $e_{jti}$ represent the errors at the country, wave-country, and individual levels.
+
 
