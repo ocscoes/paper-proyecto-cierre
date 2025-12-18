@@ -86,5 +86,6 @@ p_load(dplyr,
 {{< include 01-intro.qmd >}}
 {{< include 02-antecedentes.qmd >}}
 {{< include 03-metodo.qmd >}}
-{{< include 04-resultados.qmd >}}
+{{< include 04-resultados-descriptive.qmd >}}
+{{< include 05-resultados-modelos.qmd >}}
 
