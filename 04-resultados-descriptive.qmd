@@ -141,10 +141,9 @@ df_sum$ctyear <- paste0(df_sum$iso2c,df_sum$yr2)
 
 # Resultados
 
-## Análisis Factorial Confirmatorio
+## Confirmatory Factor Analysis
 
-```{r fit-cfa}
-#| eval: false
+```{r fit-cfa-prep}
 library(lavaan)
 library(texreg)
 
@@ -153,21 +152,34 @@ library(texreg)
 # confianza_inst_ind   = row_mean_if_complete(cur_data(), c("b13","b21","b31"), 2L),  
 # democracia_ind       = row_mean_if_complete(cur_data(), c("ing4","pn4"), 2L)        
 load("input/proc/micro-macro-merge.rdata")
+load("input/proc/datos-fit.rdata")
 
-m1 <- '
-seguridad_ind =~ aoj11+vic1ext
-# confianza_it_ind =~ it1
-confianza_inst_ind =~ b13+b21+b31
-democracia_ind =~ ing4+pn4
+datos_fit <- datos_fit |>
+  select(-escolaridad) |> na.omit()
 
-ch =~ seguridad_ind + it1
-cv =~ confianza_inst_ind + democracia_ind
-cg =~ ch+ cv
-'
-m1_cfa <- cfa(m1, data = datos_merge[,c("aoj11","vic1ext","it1","b13","b21","b31","ing4","pn4","pais")],cluster = "pais")
-screenreg(m1_cfa)
-semPlot::semPaths(m1_cfa,what = "std")
-fitmeasures(m1_cfa, fit.measures = c("rmsea", "cfi", "chisq", "pvalue", "df"))
+
+vars <- datos_merge |> 
+  ungroup() |>
+  select("aoj11","vic1ext","it1","b13","b21","b31","ing4","pn4", "id_row",
+         "seguridad_ind", "confianza_it_ind", "confianza_inst_ind", "democracia_ind")
+
+
+datos_cfa <- datos_fit |> left_join(vars, by="id_row") 
+
+# m1 <- '
+# seguridad_ind =~ aoj11+vic1ext
+# # confianza_it_ind =~ it1
+# confianza_inst_ind =~ b13+b21+b31
+# democracia_ind =~ ing4+pn4
+# 
+# ch =~ seguridad_ind + it1
+# cv =~ confianza_inst_ind + democracia_ind
+# cg =~ ch+ cv
+# '
+# m1_cfa <- cfa(m1, data = datos_cfa[,c("aoj11","vic1ext","it1","b13","b21","b31","ing4","pn4","pais")],cluster = "pais")
+# screenreg(m1_cfa)
+# semPlot::semPaths(m1_cfa,what = "std")
+# fitmeasures(m1_cfa, fit.measures = c("rmsea", "cfi", "chisq", "pvalue", "df"))
 # save(m1_cfa, file="output/cfa.rdata")
 ```
 
@@ -175,7 +187,7 @@ fitmeasures(m1_cfa, fit.measures = c("rmsea", "cfi", "chisq", "pvalue", "df"))
 #| label: fig-afc
 #| fig-width: 10
 #| fig-height: 5
-#| fig-cap: Análisis Factorial Confirmatorio Modelo de Medición de Cohesión Social
+#| fig-cap: Confirmatory Factor Analysis Social Cohesion Measurement Model
 set1 <-  RColorBrewer::brewer.pal(n = 8, name = "Set1")
 options(ggplot2.discrete.fill = set1)
 options(ggplot2.discrete.colour = set1)
@@ -192,8 +204,8 @@ m1 <- '
   cv =~ confianza_inst_ind + democracia_ind
 '
 
-datos_merge <- datos_merge %>% filter(!pais %in% c("Canada","United States","Trinidad & Tobago"))
-m1_cfa <- cfa(m1, data = datos_merge)
+datos_cfa <- datos_cfa %>% filter(!pais %in% c("Canada","United States","Trinidad & Tobago"))
+m1_cfa <- cfa(m1, data = datos_cfa)
 # summary(m1_cfa, standardized = TRUE, fit.measures = TRUE)
 
 fit <- fitmeasures(m1_cfa, fit.measures = c("rmsea", "cfi", "chisq", "pvalue", "df"))
@@ -205,8 +217,8 @@ fit_edges$label <- fit_edges$est_sig_std
 
 fit_nodes<- get_nodes(m1_cfa)
 fit_nodes$label <- c("Horizontal","Vertical",
-                     "Security","Interpersonal\nTrust",
-                     "Institutional\nTrust","Democracy")
+                     "Public \nSecurity","Interpersonal\nTrust",
+                     "Institutional\nTrust","Democratic \nAttitudes")
 
 fit_layout<- get_layout("","ch","",  "","cv"," ",
                   "confianza_it_ind","","seguridad_ind",
@@ -231,7 +243,12 @@ graph_sem(m1_cfa,edges = fit_edges,layout=fit_layout,nodes=fit_nodes) +
 
 ```
 
-En @fig-afc se presentan los resultados del análisis factorial confirmatorio hecho a partir del modelo de medición propuesto. En primer lugar, se observa que los indicadores presentan cargas factoriales moderadas, las cuales van del 0.45 al 0.6 dependiendo del caso, lo que sugiere que los indicadores reflejan parcialmente las dimensiones latentes. Los índices de ajuste son de buena calidad, apuntando a una fiabilidad del constructo. Ahora, dado que el modelo cuenta con un solo grado de libertad, las medidas de ajuste global deben interpretarse con precaución. En suma, el modelo ofrece un ajuste aceptable a nivel identificacional, pero la validez de los factores son limitadas, lo que podría solucionarse aumentando el número o la calidad de los indicadores en futuras mediciones.
+
+@fig-afc reports the confirmatory factor analysis for the proposed two-factor measurement model. At first, overall fit appears strong (RMSEA = 0.03; CFI=0.0996). However, these indices should be interpreted with caution, given that including only two indicators per factor results in the model being just overidentified (df=1), which limits the diagnostic value of global fit measures. 
+
+Standardized factor loading are moderate. For Horizontal Cohesion, loadings range from 0.44 to 0.49, and for Vertical Cohesion from 0.56 to 0.58. The latent correlation between both factors is also moderate (r = 0.51), implying related but empirically distinguishable dimensions. Following Dickes and Valentova [-@dickes_construction_2013], this pattern supports interpretation of social cohesion as a multidimensional construct. However, the statement that a single composite indicator is "not possible" [-@dickes_construction_2013, p. 836] might be discussed. Empirically, the moderate latent correlation observed here suggest a shared component that could justify, on pragmatic grounds, a composite summary for descriptive purposes. Nevertheless, such composite cannot be treated as evidence of unidimensionality nor a higher-order general factor. Accordingly, subsequent analyses will primarily treat Vertical and Horizontal dimensions as separate construct, with any exceptions explicitly noted. 
+
+
 
 ## Descriptives
 
