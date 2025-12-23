@@ -2,6 +2,9 @@
 output: html_document
 editor_options: 
   chunk_output_type: console
+execute:
+  echo: FALSE 
+  warning: false
 ---
 
 <!-- Please run the following chunks before running the models  -->
@@ -139,7 +142,7 @@ df_sum <-
 df_sum$ctyear <- paste0(df_sum$iso2c,df_sum$yr2)
 ```
 
-# Resultados
+# Results
 
 ## Confirmatory Factor Analysis
 
@@ -187,7 +190,7 @@ datos_cfa <- datos_fit |> left_join(vars, by="id_row")
 #| label: fig-afc
 #| fig-width: 10
 #| fig-height: 5
-#| fig-cap: Confirmatory Factor Analysis Social Cohesion Measurement Model
+#| fig-cap: Confirmatory Factor Analysis for Social Cohesion Measurement Model
 set1 <-  RColorBrewer::brewer.pal(n = 8, name = "Set1")
 options(ggplot2.discrete.fill = set1)
 options(ggplot2.discrete.colour = set1)
@@ -255,38 +258,64 @@ Standardized factor loading are moderate. For Horizontal Cohesion, loadings rang
 
 ```{r}
 #| label: fig-cs
-#| fig-cap: Evolución dimensiones Cohesión Social (2004-2022)
-olas <- datos_merge |>
-  group_by(ola) |>
+#| fig-cap: Evolution of vertical and horizontal cohesion (2004-2023)
+
+library(ggbreak)
+
+olas <- datos_fit |>
+  filter(!pais %in% c("Canada", "United States")) |>
+   group_by(ola) |>
   summarise(horizontal_prom = mean(`cohesion_horizontal_ind`, na.rm=T),
-            vertical_prom = mean(`cohesion_vertical_ind`, na.rm=T),
-            cohesion_prom = mean(`cohesion_general_ind`, na.rm=T)) |>
+            vertical_prom = mean(`cohesion_vertical_ind`, na.rm=T)) |>
   pivot_longer(
-    cols = c(horizontal_prom, vertical_prom, cohesion_prom),
+    cols = c(horizontal_prom, vertical_prom),
     names_to = "indicador",
     values_to = "promedio"
   ) |>
   mutate(indicador = dplyr::recode(indicador,
                             horizontal_prom = "Horizontal Cohesion",
-                            vertical_prom = "Vertical Cohesion",
-                            cohesion_prom = "General Cohesion"))
+                            vertical_prom = "Vertical Cohesion"))
+
+ # dif <- datos_fit |>
+ #  filter(!pais %in% c("Canada", "United States")) |>
+ #  group_by(ola) |>
+ #  summarise(
+ #    horizontal_prom = mean(cohesion_horizontal_ind, na.rm = TRUE),
+ #    vertical_prom   = mean(cohesion_vertical_ind,   na.rm = TRUE),
+ #    diferencia_h_v  = horizontal_prom - vertical_prom,
+ #    .groups = "drop"
+ #  ) |>
+ #   summarise(mean(diferencia_h_v))
+ # 
+ # dif
 
 olas$ola <- factor(olas$ola)
-plot_cs <- olas |>
+p<- olas |>
   ggplot(aes(x = ola, y = promedio, color = indicador,group = indicador)) +
   geom_line(linewidth = 1) +
   geom_point() +
-  scale_y_continuous(limits = c(2,8))+
+  scale_y_continuous(limits = c(0,8))+
   labs(x = "Wave", y = "Social cohesion (1-10)", color = NULL) +
   theme_minimal() +
   theme(legend.position = "bottom")
 
+plot_cs <- p + scale_y_cut(breaks=c(3.5), which= c(1,2), scales=c(3, 0.5))
+
+
 plot_cs
 ```
 
-@fig-cs shows the averages for each year for the different types of cohesion. First, it can be seen that horizontal cohesion maintained an upward trend between 2004 and 2012, except for the decline in 2010. After this, horizontal cohesion faced a sustained decline until 2018, before rebounding and even exceeding its 2004 level. Vertical cohesion shows a similar pattern of variation to horizontal cohesion, with a persistent rise over time until 2012, when it suffered a sharp decline at the regional level. This decline continued until 2016, when the trend reversed, with an increase in vertical cohesion until the last year recorded. Although the latest measurement of vertical cohesion shows higher levels than at the beginning, its scores are generally considerably low when compared to horizontal cohesion, differing by approximately 1.5 points in all waves. In summary, Latin America has consistently shown greater horizontal cohesion than vertical cohesion from 2004 to 2022[^3]. 
+@fig-cs shows the averages for each year for the different types of cohesion. First, we observed that horizontal cohesion maintained an upward trend between until 2012, reaching 6.54 (out of 10) that year. After that, horizontal cohesion faced a sustained decline until 2018, with a regional mean of 5.93, before rebounding to somewhat similar levels as 2004 (6.17).
 
-[^3]: It should be noted that social cohesion (green line) is the average of vertical and horizontal cohesion, which is why its interpretation is not detailed.
+Meanwhile, vertical cohesion show a similar trends, with a persistente trends overt time until 2010, when it suffered a sharp decline. Between 2010 and 2016, the regional mean went from 5.24 to 4.44. After that, the index showed a slight increase, reaching 4.63 in 2023. 
+
+Across the entire period under study, horizontal cohesion remains consistently higher than vertical cohesion, with an average gap of 1.38 points. This persistent difference may reflect the structural and enduring institutional weaknesses present in many Latin American states, which might tend to reinforce the role of interpersonal relationships, family ties, and informal networks as key resources for facing social life [@araujo_institutional_2014;@brinks_political_2020].
+
+At first glance, these trends appear closely aligned with the broader political, economic, and social context of Latin America over the period analyzed. The upward trajectories observed until 2010–2012 coincide with the commodities boom, during which rising prices of commodities such as oil, copper, and agricultural products—driven largely by demand from emerging economies—supported sustained economic growth in the region. This favorable context was leveraged by progressive and populist governments to implement redistributive policies, contributing to notable reductions in poverty and income inequality across several countries [@sanchez-ancochea_surprising_2021].
+
+Following the slowdown of the Chinese economy around 2012 and the subsequent end of the commodities boom, many Latin American countries entered a period of economic, political and social struggles, which might be reflected in the decline of both dimensions of cohesion. Meanwhile, the slight rebound observed in 2023 may be interpreted as a process of social and political recomposition in the aftermath of the COVID-19 pandemic, during which the expansion of state support and the reinforcement of solidarity mechanisms may have partially mitigated previous erosions of social cohesion.
+
+<!-- [^3]: It should be noted that social cohesion (green line) is the average of vertical and horizontal cohesion, which is why its interpretation is not detailed. -->
 
 
 ## Relationship between and within country level factors with social cohesión
