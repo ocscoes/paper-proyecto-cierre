@@ -422,6 +422,7 @@ datos_merge <- datos_merge |>
   semi_join(resumen, by="pais") |>
   filter(ola!=2021)
 
+datos_merge$id_row <- seq_len(nrow(datos_merge))
 
 save(datos_merge, file = "input/proc/micro-macro-merge.rdata")
 

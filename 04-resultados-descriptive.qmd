@@ -318,12 +318,15 @@ Following the slowdown of the Chinese economy around 2012 and the subsequent end
 <!-- [^3]: It should be noted that social cohesion (green line) is the average of vertical and horizontal cohesion, which is why its interpretation is not detailed. -->
 
 
-## Relationship between and within country level factors with social cohesión
+## Relationship between and within country level factors with social cohesion
 
-```{r fig-macro}
+@fig-macro presents bivariate associations between both dimensions of social cohesion and macrostructural variables such as economic inequality, GDP per capita (PPP), governance, the V-Dem democracy index, and the proportion of migrant population. The panels allow us to visually distinguish variation *between* countries and association *within* countries, represented by the gray lines. The red line represents the linear fit including the United States and Canada. Since these two countries tend to appear clearly as outliers, the fit excluding them is also reported (in black). In general, the exclusion of these cases does not alter the direction of the associations, but it does reduce their strength, shifting them toward moderate or low ranges. 
+
+```{r}
 #| fig-width: 12
 #| fig-height: 22
 #| fig-cap: "Country-level association of macro-level factors and social cohesion. Red line represents the association including Canada and United States."
+#| label: fig-macro
 #| cache: true
 library(ggrepel)
 
@@ -456,7 +459,7 @@ fig_vdem_h <-
                  label = iso2c),
              size = 2.5) +
   scale_y_continuous(limits = c(2, 8)) +
-  labs(x = "Democracy", y = " ", title = "") +
+  labs(x = "V-Dem Index", y = " ", title = "") +
   annotate("label", x = Inf, y = -Inf, hjust = 1.08, vjust = -1,
            label = paste0("r = ",
                           round(cor(df_sum$mid_indice_v_dem,
@@ -631,7 +634,7 @@ fig_vdem_v <-
                  label = iso2c),
              size = 2.5) +
   scale_y_continuous(limits = c(2, 8)) +
-  labs(x = "Democracy", y = " ", title = "") +
+  labs(x = "V-Dem Index", y = " ", title = "") +
   annotate("label", x = Inf, y = -Inf, hjust = 1.08, vjust = -1,
            label = paste0("r = ",
                           round(cor(df_sum$mid_indice_v_dem,
@@ -696,3 +699,113 @@ grid.arrange(fig_gini_h,fig_gini_v,
  gp = gpar(fontface = 1, fontsize = 9),hjust = 1,x = 1
   ))
 ```
+
+The correlation between economic inequality and horizontal cohesion is -0.2 (excluding Canada and the United States), with associations within countries ranging from -0.77 in Argentina to 0.64 in Brazil. The association with GDP per capita (PPP) is slightly positive (0.14), with countries such as Venezuela (r=0.88), El Salvador (r=0.67), and Brazil (r=0.42) showing correlations above the average, and countries such as Colombia (r=-0.9), Mexico (r=0.79), and Ecuador (r=-0.73) showing a negative association. The average correlation between the V-Dem Democracy Index and Horizontal Cohesion is 0.14, with Venezuela showing a strong positive association (r=0.73) and El Salvador a strong negative one (r=-0.85). The association between governance and horizontal cohesion is the most pronounced, with a coefficient of 0.43. However, it is possible to find countries that show the opposite trend, such as Colombia (r=-0.73), Paraguay (r=-0.63), and Ecuador (r=-0.62). Finally, the proportion of migrants in the country shows a positive association with horizontal cohesion (r=0.24), but with strong negative trends in countries such as Ecuador (-0.87), Colombia (-0.84), and Mexico (-0.78).
+
+The associations between vertical cohesion and macro indicators follow the same general trends as in the horizontal dimension, although differences in magnitude are observed. Thus, the association with economic inequality is stronger in the vertical dimension (-0.36), although countries such as Chile (r=0.77), Brazil (r=0.74), and Colombia (r=0.73) show an association in the opposite direction. The average effect of GDP per capita (PPP) is practically flat (r=-0.01), but there are also countries with a strongly negative trend, such as Chile (-0.82) and Colombia (-0.81). Something similar occurs with the association between the V-Dem Index and Vertical Cohesion, where an average correlation of 0.04 does not exclude the presence of strongly positive associations in Venezuela (r=0.92) or strongly negative ones in countries such as Ecuador (-0.90). The association between governance and vertical cohesion is less pronounced than in the horizontal dimension (r=0.18), with a range from -0.87 in Colombia to 0.91 in Venezuela. Finally, the effect of the percentage of migrant population is greater in the vertical dimension than in the horizontal dimension (r=0.41), with strongly negative effects observed in countries such as Chile (-0.78) and Peru (-0.77).
+
+
+```{r}
+#| eval: false
+
+
+library(dplyr)
+library(tidyr)
+library(purrr)
+
+# Cohesión Horizontal
+
+y_var <- "cohesion_horizontal"
+
+x_vars <- c(
+  "wid_gini_disp",
+  "pib_per_capita_ppa",
+  "indice_v_dem",
+  "wgi",
+  "percent_pob_migrante"
+  # ...
+)
+
+corr_table_hor <- df_sum %>%
+  select(iso2c, all_of(y_var), all_of(x_vars)) %>%
+  pivot_longer(
+    cols = all_of(x_vars),
+    names_to = "x_var",
+    values_to = "x"
+  ) %>%
+  filter(!is.na(x), !is.na(.data[[y_var]])) %>%
+  group_by(iso2c, x_var) %>%
+  summarise(
+    n = n(),
+    test = list(if (n() >= 3) cor.test(x, .data[[y_var]], method = "pearson") else NULL),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    r = map_dbl(test, ~ if (is.null(.x)) NA_real_ else unname(.x$estimate)),
+    p = map_dbl(test, ~ if (is.null(.x)) NA_real_ else .x$p.value)
+  ) %>%
+  select(iso2c, x_var, r, p) %>%
+  pivot_wider(
+    names_from = x_var,
+    values_from = c(r, p),
+    names_glue = "{.value}_{x_var}"
+  ) %>%
+  arrange(iso2c) |>
+  select(iso2c,
+         ends_with("disp"),
+         ends_with("ppa"),
+         ends_with("dem"),
+         ends_with("wgi"),
+         ends_with("migrante"))
+
+corr_table_hor
+
+# Cohesión Vertical
+
+y_var <- "cohesion_vertical"
+
+x_vars <- c(
+  "wid_gini_disp",
+  "pib_per_capita_ppa",
+  "indice_v_dem",
+  "wgi",
+  "percent_pob_migrante"
+  # ...
+)
+
+corr_table_ver <- df_sum %>%
+  select(iso2c, all_of(y_var), all_of(x_vars)) %>%
+  pivot_longer(
+    cols = all_of(x_vars),
+    names_to = "x_var",
+    values_to = "x"
+  ) %>%
+  filter(!is.na(x), !is.na(.data[[y_var]])) %>%
+  group_by(iso2c, x_var) %>%
+  summarise(
+    n = n(),
+    test = list(if (n() >= 3) cor.test(x, .data[[y_var]], method = "pearson") else NULL),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    r = map_dbl(test, ~ if (is.null(.x)) NA_real_ else unname(.x$estimate)),
+    p = map_dbl(test, ~ if (is.null(.x)) NA_real_ else .x$p.value)
+  ) %>%
+  select(iso2c, x_var, r, p) %>%
+  pivot_wider(
+    names_from = x_var,
+    values_from = c(r, p),
+    names_glue = "{.value}_{x_var}"
+  ) %>%
+  arrange(iso2c) |>
+  select(iso2c,
+         ends_with("disp"),
+         ends_with("ppa"),
+         ends_with("dem"),
+         ends_with("wgi"),
+         ends_with("migrante"))
+
+corr_table_ver
+
+```
+
