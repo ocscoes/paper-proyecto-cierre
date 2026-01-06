@@ -209,7 +209,7 @@ htmlreg(c(micro_h2,micro_h,micro_v2,micro_v),single.row = F,digits = 3,caption =
        # file = "output/table000.html",
         custom.coef.map = coef_names,
        groups = 
-         list("Education (ref.=No formal schooling)"=3:4,
+         list("Education (ref.=Secondary)"=3:4,
               "Political position (ref.=Undefined)"=5:7
               ),
        custom.header = list("Horizontal"=1:2,"Vertical"=3:4),
@@ -217,6 +217,15 @@ htmlreg(c(micro_h2,micro_h,micro_v2,micro_v),single.row = F,digits = 3,caption =
        custom.gof.names = c(NA,NA,"Num. Country-wave","Num. Country","Var: Country-wave (Intercept)","Var: Country (Intercept)","Var: Residual")
 )
 ```
+The first
+
+The models in Table XX present the estimates of the multilevel models examining the association between individual characteristics and social cohesion.
+For horizontal social cohesion, Model 1 indicates that a higher position in the relative income distribution is associated with greater social cohesion ($\beta = 0.027$, $p < .001$). This contrasts with differences between educational groups, where, compared to the group with secondary education, individuals with primary education ($\beta = 0.202$, $p < .001$) and those with tertiary education ($\beta = 0.099$, $p < .001$) exhibit higher horizontal social cohesion. Model 2 incorporates political position into the estimation, showing that, compared to the ideologically undefined group, both centrists ($\beta = -0.052$, $p < .01$) and leftists ($\beta = -0.162$, $p < .001$) report lower levels of horizontal cohesion. In contrast, right-leaning individuals display higher levels of social cohesion ($\beta = 0.041$, $p < .05$).
+
+Similar to the results for horizontal cohesion, Model 3 shows that individuals with higher incomes exhibit higher vertical cohesion, though with a smaller coefficient and a more moderate level of significance ($\beta = 0.004$, $p < .05$). Differences between educational groups are more attenuated compared to the horizontal dimension. Relative to the group with secondary education, those with primary education report higher levels of vertical cohesion ($\beta = 0.132$, $p < .001$), whereas those with tertiary education show no significant differences ($\beta = 0.003$, $p > .05$). When political position is incorporated into Model 4, differences from Model 3 emerge. Income loses strength and statistical significance ($\beta = 0.002$, $p > .05$), while the relationship with educational level remains robust. Regarding political groups, individuals who declare a political position generally exhibit higher levels of vertical cohesion. Compared to those who are undecided, people on the right show the highest levels of vertical cohesion ($\beta = -0.052$, $p < .01$), followed by centrists ($\beta = -0.052$, $p < .01$) and leftists ($\beta = -0.052$, $p < .01$).
+
+For the time variable in Models 2 and 4, results indicate a decline in both horizontal ($\beta = -0.048$, $p < .001$) and vertical ($\beta = -0.098$, $p < .001$) cohesion during the analyzed period. The decrease in the vertical dimension is nearly double that observed in the horizontal dimension. Additionally, a quadratic term was included to assess whether the decline accelerated in recent periods; however, no significant differences were found when incorporating the quadratic term of time (see supplementary material).
+
 
 ```{r modelo-cohesion-full}
 #| cache: true
@@ -291,6 +300,23 @@ hv_demo<- c(h_demo,v_demo)
 # screenreg(hv_demo,digits=3,custom.coef.map = coef_names)
 ```
 
+In line with our hypotheses, Table XX presents the estimates of the hybrid multilevel models that show the between- and within-country differences in social cohesion.
+
+*Horizontal Cohesion*
+
+The results display the associations between (BE) and within (WE) for inequality (Gini) and economic prosperity (GDP). Regarding inequality, across all specifications (Models 1 to 3), differences between countries in levels of economic inequality are not associated with social cohesion. However, an increase in inequality within countries is associated with lower social cohesion. Similarly, the results show that neither between-country differences nor increases in economic prosperity appear to affect horizontal cohesion.
+Regarding political variables, we observe that both levels of electoral democracy (Democracy) and governance affect social cohesion in different ways. First, differences between countries in levels of democracy are associated with lower levels of horizontal cohesion. However, this relationship is not observed within countries. Second, differences between countries in governance levels indicate that governance is associated with higher levels of horizontal cohesion. Nevertheless, changes in governance within countries do not appear to be associated with horizontal cohesion.
+Finally, the results in Model 3 show that differences between countries in the percentage of the migrant population are not associated with levels of horizontal cohesion. However, an increase in the migrant population within countries is negatively associated with horizontal cohesion.
+
+*Vertical Cohesion*
+
+Similar to the results for horizontal cohesion, we observe distinct patterns for vertical cohesion. Differences between countries in levels of economic inequality indicate that countries with higher inequality exhibit lower vertical cohesion. Additionally, rising economic inequality within countries is negatively related to levels of vertical cohesion. Furthermore, both the between-country and within-country associations for economic prosperity are weak, showing a positive association for the within-country effect only when controlling for political characteristics and migration.
+
+For political variables, we observe noteworthy results. First, differences between countries in levels of democracy do not show a robust association with vertical cohesion; this effect loses statistical significance when controlling for the percentage of the migrant population in the country. However, changes within countries reduce vertical cohesion. In other words, countries that increase their levels of electoral democracy also experience declines in vertical cohesion. Second, the results for governance are robust. Both differences between countries and changes within countries show a positive and significant association with social cohesion.
+
+Finally, differences between countries and changes within countries in the percentage of the migrant population do not show an association with levels of vertical cohesion.
+
+
 ```{r}
 #| label: tbl-table004
 #| results: asis
@@ -320,6 +346,7 @@ source("proc/proc_interactions.R")
 #| eval: true
 #| fig-width: 10
 #| fig-height: 8 
+#| fig-cap: coefplot
 library(ggplot2)
 library(broom.mixed)
 library(tidyr)
@@ -416,12 +443,29 @@ data_coes_plot %>%
 
 ```
 
+Figure @fig-coefplot shows the coefficients for the between- and within-country effects for the country-level characteristics and the time trend (wave).
+When examining the between-country effects (BE × wave), the results indicate no significant differences for any of the socioeconomic, political, or migration variables.
 
-Así...
+In contrast, the within-country effects (WE × wave) reveal nuances in their relationship with social cohesion. For economic inequality, an increase in within-country inequality is associated with a decline in social cohesion in both the horizontal and vertical dimensions as time progresses.
+
+Additionally, the effect of economic prosperity within countries becomes increasingly positive for horizontal cohesion over time. However, this pattern is not observed for vertical cohesion.
+
+Regarding political variables, changes in levels of democracy do not show differences over time for either dimension of social cohesion. In contrast, the results for governance indicate that, as time passes, increases in governance become more positively associated with social cohesion.
+
+Finally, for migration, the results show no significant changes in the within-country effect or its interaction with time for either dimension of social cohesion.
+
+
+
+
+
+
+
+
+<!-- Así...
 
 * todas las iteraciones la mismo tiempo y ver que pasa
 * si alguna de las interacciones no es ninguna de las dos cohesiones 
-  - para las interaccines que son son significativas dejarlas, las otras no 
+  - para las interaccines que son son significativas dejarlas, las otras no  -->
 
 
 
