@@ -217,7 +217,6 @@ htmlreg(c(micro_h2,micro_h,micro_v2,micro_v),single.row = F,digits = 3,caption =
        custom.gof.names = c(NA,NA,"Num. Country-wave","Num. Country","Var: Country-wave (Intercept)","Var: Country (Intercept)","Var: Residual")
 )
 ```
-The first
 
 The models in Table XX present the estimates of the multilevel models examining the association between individual characteristics and social cohesion.
 For horizontal social cohesion, Model 1 indicates that a higher position in the relative income distribution is associated with greater social cohesion ($\beta = 0.027$, $p < .001$). This contrasts with differences between educational groups, where, compared to the group with secondary education, individuals with primary education ($\beta = 0.202$, $p < .001$) and those with tertiary education ($\beta = 0.099$, $p < .001$) exhibit higher horizontal social cohesion. Model 2 incorporates political position into the estimation, showing that, compared to the ideologically undefined group, both centrists ($\beta = -0.052$, $p < .01$) and leftists ($\beta = -0.162$, $p < .001$) report lower levels of horizontal cohesion. In contrast, right-leaning individuals display higher levels of social cohesion ($\beta = 0.041$, $p < .05$).
@@ -346,7 +345,7 @@ source("proc/proc_interactions.R")
 #| eval: true
 #| fig-width: 10
 #| fig-height: 8 
-#| fig-cap: coefplot
+#| fig-cap: fig-coefplot
 library(ggplot2)
 library(broom.mixed)
 library(tidyr)

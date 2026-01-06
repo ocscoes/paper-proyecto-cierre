@@ -27,7 +27,7 @@ author:
     orcid: 0009-0008-3167-6819
     affiliations:
       - ref: 2
-  - name: Julio Iturra
+  - name: Julio Iturra-Sanhueza
     email: jiturra@uni-bremen.de
     orcid: https://orcid.org/0000-0003-1993-3479
     affiliations:
@@ -54,7 +54,7 @@ linestretch: 1.15
 geometry: "left=2.54cm,right=2.54cm,top=2.54cm,bottom=2.54cm"
 papersize: letter
 colorlinks: true
-lang: es
+lang: en
 bibliography: "input/bib/ocs-paper.bib"
 csl: "input/bib/apa.csl"
 execute:
