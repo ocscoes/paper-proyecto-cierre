@@ -1,5 +1,5 @@
 ---
-title: "Dos décadas de cambios en la cohesión social en América Latina (2004-2023)"
+title: "Two decades of changes in social cohesion in Latin America (2004-2023)"
 format:
   html:
     theme: cosmo
@@ -40,13 +40,13 @@ affiliations:
   - id: 3
     name: University of Bremen
 abstract: |
- En un contexto regional marcado por crisis políticas, desigualdades persistentes y episodios de conflictividad social, comprender la evolución de la cohesión social es fundamental para evaluar la estabilidad democrática y la legitimidad institucional. Si bien existen numerosos estudios sobre las causas y consecuencias de la desconfianza o la polarización en América Latina, aún persiste un vacío en el análisis sistemático y longitudinal de la cohesión social como fenómeno integral. Este proyecto busca llenar ese vacío mediante el desarrollo de un conjunto de indicadores que permitan analizar con comparabilidad temporal y regional la evolución de las distintas dimensiones de la cohesión social.
+ In a regional context marked by political crises, persistent inequalities, and episodes of social unrest, understanding the evolution of social cohesion is essential for assessing democratic stability and institutional legitimacy. Although there are numerous studies on the causes and consequences of mistrust or polarization in Latin America, there is still a gap in the systematic and longitudinal analysis of social cohesion as an integral phenomenon. This paper seeks to fill that gap by developing a set of indicators that allow for the analysis of the evolution of the different dimensions of social cohesion with temporal and regional comparability.
 
- Este artículo busca cubrir esas brechas proponiendo y validando un modelo de medición que permita un análisis comparativo, longitudinal y multinivel de la cohesión social en América Latina. En concreto, buscamos avanzar en: (i) una operacionalización clara y validada que integre dimensiones claves a partir de la literatura existente y los datos disponibles para la región; (ii) la estimación de trayectorias regionales y nacionales durante las últimas dos décadas; y (iii) la identificación de factores asociados a estos cambios mediante la aplicación de modelos de regresión multinivel híbridos. Con esto, se espera aportar evidencia robusta sobre los cambios en la región en las últimas dos décadas, aportando a la discusión académica y política sobre los desafíos y oportunidades de la cohesión social en América Latina.
+ This article seeks to fill these gaps by proposing and validating a measurement model that allows for a comparative, longitudinal, and multilevel analysis of social cohesion in Latin America. Specifically, we seek to advance: (i) a clear and validated operationalization that integrates key dimensions from the existing literature and available data for the region; (ii) the estimation of regional and national trajectories over the last two decades; and (iii) the identification of factors associated with these changes through the application of hybrid multilevel regression models. This is expected to provide robust evidence on changes in the region over the last two decades, contributing to the academic and political discussion on the challenges and opportunities of social cohesion in Latin America.
 keywords: 
-  - cohesión social
-  - análisis multinivel
-  - análisis longitudinal
+  - social cohesion
+  - multilevel analysis
+  - longitudinal analysis
 link-citations: true
 linestretch: 1.15       
 # mainfont: Times New Roman
@@ -60,6 +60,7 @@ csl: "input/bib/apa.csl"
 execute:
   echo: FALSE 
   warning: false
+  message: false
 ---
 
 ```{r}
@@ -80,7 +81,9 @@ p_load(dplyr,
        ggeffects,
        performance,
        haven,
-       ggbrake
+       ggbrake,
+       broom.mixed,
+       ggtext
        )
 ```
 
