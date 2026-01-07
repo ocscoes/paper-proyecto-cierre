@@ -343,7 +343,14 @@ vdem_proc <- vdem |>
   filter(year>=2004 & year<=2022 & country_text_id %in% codigos_pais) |>
   select(codigo_pais= country_text_id,
          ola=year,
-         "Indice V-Dem"= v2x_polyarchy)
+         "Indice V-Dem"= v2x_polyarchy,
+         api_index = v2x_api,
+         mpi_index = v2x_mpi,
+         expression_freedom = v2x_freexp_altinf,
+         association_freedom= v2x_frassoc_thick,
+         suffrage = v2x_suffr,
+         clean_election = v2xel_frefair,
+         elected_officials = v2x_elecoff)
 
 # Imputación con lógica extendida
 vdem_proc <- vdem_proc %>%
@@ -383,7 +390,7 @@ wgi_proc <- wgi |>
 
 items <- setdiff(names(wgi_proc), c("ola","codigo_pais"))
 
-a_wgi <- alpha(wgi_proc[3:8])
+a_wgi <- psych::alpha(wgi_proc[3:8])
 a_wgi # alpha=0.96
 
 wgi_mean <- wgi_proc |>
@@ -456,7 +463,7 @@ resumen <- datos_wide |>
 datos_wide <- datos_wide |>
   dplyr::filter(!is.na(`Cohesión general`), !is.na(ola)) |>
   semi_join(resumen, by="pais") |>
-  select(1:12, 21,24:35)
+  select(1:12, 21,24:34, 41)
 
   
 
@@ -465,4 +472,5 @@ datos_wide <- datos_wide |>
 save(datos_wide, file="input/proc/datos-completos.rdata")
 
 
+# correlations
 
