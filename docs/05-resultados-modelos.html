@@ -1,0 +1,2621 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>resultados-modelos</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="05-resultados-modelos_files/libs/clipboard/clipboard.min.js"></script>
+<script src="05-resultados-modelos_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="05-resultados-modelos_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="05-resultados-modelos_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="05-resultados-modelos_files/libs/quarto-html/popper.min.js"></script>
+<script src="05-resultados-modelos_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="05-resultados-modelos_files/libs/quarto-html/anchor.min.js"></script>
+<link href="05-resultados-modelos_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="05-resultados-modelos_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="05-resultados-modelos_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="05-resultados-modelos_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="05-resultados-modelos_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<!-- Please run the following chunks before running the models  -->
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.5.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'forcats' was built under R version 4.5.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.0     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>set1 <span class="ot">&lt;-</span>  RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">8</span>, <span class="at">name =</span> <span class="st">"Set1"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">ggplot2.discrete.fill =</span> set1)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">ggplot2.discrete.colour =</span> set1)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">theme_set</span>(ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>())</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">theme_update</span>(<span class="at">text=</span>ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>,  <span class="at">family=</span><span class="st">"serif"</span>))    </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(dplyr,ggplot2,haven,ggrepel,gridExtra,grid)  </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"input/proc/micro-macro-merge.rdata"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>datos_merge <span class="ot">&lt;-</span> datos_merge <span class="sc">|&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(haven<span class="sc">::</span>is.labelled), <span class="sc">~</span> vctrs<span class="sc">::</span><span class="fu">vec_data</span>(.)),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">pais=</span> <span class="fu">as.factor</span>(pais))</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>datos_merge<span class="sc">$</span>country_wave <span class="ot">=</span> <span class="fu">do.call</span>(paste, <span class="fu">c</span>(datos_merge[<span class="fu">c</span>(<span class="st">"pais"</span>, <span class="st">"ola"</span>)], <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>wid_data <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="at">file =</span> <span class="st">"input/proc/wid_data.dta"</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>wid_data <span class="ot">&lt;-</span> wid_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">yr2=</span><span class="fu">substr</span>(year, <span class="dv">3</span>, <span class="dv">4</span>)) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">iso2c=</span>country)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>datos_merge<span class="sc">$</span>iso2c<span class="ot">&lt;-</span> countrycode<span class="sc">::</span><span class="fu">countrycode</span>(<span class="at">sourcevar =</span> datos_merge<span class="sc">$</span>pais,<span class="at">origin =</span> <span class="st">"country.name"</span>,<span class="at">destination =</span> <span class="st">"iso2c"</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>wid_data<span class="sc">$</span>iso2c <span class="ot">&lt;-</span> <span class="fu">as.character</span>(wid_data<span class="sc">$</span>iso2c)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>datos_merge<span class="sc">$</span>yr2<span class="ot">&lt;-</span> <span class="fu">substr</span>(datos_merge<span class="sc">$</span>ola, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>frhouse <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"input/orig/freedom-score-fh.csv"</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>frhouse<span class="ot">&lt;-</span> </span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>frhouse <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="at">country=</span>Entity,<span class="at">iso3c=</span>Code,<span class="at">year=</span>Year,<span class="at">frhouse=</span>Total.democracy.score) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">iso2c =</span>countrycode<span class="sc">::</span><span class="fu">countrycode</span>(<span class="at">sourcevar =</span> iso3c,<span class="at">origin =</span> <span class="st">"iso3c"</span>,<span class="at">destination =</span> <span class="st">"iso2c"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">yr2 =</span> <span class="fu">substr</span>(year, <span class="dv">3</span>, <span class="dv">4</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(iso2c <span class="sc">%in%</span> datos_merge<span class="sc">$</span>iso2c)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>datos_merge<span class="ot">&lt;-</span> </span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(<span class="at">x =</span> datos_merge,<span class="at">y =</span> wid_data[,<span class="fu">c</span>(<span class="st">"iso2c"</span>,<span class="st">"yr2"</span>,<span class="st">"wid_gini_disp"</span>)],</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>          <span class="at">by =</span><span class="fu">c</span>(<span class="st">"iso2c"</span>,<span class="st">"yr2"</span>))</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>datos_merge<span class="ot">&lt;-</span> </span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(<span class="at">x =</span> datos_merge,<span class="at">y =</span> frhouse[,<span class="fu">c</span>(<span class="st">"iso2c"</span>,<span class="st">"yr2"</span>,<span class="st">"frhouse"</span>)],</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>          <span class="at">by =</span><span class="fu">c</span>(<span class="st">"iso2c"</span>,<span class="st">"yr2"</span>))</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Separar los efectos</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>datos_merge <span class="ot">&lt;-</span> datos_merge <span class="sc">|&gt;</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pais) <span class="sc">|&gt;</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">pib_be =</span> <span class="fu">mean</span>(log_pib_per_capita_ppa, <span class="at">na.rm=</span>T),</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>         <span class="co"># gini_be = mean(gini_index, na.rm=T),</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>         <span class="at">gini_be =</span> <span class="fu">mean</span>(wid_gini_disp, <span class="at">na.rm=</span>T),</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>         <span class="at">mig_be =</span> <span class="fu">mean</span>(percent_pob_migrante, <span class="at">na.rm=</span>T),</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>         <span class="at">dem_be =</span> <span class="fu">mean</span>(indice_v_dem, <span class="at">na.rm=</span>T),</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>         <span class="at">wgi_be =</span> <span class="fu">mean</span>(wgi, <span class="at">na.rm=</span>T),</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>         <span class="at">fho_be =</span> <span class="fu">mean</span>(frhouse, <span class="at">na.rm=</span>T),</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>        <span class="at">api_be =</span> <span class="fu">mean</span>(api_index, <span class="at">na.rm=</span>T),</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>        <span class="at">mpi_be =</span> <span class="fu">mean</span>(mpi_index, <span class="at">na.rm=</span>T)</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>         <span class="co"># edu_be = mean(edu_terciaria, na.rm=T)</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">|&gt;</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pib_we =</span> log_pib_per_capita_ppa <span class="sc">-</span> pib_be,</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>          <span class="co"># gini_we = gini_index - gini_be,</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>          <span class="at">gini_we =</span> wid_gini_disp <span class="sc">-</span> gini_be,</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>          <span class="at">mig_we =</span> percent_pob_migrante <span class="sc">-</span> mig_be,</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>          <span class="at">dem_we =</span> indice_v_dem <span class="sc">-</span> dem_be,</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>          <span class="at">wgi_we =</span> wgi<span class="sc">-</span> wgi_be,</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>          <span class="at">fho_we =</span> frhouse<span class="sc">-</span> fho_be,</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>         <span class="at">api_we =</span> api_index <span class="sc">-</span> api_be,</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>         <span class="at">mpi_we =</span> mpi_index <span class="sc">-</span>  mpi_be</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>          <span class="co"># edu_we = edu_terciaria-edu_be</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Centrado y limpieza</span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">as.numeric</span>(<span class="fu">scale</span>(x))</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>datos_fit <span class="ot">&lt;-</span> datos_merge <span class="sc">%&gt;%</span></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>pais <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Canada"</span>,<span class="st">"United States"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    <span class="co"># pib_we  = z(pib_we),   gini_we = z(gini_we), wgi_we = z(wgi_we), dem_we = z(dem_we),</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>    <span class="co"># mig_we  = z(mig_we),   edu_we = z(edu_we),</span></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>    <span class="co"># pib_be  = z(pib_be),   gini_be = z(gini_be), wgi_be = z(wgi_be), dem_be = z(dem_be),</span></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>    <span class="co"># mig_be  = z(mig_be),   edu_be = z(edu_be),</span></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>    <span class="at">edad_c =</span> <span class="fu">scale</span>(edad) <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>(),</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>    <span class="at">ola_s =</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(ola, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>    ola,</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>    <span class="at">nivel_educ   =</span> forcats<span class="sc">::</span><span class="fu">fct_drop</span>(<span class="fu">factor</span>(nivel_educ)),</span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">pos_politica =</span> forcats<span class="sc">::</span><span class="fu">fct_drop</span>(<span class="fu">factor</span>(pos_politica)),</span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">sexo         =</span> forcats<span class="sc">::</span><span class="fu">fct_drop</span>(<span class="fu">factor</span>(sexo)),</span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">pais         =</span> forcats<span class="sc">::</span><span class="fu">fct_drop</span>(<span class="fu">factor</span>(pais)),</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">country_wave =</span> forcats<span class="sc">::</span><span class="fu">fct_drop</span>(<span class="fu">factor</span>(country_wave)),</span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>    <span class="co"># --- cambiar categoría de referencia ---</span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>    <span class="at">nivel_educ   =</span> forcats<span class="sc">::</span><span class="fu">fct_relevel</span>(nivel_educ, <span class="st">"Primary"</span>),   <span class="co"># ejemplo</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>    <span class="at">pos_politica =</span> forcats<span class="sc">::</span><span class="fu">fct_relevel</span>(pos_politica, <span class="st">"Not declared"</span>)         <span class="co"># ejemplo</span></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(cohesion_general_ind, cohesion_vertical_ind, cohesion_horizontal_ind,</span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>         nivel_educ, sexo, edad_c, ola_s, pos_politica,ola,</span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>         income_decile,escolaridad,</span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>         pib_we, gini_we, dem_we, wgi_we, mig_we,fho_we, api_we, mpi_we,</span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>         pib_be, gini_be, dem_be, wgi_be, mig_be,fho_be, api_be, mpi_be,</span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>         country_wave, pais, wt) </span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(datos_fit, <span class="at">file=</span><span class="st">"input/proc/datos-fit.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="differences-and-changes-in-country-level-factors-and-social-cohesion" class="level2">
+<h2 class="anchored" data-anchor-id="differences-and-changes-in-country-level-factors-and-social-cohesion">Differences and changes in country level factors and social cohesion</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"input/proc/datos-fit.rdata"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>m0_ch <span class="ot">=</span> <span class="fu">lmer</span>(cohesion_horizontal_ind <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> country_wave) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>pais), <span class="at">data=</span>datos_fit, <span class="at">weights=</span>wt)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">icc</span>(m0_ch, <span class="at">by_group=</span><span class="cn">TRUE</span>) <span class="co"># 2.3% y 5.6%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>m0_cv <span class="ot">=</span> <span class="fu">lmer</span>(cohesion_vertical_ind <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> country_wave) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>pais), <span class="at">data=</span>datos_fit, <span class="at">weights=</span>wt)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">icc</span>(m0_cv, <span class="at">by_group=</span><span class="cn">TRUE</span>) <span class="co"># 6.3% y 6.3%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>m0_cs <span class="ot">=</span> <span class="fu">lmer</span>(cohesion_general_ind <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> country_wave) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>pais), <span class="at">data=</span>datos_fit, <span class="at">weights=</span>wt)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">icc</span>(m0_cs, <span class="at">by_group=</span><span class="cn">TRUE</span>) <span class="co"># 4.9% y 7.5%</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(m0_ch, <span class="at">file=</span><span class="st">"output/modelo_nulo_horizontal.rdata"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(m0_cv, <span class="at">file=</span><span class="st">"output/modelo_nulo_vertical.rdata"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(m0_cs, <span class="at">file=</span> <span class="st">"output/modelo_nulo_completo.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tbl-modelos-cohesion-micro" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-modelos-cohesion-micro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Multilevel regression for individual level factors and social cohesion
+</figcaption>
+<div aria-describedby="tbl-modelos-cohesion-micro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"input/proc/datos-fit.rdata"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Cargando paquete requerido: Matrix</code></pre>
+<pre><code>
+Adjuntando el paquete: 'Matrix'</code></pre>
+<pre><code>The following objects are masked from 'package:tidyr':
+
+    expand, pack, unpack</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(texreg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Version:  1.39.4
+Date:     2024-07-23
+Author:   Philip Leifeld (University of Manchester)
+
+Consider submitting praise using the praise or praise_interactive functions.
+Please cite the JSS article in your publications -- see citation("texreg").</code></pre>
+<pre><code>
+Adjuntando el paquete: 'texreg'</code></pre>
+<pre><code>The following object is masked from 'package:tidyr':
+
+    extract</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>isced_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Early education/none"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Primary"</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Lower secondary"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Upper secondary"</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Postsecondary non-terciary"</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Terciary (short-cycle)"</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Universitary"</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>datos_fit<span class="sc">$</span>isced11 <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">recode</span>(datos_fit<span class="sc">$</span>escolaridad, </span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="st">"0 = 0;1:6 = 1;7:9 = 2;10:12 = 3;13:14 = 4;15:16 = 5;17:18 = 6"</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>datos_fit<span class="sc">$</span>isced11 <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  datos_fit<span class="sc">$</span>isced11,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">6</span>,</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> isced_labels</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>datos_fit<span class="sc">$</span>ola <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(haven<span class="sc">::</span><span class="fu">as_factor</span>(datos_fit<span class="sc">$</span>ola))</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>datos_fit<span class="sc">$</span>nivel_educ <span class="ot">&lt;-</span> <span class="fu">relevel</span>(datos_fit<span class="sc">$</span>nivel_educ,<span class="at">ref =</span> <span class="st">"Secondary"</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>datos_fit <span class="ot">&lt;-</span> </span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>datos_fit <span class="sc">%&gt;%</span> </span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(cohesion_general_ind, cohesion_vertical_ind, cohesion_horizontal_ind,</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>         nivel_educ, sexo, edad_c, ola_s, pos_politica,ola,</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>         income_decile,nivel_educ,</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>         pib_we, gini_we, dem_we, wgi_we, mig_we,fho_we,</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>         pib_be, gini_be, dem_be, wgi_be, mig_be,fho_be, </span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>         country_wave, pais, wt) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>pais <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Canada"</span>,<span class="st">"United States"</span>)) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>micro_h2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(cohesion_horizontal_ind <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> income_decile <span class="sc">+</span> nivel_educ <span class="sc">+</span> sexo <span class="sc">+</span> edad_c <span class="sc">+</span> <span class="fu">I</span>(edad_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span>  ola <span class="sc">+</span>  (<span class="dv">1</span> <span class="sc">|</span> country_wave) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> pais), <span class="at">data=</span> datos_fit, <span class="at">weights=</span> wt)</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>micro_h <span class="ot">&lt;-</span> <span class="fu">lmer</span>(cohesion_horizontal_ind <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> income_decile <span class="sc">+</span> nivel_educ <span class="sc">+</span> sexo <span class="sc">+</span> edad_c <span class="sc">+</span> <span class="fu">I</span>(edad_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> pos_politica <span class="sc">+</span> ola <span class="sc">+</span>  (<span class="dv">1</span> <span class="sc">|</span> country_wave) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> pais), <span class="at">data=</span> datos_fit, <span class="at">weights=</span> wt)</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>micro_v2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(cohesion_vertical_ind <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> income_decile <span class="sc">+</span> nivel_educ <span class="sc">+</span> sexo <span class="sc">+</span> edad_c <span class="sc">+</span> <span class="fu">I</span>(edad_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span>  ola <span class="sc">+</span>  (<span class="dv">1</span> <span class="sc">|</span> country_wave) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> pais), <span class="at">data=</span> datos_fit, <span class="at">weights=</span> wt)</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>micro_v <span class="ot">&lt;-</span> <span class="fu">lmer</span>(cohesion_vertical_ind <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> income_decile <span class="sc">+</span> nivel_educ <span class="sc">+</span> sexo <span class="sc">+</span> edad_c <span class="sc">+</span> <span class="fu">I</span>(edad_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> pos_politica <span class="sc">+</span> ola <span class="sc">+</span>  (<span class="dv">1</span> <span class="sc">|</span> country_wave) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> pais), <span class="at">data=</span> datos_fit, <span class="at">weights=</span> wt)</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>coef_names<span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"(Intercept)"</span><span class="ot">=</span><span class="st">"(Intercept)"</span>,</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a><span class="st">"income_decile"</span> <span class="ot">=</span><span class="st">"Income decile"</span>,                  </span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="st">"nivel_educPrimary"</span> <span class="ot">=</span> <span class="st">"Primary"</span>,</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="st">"nivel_educTertiary"</span> <span class="ot">=</span> <span class="st">"Tertiary"</span>,</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="st">"pos_politicaLeft"</span><span class="ot">=</span><span class="st">"Left"</span>,    </span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="st">"pos_politicaCenter"</span><span class="ot">=</span><span class="st">"Center"</span>,  </span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="st">"pos_politicaRight"</span><span class="ot">=</span><span class="st">"Right"</span>,</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a><span class="st">"ola"</span><span class="ot">=</span><span class="st">"Time"</span>,</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a><span class="st">"sexoMale"</span><span class="ot">=</span><span class="st">"Male (ref.=Female)"</span>,            </span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="st">"edad_c"</span><span class="ot">=</span><span class="st">"Age"</span>,              </span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a><span class="st">"I(edad_c^2)"</span><span class="ot">=</span><span class="st">"Age2"</span></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>)   </span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a><span class="co"># knitreg(c(micro_h2,micro_h,micro_v2,micro_v),       # file = "output/table000.html",</span></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a><span class="co">#         custom.coef.map = coef_names,</span></span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="co">#        groups =</span></span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a><span class="co">#          list("Education (ref.=No formal schooling)"=3:4,</span></span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a><span class="co">#               "Political position (ref.=Undefined)"=5:7</span></span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a><span class="co">#               )</span></span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a><span class="co">#        )</span></span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlreg</span>(<span class="fu">c</span>(micro_h2,micro_h,micro_v2,micro_v),<span class="at">single.row =</span> F,<span class="at">digits =</span> <span class="dv">3</span>,<span class="at">caption =</span> <span class="cn">NULL</span>,</span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>       <span class="co"># file = "output/table000.html",</span></span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>        <span class="at">custom.coef.map =</span> coef_names,</span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>       <span class="at">groups =</span> </span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a>         <span class="fu">list</span>(<span class="st">"Education (ref.=Secondary)"</span><span class="ot">=</span><span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Political position (ref.=Undefined)"</span><span class="ot">=</span><span class="dv">5</span><span class="sc">:</span><span class="dv">7</span></span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>              ),</span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>       <span class="at">custom.header =</span> <span class="fu">list</span>(<span class="st">"Horizontal"</span><span class="ot">=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="st">"Vertical"</span><span class="ot">=</span><span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>),</span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>       <span class="at">custom.gof.rows =</span> <span class="fu">list</span>(<span class="st">"Controls"</span><span class="ot">=</span><span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Yes"</span>,<span class="dv">4</span>))),<span class="at">include.loglik =</span> <span class="cn">FALSE</span>,<span class="at">include.aic =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>       <span class="at">custom.gof.names =</span> <span class="fu">c</span>(<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="st">"Num. Country-wave"</span>,<span class="st">"Num. Country"</span>,<span class="st">"Var: Country-wave (Intercept)"</span>,<span class="st">"Var: Country (Intercept)"</span>,<span class="st">"Var: Residual"</span>)</span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<thead>
+<tr>
+<th>
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;border-bottom: 1px solid #000000;" colspan="2">
+Horizontal
+</th>
+<th style="padding-left: 5px;padding-right: 5px;border-bottom: 1px solid #000000;" colspan="2">
+Vertical
+</th>
+</tr>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 3
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 4
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+(Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+6.205<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+6.240<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+5.254<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+5.029<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.115)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.114)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.125)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.123)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Income decile
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.027<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.026<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.004<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.002
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.002)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.002)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.002)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.002)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Education (ref.=Secondary)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Primary
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.202<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.196<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.132<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.122<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.010)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.010)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tertiary
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.099<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.102<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.003
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.002
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.010)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.010)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Political position (ref.=Undefined)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Left
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.162<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.073<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.017)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Center
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.052<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.193<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.017)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Right
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.041<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.568<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.017)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.013)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Time
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.051<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.048<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.100<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.098<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.011)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.015)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.015)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Male (ref.=Female)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.202<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.204<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.044<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.033<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.010)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.010)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.008)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.008)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Age
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.098<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.095<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.007
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.012<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.006)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.006)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.005)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.005)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Age2
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.048<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.046<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.094<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.090<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.004)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.004)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.003)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.003)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Controls
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+Yes
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+Yes
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+Yes
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+BIC
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+958966.852
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+958777.616
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+849552.485
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+846499.344
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+213130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+213130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+213130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+213130
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. Country-wave
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+161
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+161
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+161
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+161
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. Country
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: Country-wave (Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.095
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.093
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.195
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.187
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: Country (Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.199
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.194
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.170
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.167
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: Residual
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+5.016
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+5.010
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.999
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.956
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="5">
+<sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</figure>
+</div>
+<p>The first</p>
+<p>The models in Table XX present the estimates of the multilevel models examining the association between individual characteristics and social cohesion. For horizontal social cohesion, Model 1 indicates that a higher position in the relative income distribution is associated with greater social cohesion (<span class="math inline">\(\beta = 0.027\)</span>, <span class="math inline">\(p &lt; .001\)</span>). This contrasts with differences between educational groups, where, compared to the group with secondary education, individuals with primary education (<span class="math inline">\(\beta = 0.202\)</span>, <span class="math inline">\(p &lt; .001\)</span>) and those with tertiary education (<span class="math inline">\(\beta = 0.099\)</span>, <span class="math inline">\(p &lt; .001\)</span>) exhibit higher horizontal social cohesion. Model 2 incorporates political position into the estimation, showing that, compared to the ideologically undefined group, both centrists (<span class="math inline">\(\beta = -0.052\)</span>, <span class="math inline">\(p &lt; .01\)</span>) and leftists (<span class="math inline">\(\beta = -0.162\)</span>, <span class="math inline">\(p &lt; .001\)</span>) report lower levels of horizontal cohesion. In contrast, right-leaning individuals display higher levels of social cohesion (<span class="math inline">\(\beta = 0.041\)</span>, <span class="math inline">\(p &lt; .05\)</span>).</p>
+<p>Similar to the results for horizontal cohesion, Model 3 shows that individuals with higher incomes exhibit higher vertical cohesion, though with a smaller coefficient and a more moderate level of significance (<span class="math inline">\(\beta = 0.004\)</span>, <span class="math inline">\(p &lt; .05\)</span>). Differences between educational groups are more attenuated compared to the horizontal dimension. Relative to the group with secondary education, those with primary education report higher levels of vertical cohesion (<span class="math inline">\(\beta = 0.132\)</span>, <span class="math inline">\(p &lt; .001\)</span>), whereas those with tertiary education show no significant differences (<span class="math inline">\(\beta = 0.003\)</span>, <span class="math inline">\(p &gt; .05\)</span>). When political position is incorporated into Model 4, differences from Model 3 emerge. Income loses strength and statistical significance (<span class="math inline">\(\beta = 0.002\)</span>, <span class="math inline">\(p &gt; .05\)</span>), while the relationship with educational level remains robust. Regarding political groups, individuals who declare a political position generally exhibit higher levels of vertical cohesion. Compared to those who are undecided, people on the right show the highest levels of vertical cohesion (<span class="math inline">\(\beta = -0.052\)</span>, <span class="math inline">\(p &lt; .01\)</span>), followed by centrists (<span class="math inline">\(\beta = -0.052\)</span>, <span class="math inline">\(p &lt; .01\)</span>) and leftists (<span class="math inline">\(\beta = -0.052\)</span>, <span class="math inline">\(p &lt; .01\)</span>).</p>
+<p>For the time variable in Models 2 and 4, results indicate a decline in both horizontal (<span class="math inline">\(\beta = -0.048\)</span>, <span class="math inline">\(p &lt; .001\)</span>) and vertical (<span class="math inline">\(\beta = -0.098\)</span>, <span class="math inline">\(p &lt; .001\)</span>) cohesion during the analyzed period. The decrease in the vertical dimension is nearly double that observed in the horizontal dimension. Additionally, a quadratic term was included to assess whether the decline accelerated in recent periods; however, no significant differences were found when incorporating the quadratic term of time (see supplementary material).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"input/proc/datos-fit.rdata"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(texreg)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(correlation)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Warning: package 'correlation' was built under R version 4.5.2</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>isced_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Early education/none"</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Primary"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Lower secondary"</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Upper secondary"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Postsecondary non-terciary"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Terciary (short-cycle)"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Universitary"</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>datos_fit<span class="sc">$</span>isced11 <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">recode</span>(datos_fit<span class="sc">$</span>escolaridad, </span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="st">"0 = 0;1:6 = 1;7:9 = 2;10:12 = 3;13:14 = 4;15:16 = 5;17:18 = 6"</span>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>datos_fit<span class="sc">$</span>isced11 <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  datos_fit<span class="sc">$</span>isced11,</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">6</span>,</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> isced_labels</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>datos_fit <span class="ot">&lt;-</span> </span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>datos_fit <span class="sc">%&gt;%</span> </span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(cohesion_general_ind, cohesion_vertical_ind, cohesion_horizontal_ind,</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>         nivel_educ, sexo, edad_c, ola_s, pos_politica,ola,</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>         income_decile,</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>         pib_we, gini_we, api_we, mpi_we, wgi_we, mig_we,fho_we,</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>         pib_be, gini_be, api_be, mpi_be, wgi_be, mig_be,fho_be, </span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>         country_wave, pais, wt) <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>pais <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Canada"</span>,<span class="st">"United States"</span>))</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>datos_fit<span class="sc">$</span>ola <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(haven<span class="sc">::</span><span class="fu">as_factor</span>(datos_fit<span class="sc">$</span>ola))</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>datos_fit<span class="sc">$</span>nivel_educ <span class="ot">&lt;-</span> <span class="fu">relevel</span>(datos_fit<span class="sc">$</span>nivel_educ,<span class="at">ref =</span> <span class="st">"Secondary"</span>)</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>coef_names <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">ola =</span> <span class="st">"Time"</span>,</span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">gini_be =</span> <span class="st">"Gini (BE)"</span>,</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">gini_we =</span> <span class="st">"Gini (WE)"</span>,</span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">pib_be =</span> <span class="st">"GDP (BE)"</span>,</span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">pib_we =</span> <span class="st">"GDP (WE)"</span>,</span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># dem_be = "Democracy (BE)",</span></span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>  <span class="co"># dem_we = "Democracy (WE)",</span></span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">api_we =</span> <span class="st">"API (WE)"</span>,</span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">api_be =</span> <span class="st">"API (BE)"</span>,</span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">mpi_we =</span> <span class="st">"MPI (WE)"</span>,</span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">mpi_be =</span> <span class="st">"MPI (BE)"</span>,</span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>  <span class="at">wgi_be =</span> <span class="st">"Governace (BE)"</span>,</span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>  <span class="at">wgi_we =</span> <span class="st">"Governace (WE)"</span>,</span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">mig_be =</span> <span class="st">"Migration (BE)"</span>,</span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">mig_we =</span> <span class="st">"Migration (WE)"</span></span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a>micro <span class="ot">&lt;-</span> <span class="fu">lmer</span>(cohesion_horizontal_ind <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> income_decile <span class="sc">+</span> nivel_educ <span class="sc">+</span> sexo <span class="sc">+</span> edad_c <span class="sc">+</span> <span class="fu">I</span>(edad_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> pos_politica <span class="sc">+</span> ola <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> country_wave) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> pais), <span class="at">data=</span> datos_fit, <span class="at">weights=</span> wt)</span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a>macro_econ <span class="ot">&lt;-</span> <span class="fu">update</span>(micro,. <span class="sc">~</span> . <span class="sc">+</span> gini_be<span class="sc">+</span>gini_we<span class="sc">+</span>pib_be<span class="sc">+</span>pib_we)</span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>macro_econ_polit <span class="ot">&lt;-</span> <span class="fu">update</span>(macro_econ,. <span class="sc">~</span> . <span class="sc">+</span> gini_be<span class="sc">+</span>gini_we<span class="sc">+</span>pib_be<span class="sc">+</span>pib_we<span class="sc">+</span>api_be<span class="sc">+</span>api_we <span class="sc">+</span> mpi_we <span class="sc">+</span> mpi_be <span class="sc">+</span> wgi_be<span class="sc">+</span>wgi_we)</span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a>macro_econ_polit_dem <span class="ot">&lt;-</span> <span class="fu">update</span>(micro,. <span class="sc">~</span> . <span class="sc">+</span> gini_be<span class="sc">+</span>gini_we<span class="sc">+</span>pib_be<span class="sc">+</span>pib_we<span class="sc">+</span>api_be<span class="sc">+</span>api_we <span class="sc">+</span> mpi_we <span class="sc">+</span> mpi_be<span class="sc">+</span>wgi_be<span class="sc">+</span>wgi_we<span class="sc">+</span>mig_be<span class="sc">+</span>mig_we)</span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>h_demo <span class="ot">&lt;-</span> <span class="fu">list</span>(macro_econ,macro_econ_polit,macro_econ_polit_dem)</span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a>micro <span class="ot">&lt;-</span> <span class="fu">lmer</span>(cohesion_vertical_ind <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> income_decile<span class="sc">+</span> nivel_educ <span class="sc">+</span> sexo <span class="sc">+</span> edad_c <span class="sc">+</span> <span class="fu">I</span>(edad_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> pos_politica <span class="sc">+</span> ola <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> country_wave) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> pais), <span class="at">data=</span> datos_fit, <span class="at">weights=</span> wt)</span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a>macro_econ <span class="ot">&lt;-</span> <span class="fu">update</span>(micro,. <span class="sc">~</span> . <span class="sc">+</span> gini_be<span class="sc">+</span>gini_we<span class="sc">+</span>pib_be<span class="sc">+</span>pib_we)</span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a>macro_econ_polit <span class="ot">&lt;-</span> <span class="fu">update</span>(macro_econ,. <span class="sc">~</span> . <span class="sc">+</span> gini_be<span class="sc">+</span>gini_we<span class="sc">+</span>pib_be<span class="sc">+</span>pib_we<span class="sc">+</span>api_be<span class="sc">+</span>api_we <span class="sc">+</span> mpi_we <span class="sc">+</span> mpi_be<span class="sc">+</span>wgi_be<span class="sc">+</span>wgi_we)</span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a>macro_econ_polit_dem <span class="ot">&lt;-</span> <span class="fu">update</span>(micro,. <span class="sc">~</span> . <span class="sc">+</span> gini_be<span class="sc">+</span>gini_we<span class="sc">+</span>pib_be<span class="sc">+</span>pib_we<span class="sc">+</span>api_be<span class="sc">+</span>api_we <span class="sc">+</span> mpi_we <span class="sc">+</span> mpi_be<span class="sc">+</span>wgi_be<span class="sc">+</span>wgi_we<span class="sc">+</span>mig_be<span class="sc">+</span>mig_we)</span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a>v_demo <span class="ot">&lt;-</span> <span class="fu">list</span>(macro_econ,macro_econ_polit,macro_econ_polit_dem)</span>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a>hv_demo<span class="ot">&lt;-</span> <span class="fu">c</span>(h_demo,v_demo)</span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a><span class="co"># screenreg(hv_demo,digits=3,custom.coef.map = coef_names)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In line with our hypotheses, Table XX presents the estimates of the hybrid multilevel models that show the between- and within-country differences in social cohesion.</p>
+<p><em>Horizontal Cohesion</em></p>
+<p>The results display the associations between (BE) and within (WE) for inequality (Gini) and economic prosperity (GDP). Regarding inequality, across all specifications (Models 1 to 3), differences between countries in levels of economic inequality are not associated with social cohesion. However, an increase in inequality within countries is associated with lower social cohesion. Similarly, the results show that neither between-country differences nor increases in economic prosperity appear to affect horizontal cohesion. Regarding political variables, we observe that both levels of electoral democracy (Democracy) and governance affect social cohesion in different ways. First, differences between countries in levels of democracy are associated with lower levels of horizontal cohesion. However, this relationship is not observed within countries. Second, differences between countries in governance levels indicate that governance is associated with higher levels of horizontal cohesion. Nevertheless, changes in governance within countries do not appear to be associated with horizontal cohesion. Finally, the results in Model 3 show that differences between countries in the percentage of the migrant population are not associated with levels of horizontal cohesion. However, an increase in the migrant population within countries is negatively associated with horizontal cohesion.</p>
+<p><em>Vertical Cohesion</em></p>
+<p>Similar to the results for horizontal cohesion, we observe distinct patterns for vertical cohesion. Differences between countries in levels of economic inequality indicate that countries with higher inequality exhibit lower vertical cohesion. Additionally, rising economic inequality within countries is negatively related to levels of vertical cohesion. Furthermore, both the between-country and within-country associations for economic prosperity are weak, showing a positive association for the within-country effect only when controlling for political characteristics and migration.</p>
+<p>For political variables, we observe noteworthy results. First, differences between countries in levels of democracy do not show a robust association with vertical cohesion; this effect loses statistical significance when controlling for the percentage of the migrant population in the country. However, changes within countries reduce vertical cohesion. In other words, countries that increase their levels of electoral democracy also experience declines in vertical cohesion. Second, the results for governance are robust. Both differences between countries and changes within countries show a positive and significant association with social cohesion.</p>
+<p>Finally, differences between countries and changes within countries in the percentage of the migrant population do not show an association with levels of vertical cohesion.</p>
+<div id="tbl-table004" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-table004-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Multilevel regression for country level factors and social cohesion
+</figcaption>
+<div aria-describedby="tbl-table004-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">knitreg</span>(hv_demo, <span class="at">digits=</span><span class="dv">3</span>,<span class="at">custom.coef.map =</span> coef_names,<span class="at">caption =</span> <span class="cn">NULL</span>,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">custom.header =</span> <span class="fu">list</span>(<span class="st">"Horizontal"</span><span class="ot">=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="st">"Vertical"</span><span class="ot">=</span><span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<thead>
+<tr>
+<th>
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;border-bottom: 1px solid #000000;" colspan="3">
+Horizontal
+</th>
+<th style="padding-left: 5px;padding-right: 5px;border-bottom: 1px solid #000000;" colspan="3">
+Vertical
+</th>
+</tr>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 3
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 4
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 5
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 6
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Time
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.086<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.097<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.109<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.180<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.203<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.210<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.031)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.031)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.030)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.040)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.038)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.038)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Gini (BE)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.811
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.983
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.931
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-3.757<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-3.549<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-3.616<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(2.320)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(1.986)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(2.062)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(1.901)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(1.675)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(1.735)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Gini (WE)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-3.401<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-3.584<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-3.643<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-6.648<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-5.912<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-5.938<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(1.581)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(1.613)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(1.564)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(2.164)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(2.047)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(2.032)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+GDP (BE)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.198
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.187
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.114
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.258
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.205
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.202
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.176)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.193)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.230)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.149)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.169)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.198)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+GDP (WE)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.171
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.220
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.596<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.401
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.428
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.695
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.277)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.278)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.296)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.368)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.346)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.377)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+API (WE)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.093
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+1.150
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-2.003
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.203
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(1.695)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(1.680)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(2.154)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(2.185)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+API (BE)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.618
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+3.854
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-4.110
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-3.855
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(4.300)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(4.584)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(3.739)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(3.976)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+MPI (WE)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.681
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.093
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-1.845
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-2.154
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.956)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.937)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(1.217)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(1.220)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+MPI (BE)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-3.600
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-4.085
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.446
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.356
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(2.202)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(2.317)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(1.895)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(1.992)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Governace (BE)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+1.088<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+1.083<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.687<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.691<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.334)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.346)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.285)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.294)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Governace (WE)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.082
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.218
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.731<sup>*</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.625
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.252)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.248)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.321)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.324)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Migration (BE)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.033
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.001
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.051)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.043)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Migration (WE)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.118<sup>**</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.092
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.039)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.051)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+AIC
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+958631.141
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+958623.593
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+958627.015
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+846342.480
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+846314.995
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+846324.313
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+BIC
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+958815.995
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+958870.065
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+958894.026
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+846527.334
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+846561.467
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+846591.324
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Log Likelihood
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-479297.571
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-479287.796
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-479287.507
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-423153.240
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-423133.497
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-423136.156
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+213130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+213130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+213130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+213130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+213130
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+213130
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. groups: country_wave
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+161
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+161
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+161
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+161
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+161
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+161
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. groups: pais
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+22
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: country_wave (Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.091
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.091
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.085
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.178
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.152
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.150
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: pais (Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.202
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.138
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.148
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.121
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.087
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.094
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Var: Residual
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+5.010
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+5.010
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+5.010
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.956
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.956
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.956
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="7">
+<sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="interactions" class="level1">
+<h1>Interactions</h1>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Please run this code independently - it takes around 1 hour </span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"proc/proc_interactions.R"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the output saves two objects "hz_ola.RData" and "vt_ola.RData"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Warning: package 'broom.mixed' was built under R version 4.5.2</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Warning: package 'ggtext' was built under R version 4.5.2</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"output/hz_ola.RData"</span>) <span class="co"># horizontal cohesion</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"output/vt_ola.RData"</span>) <span class="co"># vertical cohesion</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>hz_gini<span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(hz_ola[[<span class="dv">1</span>]],<span class="at">conf.int =</span> T)<span class="co"># gini</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>hz_gdp <span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(hz_ola[[<span class="dv">2</span>]],<span class="at">conf.int =</span> T)<span class="co"># gdp </span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>hz_demo<span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(hz_ola[[<span class="dv">3</span>]],<span class="at">conf.int =</span> T)<span class="co"># democracy</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>hz_gove<span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(hz_ola[[<span class="dv">4</span>]],<span class="at">conf.int =</span> T)<span class="co"># governance</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>hz_migr<span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(hz_ola[[<span class="dv">5</span>]],<span class="at">conf.int =</span> T)<span class="co"># migration</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>data_hz_plot <span class="ot">&lt;-</span> </span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>hz_gini <span class="sc">%&gt;%</span><span class="fu">filter</span>(term <span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"ola:gini_be"</span>,<span class="st">"ola:gini_we"</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">extract</span>(term,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ola"</span>, <span class="st">"macro"</span>, <span class="st">"effect"</span>),<span class="at">regex =</span> <span class="st">"^([^:]+):([^_]+)_([^_]+)$"</span>,<span class="at">remove =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>hz_gdp  <span class="sc">%&gt;%</span><span class="fu">filter</span>(term<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"ola:pib_be"</span>,<span class="st">"ola:pib_we"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">extract</span>(term,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ola"</span>, <span class="st">"macro"</span>, <span class="st">"effect"</span>),<span class="at">regex =</span> <span class="st">"^([^:]+):([^_]+)_([^_]+)$"</span>,<span class="at">remove =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>hz_demo <span class="sc">%&gt;%</span><span class="fu">filter</span>(term<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"ola:dem_be"</span>,<span class="st">"ola:dem_we"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">extract</span>(term,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ola"</span>, <span class="st">"macro"</span>, <span class="st">"effect"</span>),<span class="at">regex =</span> <span class="st">"^([^:]+):([^_]+)_([^_]+)$"</span>,<span class="at">remove =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>hz_gove <span class="sc">%&gt;%</span><span class="fu">filter</span>(term<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"ola:wgi_be"</span>,<span class="st">"ola:wgi_we"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">extract</span>(term,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ola"</span>, <span class="st">"macro"</span>, <span class="st">"effect"</span>),<span class="at">regex =</span> <span class="st">"^([^:]+):([^_]+)_([^_]+)$"</span>,<span class="at">remove =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>hz_migr <span class="sc">%&gt;%</span><span class="fu">filter</span>(term<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"ola:mig_be"</span>,<span class="st">"ola:mig_we"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">extract</span>(term,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ola"</span>, <span class="st">"macro"</span>, <span class="st">"effect"</span>),<span class="at">regex =</span> <span class="st">"^([^:]+):([^_]+)_([^_]+)$"</span>,<span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>data_hz_plot<span class="sc">$</span>cohesion <span class="ot">&lt;-</span><span class="st">"Horizontal"</span> </span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>vt_gini<span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(vt_ola[[<span class="dv">1</span>]],<span class="at">conf.int =</span> T)<span class="co"># gini</span></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>vt_gdp <span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(vt_ola[[<span class="dv">2</span>]],<span class="at">conf.int =</span> T)<span class="co"># gdp</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>vt_demo<span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(vt_ola[[<span class="dv">3</span>]],<span class="at">conf.int =</span> T)<span class="co"># democracy</span></span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>vt_gove<span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(vt_ola[[<span class="dv">4</span>]],<span class="at">conf.int =</span> T)<span class="co"># governance</span></span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>vt_migr<span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(vt_ola[[<span class="dv">5</span>]],<span class="at">conf.int =</span> T)<span class="co"># migration</span></span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>data_vt_plot <span class="ot">&lt;-</span></span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>vt_gini <span class="sc">%&gt;%</span><span class="fu">filter</span>(term<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"ola:gini_be"</span>,<span class="st">"ola:gini_we"</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">extract</span>(term,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ola"</span>, <span class="st">"macro"</span>, <span class="st">"effect"</span>),<span class="at">regex =</span> <span class="st">"^([^:]+):([^_]+)_([^_]+)$"</span>,<span class="at">remove =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>vt_gdp  <span class="sc">%&gt;%</span><span class="fu">filter</span>(term<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"ola:pib_be"</span>,<span class="st">"ola:pib_we"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">extract</span>(term,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ola"</span>, <span class="st">"macro"</span>, <span class="st">"effect"</span>),<span class="at">regex =</span> <span class="st">"^([^:]+):([^_]+)_([^_]+)$"</span>,<span class="at">remove =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>vt_demo <span class="sc">%&gt;%</span><span class="fu">filter</span>(term<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"ola:dem_be"</span>,<span class="st">"ola:dem_we"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">extract</span>(term,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ola"</span>, <span class="st">"macro"</span>, <span class="st">"effect"</span>),<span class="at">regex =</span> <span class="st">"^([^:]+):([^_]+)_([^_]+)$"</span>,<span class="at">remove =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>vt_gove <span class="sc">%&gt;%</span><span class="fu">filter</span>(term<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"ola:wgi_be"</span>,<span class="st">"ola:wgi_we"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">extract</span>(term,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ola"</span>, <span class="st">"macro"</span>, <span class="st">"effect"</span>),<span class="at">regex =</span> <span class="st">"^([^:]+):([^_]+)_([^_]+)$"</span>,<span class="at">remove =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>vt_migr <span class="sc">%&gt;%</span><span class="fu">filter</span>(term<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"ola:mig_be"</span>,<span class="st">"ola:mig_we"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">extract</span>(term,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ola"</span>, <span class="st">"macro"</span>, <span class="st">"effect"</span>),<span class="at">regex =</span> <span class="st">"^([^:]+):([^_]+)_([^_]+)$"</span>,<span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>data_vt_plot<span class="sc">$</span>cohesion <span class="ot">&lt;-</span><span class="st">"Vertical"</span> </span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a>data_coes_plot <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(data_vt_plot,data_hz_plot)</span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a>data_coes_plot<span class="sc">$</span>macro<span class="ot">&lt;-</span> <span class="fu">factor</span>(data_coes_plot<span class="sc">$</span>macro,<span class="at">levels =</span> <span class="fu">rev</span>(<span class="fu">c</span>(<span class="st">"gini"</span>,<span class="st">"pib"</span>,<span class="st">"dem"</span>,<span class="st">"wgi"</span>,<span class="st">"mig"</span>)),<span class="at">ordered =</span> T) </span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a>data_coes_plot <span class="sc">%&gt;%</span> </span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(</span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> estimate,</span>
+<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> effect,</span>
+<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">shape =</span> macro,</span>
+<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> macro</span>
+<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>,</span>
+<span id="cb24-57"><a href="#cb24-57" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"red"</span>,</span>
+<span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_errorbarh</span>(</span>
+<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(<span class="at">xmin =</span> conf.low, <span class="at">xmax =</span> conf.high),</span>
+<span id="cb24-60"><a href="#cb24-60" aria-hidden="true" tabindex="-1"></a>                  <span class="at">height =</span> <span class="fl">0.2</span>,</span>
+<span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a>                  <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb24-62"><a href="#cb24-62" aria-hidden="true" tabindex="-1"></a>                  <span class="at">size =</span> <span class="fl">0.5</span>,</span>
+<span id="cb24-63"><a href="#cb24-63" aria-hidden="true" tabindex="-1"></a>                  <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.5</span>)</span>
+<span id="cb24-64"><a href="#cb24-64" aria-hidden="true" tabindex="-1"></a>                ) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.5</span>)) <span class="sc">+</span> <span class="fu">labs</span>(</span>
+<span id="cb24-65"><a href="#cb24-65" aria-hidden="true" tabindex="-1"></a>                  <span class="co"># title = "Interaction of country-level factors with wave on horiztontal social cohesion",</span></span>
+<span id="cb24-66"><a href="#cb24-66" aria-hidden="true" tabindex="-1"></a>                  <span class="co"># subtitle = "lower cohesion ←         → higher cohesion",</span></span>
+<span id="cb24-67"><a href="#cb24-67" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="st">"Coefficient"</span>,</span>
+<span id="cb24-68"><a href="#cb24-68" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> stringr<span class="sc">::</span><span class="fu">str_wrap</span>(<span class="st">"*Note*: Multilevel hybrid model regression (95% CIs). Include country-level factor and wave random slopes within country. Each coefficient corresponds to an independent estimate (see supplementary material)."</span>,),</span>
+<span id="cb24-69"><a href="#cb24-69" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb24-70"><a href="#cb24-70" aria-hidden="true" tabindex="-1"></a>                ) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb24-71"><a href="#cb24-71" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">scale_y_discrete</span>(<span class="at">labels=</span><span class="fu">c</span>(<span class="st">"BE</span><span class="sc">\n</span><span class="st">×Wave"</span>,<span class="st">"WE</span><span class="sc">\n</span><span class="st">× Wave "</span>))<span class="sc">+</span></span>
+<span id="cb24-72"><a href="#cb24-72" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">scale_shape_manual</span>(<span class="at">labels=</span><span class="fu">rev</span>(<span class="fu">c</span>(<span class="st">"Gini"</span>,<span class="st">"GDP"</span>,<span class="st">"Democracy"</span>,<span class="st">"Governance"</span>,<span class="st">"Migration"</span>)),</span>
+<span id="cb24-73"><a href="#cb24-73" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">values =</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">10</span>, <span class="dv">17</span>, <span class="dv">16</span>, <span class="dv">5</span>))<span class="sc">+</span></span>
+<span id="cb24-74"><a href="#cb24-74" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">facet_wrap</span>(<span class="at">facets =</span> <span class="st">"cohesion"</span>)<span class="sc">+</span></span>
+<span id="cb24-75"><a href="#cb24-75" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">theme</span>(</span>
+<span id="cb24-76"><a href="#cb24-76" aria-hidden="true" tabindex="-1"></a>                  <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb24-77"><a href="#cb24-77" aria-hidden="true" tabindex="-1"></a>                  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>,<span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb24-78"><a href="#cb24-78" aria-hidden="true" tabindex="-1"></a>                  <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb24-79"><a href="#cb24-79" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb24-80"><a href="#cb24-80" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb24-81"><a href="#cb24-81" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>), <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb24-82"><a href="#cb24-82" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r =</span> <span class="dv">10</span>), <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb24-83"><a href="#cb24-83" aria-hidden="true" tabindex="-1"></a>                  <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb24-84"><a href="#cb24-84" aria-hidden="true" tabindex="-1"></a>                  <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb24-85"><a href="#cb24-85" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.text.y =</span> <span class="fu">element_markdown</span>(<span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb24-86"><a href="#cb24-86" aria-hidden="true" tabindex="-1"></a>                  <span class="at">plot.caption =</span> <span class="fu">element_textbox_simple</span>(<span class="at">hjust =</span> <span class="dv">0</span>,<span class="at">size =</span> <span class="dv">13</span>)</span>
+<span id="cb24-87"><a href="#cb24-87" aria-hidden="true" tabindex="-1"></a>                )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+<pre><code>Warning: `geom_errobarh()` was deprecated in ggplot2 4.0.0.
+ℹ Please use the `orientation` argument of `geom_errorbar()` instead.</code></pre>
+<pre><code>`height` was translated to `width`.</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="05-resultados-modelos_files/figure-html/coefplot-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption>coefplot</figcaption>
+</figure>
+</div>
+<p>Figure <strong>?@fig-coefplot</strong> shows the coefficients for the between- and within-country effects for the country-level characteristics and the time trend (wave). When examining the between-country effects (BE × wave), the results indicate no significant differences for any of the socioeconomic, political, or migration variables.</p>
+<p>In contrast, the within-country effects (WE × wave) reveal nuances in their relationship with social cohesion. For economic inequality, an increase in within-country inequality is associated with a decline in social cohesion in both the horizontal and vertical dimensions as time progresses.</p>
+<p>Additionally, the effect of economic prosperity within countries becomes increasingly positive for horizontal cohesion over time. However, this pattern is not observed for vertical cohesion.</p>
+<p>Regarding political variables, changes in levels of democracy do not show differences over time for either dimension of social cohesion. In contrast, the results for governance indicate that, as time passes, increases in governance become more positively associated with social cohesion.</p>
+<p>Finally, for migration, the results show no significant changes in the within-country effect or its interaction with time for either dimension of social cohesion.</p>
+<!-- Así...
+
+* todas las iteraciones la mismo tiempo y ver que pasa
+* si alguna de las interacciones no es ninguna de las dos cohesiones 
+  - para las interaccines que son son significativas dejarlas, las otras no  -->
+<p>Table 6…</p>
+<div id="tbl-table006" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-table006-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Multilevel regression for macro factors and general social cohesion
+</figcaption>
+<div aria-describedby="tbl-table006-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>micro <span class="ot">&lt;-</span> <span class="fu">lmer</span>(cohesion_general_ind <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> income_decile <span class="sc">+</span>isced11 <span class="sc">+</span> sexo <span class="sc">+</span> edad_c <span class="sc">+</span> <span class="fu">I</span>(edad_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> pos_politica <span class="sc">+</span> ola <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> country_wave) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> pais), <span class="at">data=</span> datos_fit, <span class="at">weights=</span> wt)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>macro_econ <span class="ot">&lt;-</span> <span class="fu">update</span>(micro,. <span class="sc">~</span> . <span class="sc">+</span> gini_be<span class="sc">+</span>gini_we<span class="sc">+</span>pib_be<span class="sc">+</span>pib_we)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>macro_econ_polit <span class="ot">&lt;-</span> <span class="fu">update</span>(macro_econ,. <span class="sc">~</span> . <span class="sc">+</span> gini_be<span class="sc">+</span>gini_we<span class="sc">+</span>pib_be<span class="sc">+</span>pib_we<span class="sc">+</span>api_be<span class="sc">+</span>api_we <span class="sc">+</span> mpi_we <span class="sc">+</span> mpi_be<span class="sc">+</span>wgi_be<span class="sc">+</span>wgi_we)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># macro_dem &lt;- update(micro,. ~ . + mig_be+mig_we)</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># macro_econ_dem &lt;- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we+mig_be+mig_we)</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>macro_econ_polit_dem <span class="ot">&lt;-</span> <span class="fu">update</span>(micro,. <span class="sc">~</span> . <span class="sc">+</span> gini_be<span class="sc">+</span>gini_we<span class="sc">+</span>pib_be<span class="sc">+</span>pib_we<span class="sc">+</span>api_be<span class="sc">+</span>api_we <span class="sc">+</span> mpi_we <span class="sc">+</span> mpi_be<span class="sc">+</span>wgi_be<span class="sc">+</span>wgi_we<span class="sc">+</span>mig_be<span class="sc">+</span>mig_we)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>g_demo <span class="ot">&lt;-</span> <span class="fu">list</span>(macro_econ,macro_econ_polit,macro_econ_polit_dem) </span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># screenreg(g_demo,digits=3,custom.coef.map = coef_names)</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlreg</span>(g_demo, <span class="at">digits=</span><span class="dv">3</span>,<span class="at">custom.coef.map =</span> coef_names,<span class="at">caption =</span> <span class="cn">NULL</span>,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># file = "output/table006.html"</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+<div id="tbl-modelos-cohesion" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-modelos-cohesion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4
+</figcaption>
+<div aria-describedby="tbl-modelos-cohesion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+
+</div>
+</div>
+</figure>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>set1 <span class="ot">&lt;-</span>  RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">8</span>, <span class="at">name =</span> <span class="st">"Set1"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">ggplot2.discrete.fill =</span> set1)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">ggplot2.discrete.colour =</span> set1)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">theme_set</span>(ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>())</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">theme_update</span>(<span class="at">text=</span>ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>,  <span class="at">family=</span><span class="st">"serif"</span>))    </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(dplyr,ggplot2,haven,ggrepel,gridExtra,grid)  </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"input/proc/micro-macro-merge.rdata"</span>)</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>datos_merge <span class="ot">&lt;-</span> datos_merge <span class="sc">|&gt;</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(haven<span class="sc">::</span>is.labelled), <span class="sc">~</span> vctrs<span class="sc">::</span><span class="fu">vec_data</span>(.)),</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">pais=</span> <span class="fu">as.factor</span>(pais))</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>datos_merge<span class="sc">$</span>country_wave <span class="ot">=</span> <span class="fu">do.call</span>(paste, <span class="fu">c</span>(datos_merge[<span class="fu">c</span>(<span class="st">"pais"</span>, <span class="st">"ola"</span>)], <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>wid_data <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="at">file =</span> <span class="st">"input/proc/wid_data.dta"</span>)</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>wid_data <span class="ot">&lt;-</span> wid_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">yr2=</span><span class="fu">substr</span>(year, <span class="dv">3</span>, <span class="dv">4</span>)) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">iso2c=</span>country)</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>datos_merge<span class="sc">$</span>iso2c<span class="ot">&lt;-</span> countrycode<span class="sc">::</span><span class="fu">countrycode</span>(<span class="at">sourcevar =</span> datos_merge<span class="sc">$</span>pais,<span class="at">origin =</span> <span class="st">"country.name"</span>,<span class="at">destination =</span> <span class="st">"iso2c"</span>)</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>wid_data<span class="sc">$</span>iso2c <span class="ot">&lt;-</span> <span class="fu">as.character</span>(wid_data<span class="sc">$</span>iso2c)</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>datos_merge<span class="sc">$</span>yr2<span class="ot">&lt;-</span> <span class="fu">substr</span>(datos_merge<span class="sc">$</span>ola, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>frhouse <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"input/orig/freedom-score-fh.csv"</span>)</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>frhouse<span class="ot">&lt;-</span> </span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>frhouse <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="at">country=</span>Entity,<span class="at">iso3c=</span>Code,<span class="at">year=</span>Year,<span class="at">frhouse=</span>Total.democracy.score) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">iso2c =</span>countrycode<span class="sc">::</span><span class="fu">countrycode</span>(<span class="at">sourcevar =</span> iso3c,<span class="at">origin =</span> <span class="st">"iso3c"</span>,<span class="at">destination =</span> <span class="st">"iso2c"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">yr2 =</span> <span class="fu">substr</span>(year, <span class="dv">3</span>, <span class="dv">4</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(iso2c <span class="sc">%in%</span> datos_merge<span class="sc">$</span>iso2c)</span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>datos_merge<span class="ot">&lt;-</span> </span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(<span class="at">x =</span> datos_merge,<span class="at">y =</span> wid_data[,<span class="fu">c</span>(<span class="st">"iso2c"</span>,<span class="st">"yr2"</span>,<span class="st">"wid_gini_disp"</span>)],</span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>          <span class="at">by =</span><span class="fu">c</span>(<span class="st">"iso2c"</span>,<span class="st">"yr2"</span>))</span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>datos_merge<span class="ot">&lt;-</span> </span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(<span class="at">x =</span> datos_merge,<span class="at">y =</span> frhouse[,<span class="fu">c</span>(<span class="st">"iso2c"</span>,<span class="st">"yr2"</span>,<span class="st">"frhouse"</span>)],</span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>          <span class="at">by =</span><span class="fu">c</span>(<span class="st">"iso2c"</span>,<span class="st">"yr2"</span>))</span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>datos_macro <span class="ot">&lt;-</span> datos_merge <span class="sc">%&gt;%</span></span>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>   cohesion_horizontal,</span>
+<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a>      cohesion_vertical,</span>
+<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>      cohesion_general,</span>
+<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>      gini_index,</span>
+<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a>      wid_gini_disp,  </span>
+<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a>      pib_per_capita_ppa,</span>
+<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a>      log_pib_per_capita_ppa,</span>
+<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a>      percent_pob_migrante,</span>
+<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a>      indice_v_dem,</span>
+<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a>      regulatory_quality,</span>
+<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a>      voice_and_accountability,</span>
+<span id="cb29-53"><a href="#cb29-53" aria-hidden="true" tabindex="-1"></a>      wgi,</span>
+<span id="cb29-54"><a href="#cb29-54" aria-hidden="true" tabindex="-1"></a>     frhouse, </span>
+<span id="cb29-55"><a href="#cb29-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">edad_c =</span> <span class="fu">scale</span>(edad) <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>(),</span>
+<span id="cb29-56"><a href="#cb29-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">ola_s =</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(ola, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb29-57"><a href="#cb29-57" aria-hidden="true" tabindex="-1"></a>   income_decile,</span>
+<span id="cb29-58"><a href="#cb29-58" aria-hidden="true" tabindex="-1"></a>    ola,</span>
+<span id="cb29-59"><a href="#cb29-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">nivel_educ   =</span> forcats<span class="sc">::</span><span class="fu">fct_drop</span>(<span class="fu">factor</span>(nivel_educ)),</span>
+<span id="cb29-60"><a href="#cb29-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">pos_politica =</span> forcats<span class="sc">::</span><span class="fu">fct_drop</span>(<span class="fu">factor</span>(pos_politica)),</span>
+<span id="cb29-61"><a href="#cb29-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">sexo         =</span> forcats<span class="sc">::</span><span class="fu">fct_drop</span>(<span class="fu">factor</span>(sexo)),</span>
+<span id="cb29-62"><a href="#cb29-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">pais         =</span> forcats<span class="sc">::</span><span class="fu">fct_drop</span>(<span class="fu">factor</span>(pais)),</span>
+<span id="cb29-63"><a href="#cb29-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">country_wave =</span> forcats<span class="sc">::</span><span class="fu">fct_drop</span>(<span class="fu">factor</span>(country_wave))</span>
+<span id="cb29-64"><a href="#cb29-64" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-65"><a href="#cb29-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(cohesion_horizontal,</span>
+<span id="cb29-66"><a href="#cb29-66" aria-hidden="true" tabindex="-1"></a>      cohesion_vertical,</span>
+<span id="cb29-67"><a href="#cb29-67" aria-hidden="true" tabindex="-1"></a>      cohesion_general,</span>
+<span id="cb29-68"><a href="#cb29-68" aria-hidden="true" tabindex="-1"></a>      gini_index,wid_gini_disp,</span>
+<span id="cb29-69"><a href="#cb29-69" aria-hidden="true" tabindex="-1"></a>      pib_per_capita_ppa,</span>
+<span id="cb29-70"><a href="#cb29-70" aria-hidden="true" tabindex="-1"></a>      log_pib_per_capita_ppa,</span>
+<span id="cb29-71"><a href="#cb29-71" aria-hidden="true" tabindex="-1"></a>      percent_pob_migrante,</span>
+<span id="cb29-72"><a href="#cb29-72" aria-hidden="true" tabindex="-1"></a>      indice_v_dem,</span>
+<span id="cb29-73"><a href="#cb29-73" aria-hidden="true" tabindex="-1"></a>      regulatory_quality,</span>
+<span id="cb29-74"><a href="#cb29-74" aria-hidden="true" tabindex="-1"></a>      voice_and_accountability,wgi,frhouse,</span>
+<span id="cb29-75"><a href="#cb29-75" aria-hidden="true" tabindex="-1"></a>      income_decile,escolaridad,</span>
+<span id="cb29-76"><a href="#cb29-76" aria-hidden="true" tabindex="-1"></a>         nivel_educ, sexo, edad_c, ola_s,ola, pos_politica,iso2c,</span>
+<span id="cb29-77"><a href="#cb29-77" aria-hidden="true" tabindex="-1"></a>         country_wave, pais, wt)</span>
+<span id="cb29-78"><a href="#cb29-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-79"><a href="#cb29-79" aria-hidden="true" tabindex="-1"></a><span class="co"># dim(datos_macro);dim(na.omit(datos_macro))</span></span>
+<span id="cb29-80"><a href="#cb29-80" aria-hidden="true" tabindex="-1"></a>datos_macro<span class="sc">$</span>yr2<span class="ot">&lt;-</span> <span class="fu">substr</span>(datos_macro<span class="sc">$</span>ola, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb29-81"><a href="#cb29-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-82"><a href="#cb29-82" aria-hidden="true" tabindex="-1"></a>df_sum <span class="ot">&lt;-</span> datos_macro <span class="sc">%&gt;%</span></span>
+<span id="cb29-83"><a href="#cb29-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(iso2c, yr2) <span class="sc">%&gt;%</span></span>
+<span id="cb29-84"><a href="#cb29-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(</span>
+<span id="cb29-85"><a href="#cb29-85" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(cohesion_horizontal,</span>
+<span id="cb29-86"><a href="#cb29-86" aria-hidden="true" tabindex="-1"></a>      cohesion_vertical,</span>
+<span id="cb29-87"><a href="#cb29-87" aria-hidden="true" tabindex="-1"></a>      cohesion_general,</span>
+<span id="cb29-88"><a href="#cb29-88" aria-hidden="true" tabindex="-1"></a>      gini_index,wid_gini_disp,</span>
+<span id="cb29-89"><a href="#cb29-89" aria-hidden="true" tabindex="-1"></a>      pib_per_capita_ppa,</span>
+<span id="cb29-90"><a href="#cb29-90" aria-hidden="true" tabindex="-1"></a>      log_pib_per_capita_ppa,</span>
+<span id="cb29-91"><a href="#cb29-91" aria-hidden="true" tabindex="-1"></a>      percent_pob_migrante,</span>
+<span id="cb29-92"><a href="#cb29-92" aria-hidden="true" tabindex="-1"></a>      indice_v_dem,frhouse,</span>
+<span id="cb29-93"><a href="#cb29-93" aria-hidden="true" tabindex="-1"></a>      wgi),</span>
+<span id="cb29-94"><a href="#cb29-94" aria-hidden="true" tabindex="-1"></a>    mean,</span>
+<span id="cb29-95"><a href="#cb29-95" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb29-96"><a href="#cb29-96" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb29-97"><a href="#cb29-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() </span>
+<span id="cb29-98"><a href="#cb29-98" aria-hidden="true" tabindex="-1"></a>df_sum <span class="ot">&lt;-</span> </span>
+<span id="cb29-99"><a href="#cb29-99" aria-hidden="true" tabindex="-1"></a> df_sum <span class="sc">%&gt;%</span> </span>
+<span id="cb29-100"><a href="#cb29-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(iso2c) <span class="sc">%&gt;%</span></span>
+<span id="cb29-101"><a href="#cb29-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
+<span id="cb29-102"><a href="#cb29-102" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(cohesion_horizontal,</span>
+<span id="cb29-103"><a href="#cb29-103" aria-hidden="true" tabindex="-1"></a>      cohesion_vertical,</span>
+<span id="cb29-104"><a href="#cb29-104" aria-hidden="true" tabindex="-1"></a>      cohesion_general,</span>
+<span id="cb29-105"><a href="#cb29-105" aria-hidden="true" tabindex="-1"></a>      gini_index,wid_gini_disp,</span>
+<span id="cb29-106"><a href="#cb29-106" aria-hidden="true" tabindex="-1"></a>      pib_per_capita_ppa,</span>
+<span id="cb29-107"><a href="#cb29-107" aria-hidden="true" tabindex="-1"></a>      log_pib_per_capita_ppa,</span>
+<span id="cb29-108"><a href="#cb29-108" aria-hidden="true" tabindex="-1"></a>      percent_pob_migrante,</span>
+<span id="cb29-109"><a href="#cb29-109" aria-hidden="true" tabindex="-1"></a>      indice_v_dem,frhouse,</span>
+<span id="cb29-110"><a href="#cb29-110" aria-hidden="true" tabindex="-1"></a>      wgi),</span>
+<span id="cb29-111"><a href="#cb29-111" aria-hidden="true" tabindex="-1"></a>    mean,</span>
+<span id="cb29-112"><a href="#cb29-112" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb29-113"><a href="#cb29-113" aria-hidden="true" tabindex="-1"></a>    <span class="at">.names =</span> <span class="st">"mid_{.col}"</span></span>
+<span id="cb29-114"><a href="#cb29-114" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb29-115"><a href="#cb29-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb29-116"><a href="#cb29-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-117"><a href="#cb29-117" aria-hidden="true" tabindex="-1"></a>df_sum<span class="sc">$</span>ctyear <span class="ot">&lt;-</span> <span class="fu">paste0</span>(df_sum<span class="sc">$</span>iso2c,df_sum<span class="sc">$</span>yr2)</span>
+<span id="cb29-118"><a href="#cb29-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-119"><a href="#cb29-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-120"><a href="#cb29-120" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb29-121"><a href="#cb29-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> df_sum, <span class="at">method =</span> lm, <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb29-122"><a href="#cb29-122" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">scale</span>(mid_cohesion_vertical), <span class="at">x =</span> <span class="fu">scale</span>(mid_cohesion_horizontal)),</span>
+<span id="cb29-123"><a href="#cb29-123" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"red"</span>,<span class="at">size=</span><span class="fl">0.5</span>,<span class="at">fullrange=</span>T) <span class="sc">+</span></span>
+<span id="cb29-124"><a href="#cb29-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> df_sum, <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">scale</span>(mid_cohesion_vertical), <span class="at">x =</span> <span class="fu">scale</span>(mid_cohesion_horizontal), <span class="at">label =</span> iso2c),<span class="at">size=</span><span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb29-125"><a href="#cb29-125" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>,<span class="at">color=</span><span class="st">"black"</span>,<span class="at">linetype=</span><span class="st">"dashed"</span>)<span class="sc">+</span></span>
+<span id="cb29-126"><a href="#cb29-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>,<span class="at">color=</span><span class="st">"black"</span>,<span class="at">linetype=</span><span class="st">"dashed"</span>)<span class="sc">+</span></span>
+<span id="cb29-127"><a href="#cb29-127" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>))<span class="sc">+</span></span>
+<span id="cb29-128"><a href="#cb29-128" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb29-129"><a href="#cb29-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Horizontal Cohesion (z-score)"</span>, <span class="at">y =</span> <span class="st">"Vertical Cohesion (z-score)"</span>) <span class="sc">+</span></span>
+<span id="cb29-130"><a href="#cb29-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"label"</span>,</span>
+<span id="cb29-131"><a href="#cb29-131" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="cn">Inf</span>, <span class="at">y =</span> <span class="sc">-</span><span class="cn">Inf</span>,               </span>
+<span id="cb29-132"><a href="#cb29-132" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="fl">1.08</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>,      </span>
+<span id="cb29-133"><a href="#cb29-133" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"r = "</span>, <span class="fu">round</span>(<span class="fu">cor</span>(df_sum<span class="sc">$</span>mid_cohesion_horizontal,df_sum<span class="sc">$</span>mid_cohesion_vertical,<span class="at">use =</span> <span class="st">"complete.obs"</span>), <span class="dv">2</span>)),</span>
+<span id="cb29-134"><a href="#cb29-134" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">"white"</span>,                 </span>
+<span id="cb29-135"><a href="#cb29-135" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"red"</span>,                </span>
+<span id="cb29-136"><a href="#cb29-136" aria-hidden="true" tabindex="-1"></a>           <span class="at">label.size =</span> <span class="fl">0.25</span>,<span class="at">family =</span> <span class="st">"serif"</span>,</span>
+<span id="cb29-137"><a href="#cb29-137" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">3.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

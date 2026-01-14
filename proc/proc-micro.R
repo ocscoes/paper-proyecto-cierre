@@ -431,29 +431,29 @@ save(datos_merge, file = "input/proc/micro-macro-merge.rdata")
 # Correlactions ----
 
 
-subset <- datos_merge |>
-  ungroup() |>
-  select(1:2,23:24,
-         40:47) |>
-  group_by(pais, ola) |>
-  summarise(cohesion_horizontal_mid = mean(cohesion_horizontal_ind, na.rm=T),
-            cohesion_vertical_mid = mean(cohesion_vertical_ind, na.rm=T),
-            v_dem_mid = mean(indice_v_dem, na.rm=T),
-            api_mid = mean(api_index, na.rm=T),
-            mpi_mid = mean(mpi_index, na.rm=T),
-            expression_freedom_mid = mean(expression_freedom, na.rm=T),
-            assocation_freedom_mid = mean(association_freedom, na.rm=T),
-            clean_elections_mid = mean(clean_election, na.rm=T),
-            elected_officials_mid = mean(elected_officials, na.rm=T),
-            suffrage_mid = mean(suffrage, na.rm=T)) |>
-  ungroup() |>
-  select(3:12)
-
-cor(subset,
-    use= "pairwise.complete.obs", method = "pearson")
-
-
-subset_ind <- datos_merge |>
-  ungroup() |>
-  select(1:2,23:24,
-         40:47)
+# subset <- datos_merge |>
+#   ungroup() |>
+#   select(1:2,23:24,
+#          40:47) |>
+#   group_by(pais, ola) |>
+#   summarise(cohesion_horizontal_mid = mean(cohesion_horizontal_ind, na.rm=T),
+#             cohesion_vertical_mid = mean(cohesion_vertical_ind, na.rm=T),
+#             v_dem_mid = mean(indice_v_dem, na.rm=T),
+#             api_mid = mean(api_index, na.rm=T),
+#             mpi_mid = mean(mpi_index, na.rm=T),
+#             expression_freedom_mid = mean(expression_freedom, na.rm=T),
+#             assocation_freedom_mid = mean(association_freedom, na.rm=T),
+#             clean_elections_mid = mean(clean_election, na.rm=T),
+#             elected_officials_mid = mean(elected_officials, na.rm=T),
+#             suffrage_mid = mean(suffrage, na.rm=T)) |>
+#   ungroup() |>
+#   select(3:12)
+# 
+# cor(subset,
+#     use= "pairwise.complete.obs", method = "pearson")
+# 
+# 
+# subset_ind <- datos_merge |>
+#   ungroup() |>
+#   select(1:2,23:24,
+#          40:47)

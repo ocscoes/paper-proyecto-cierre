@@ -463,7 +463,7 @@ resumen <- datos_wide |>
 datos_wide <- datos_wide |>
   dplyr::filter(!is.na(`Cohesión general`), !is.na(ola)) |>
   semi_join(resumen, by="pais") |>
-  select(1:12, 21,24:34, 41)
+  select(1:12, 21,24:42)
 
   
 

@@ -109,7 +109,7 @@ datos_fit <- datos_merge %>%
     nivel_educ   = forcats::fct_relevel(nivel_educ, "Primary"),   # ejemplo
     pos_politica = forcats::fct_relevel(pos_politica, "Not declared")         # ejemplo
   ) |>
-  select(cohesion_general_ind, cohesion_vertical_ind, cohesion_horizontal_ind,
+  select(id_row, cohesion_general_ind, cohesion_vertical_ind, cohesion_horizontal_ind,
          nivel_educ, sexo, edad_c, ola_s, pos_politica,ola,
          income_decile,escolaridad,
          pib_we, gini_we, dem_we, wgi_we, mig_we,fho_we,
