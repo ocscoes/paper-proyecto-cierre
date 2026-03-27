@@ -1,0 +1,71 @@
+---
+format:
+  revealjs:
+    slide-number: true
+    show-slide-number: print
+    logo: images/ocs-transparent.png
+    theme: [ocs.scss]
+    transition: fade            # ← global
+    transition-speed: slow
+    auto-play-media: false
+    view-distance: 100
+    mobile-view-distance: 100
+    fig-cap-location: top        # ← nombre correcto
+    scrollable: false
+editor: source
+bibliography: input/book-ocs.bib
+lang: es
+---
+
+
+# {data-background-color="#ffffff"}
+
+::: columns
+::: {.column width="15%"}
+![](images/ocs-old.jpg)
+
+
+![](images/bigsss.png)
+:::
+
+::: {.column .column-right width="80%" }
+
+## **Two decades of changes in social cohesion in Latin America (2004-2023)** {style="text-align: right;"}
+
+------------------------------------------------------------------------
+
+<div style="font-size: 25px; text-align: right;">
+
+**Juan Carlos Castillo, Julio Iturra, Gabriel Cortés & Tomás Urzúa**
+
+</div>
+
+<br>
+
+<div style="font-size: 25px; text-align: right;">
+
+**Departament of Sociology, Universidad de Chile**  
+
+</div>
+
+<br>
+
+<div style="font-size: 23px; text-align: right;">
+
+Universität Bremen
+
+07th April, 2026
+
+</div>
+
+:::
+::::
+
+{{< include context.qmd >}}
+
+{{< include bg-methods.qmd >}}
+
+{{< include results.qmd >}}
+
+
+

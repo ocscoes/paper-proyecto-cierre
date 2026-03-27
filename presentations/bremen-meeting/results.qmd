@@ -1,0 +1,749 @@
+
+
+# Results {data-background-color="#1b241f"}
+
+```{r}
+#| echo: false
+#| label: cargar-base
+library(tidyverse)
+library(lme4)
+library(texreg)
+library(dplyr)
+library(haven)
+library(correlation)
+library(ggtext)
+library(lavaan)
+library(performance)
+
+load("../../input/proc/micro-macro-merge.rdata")
+
+datos_merge <- datos_merge |>
+  mutate(across(where(haven::is.labelled), ~ vctrs::vec_data(.)),
+         pais= as.factor(pais))
+
+datos_merge$country_wave = do.call(paste, c(datos_merge[c("pais", "ola")], sep = "_"))
+```
+
+```{r data-fig-macro}
+set1 <-  RColorBrewer::brewer.pal(n = 8, name = "Set1")
+options(ggplot2.discrete.fill = set1)
+options(ggplot2.discrete.colour = set1)
+ggplot2::theme_set(ggplot2::theme_bw())
+ggplot2::theme_update(text=ggplot2::element_text(size=15,  family="serif"))    
+options(scipen=999)
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(dplyr,ggplot2,haven,ggrepel,gridExtra,grid)  
+rm(list=ls())
+
+load("../../input/proc/micro-macro-merge.rdata")
+
+datos_merge <- datos_merge |>
+  mutate(across(where(haven::is.labelled), ~ vctrs::vec_data(.)),
+         pais= as.factor(pais))
+
+datos_merge$country_wave = do.call(paste, c(datos_merge[c("pais", "ola")], sep = "_"))
+
+wid_data <- haven::read_dta(file = "../../input/proc/wid_data.dta")
+wid_data <- wid_data %>% mutate(yr2=substr(year, 3, 4)) %>% rename(iso2c=country)
+datos_merge$iso2c<- countrycode::countrycode(sourcevar = datos_merge$pais,origin = "country.name",destination = "iso2c")
+wid_data$iso2c <- as.character(wid_data$iso2c)
+datos_merge$yr2<- substr(datos_merge$ola, 3, 4)
+
+frhouse <- read.csv("../../input/orig/freedom-score-fh.csv")
+frhouse<- 
+frhouse %>% select(country=Entity,iso3c=Code,year=Year,frhouse=Total.democracy.score) %>% 
+  mutate(iso2c =countrycode::countrycode(sourcevar = iso3c,origin = "iso3c",destination = "iso2c")) %>% 
+  mutate(yr2 = substr(year, 3, 4)) %>% 
+  filter(iso2c %in% datos_merge$iso2c)
+  
+datos_merge<- 
+left_join(x = datos_merge,y = wid_data[,c("iso2c","yr2","wid_gini_disp")],
+          by =c("iso2c","yr2"))
+
+datos_merge<- 
+left_join(x = datos_merge,y = frhouse[,c("iso2c","yr2","frhouse")],
+          by =c("iso2c","yr2"))
+
+datos_macro <- datos_merge %>%
+  mutate(
+   cohesion_horizontal,
+      cohesion_vertical,
+      cohesion_general,
+      gini_index,
+      wid_gini_disp,  
+      pib_per_capita_ppa,
+      log_pib_per_capita_ppa,
+      percent_pob_migrante,
+      indice_v_dem,
+      regulatory_quality,
+      voice_and_accountability,
+      wgi,
+     frhouse, 
+    edad_c = scale(edad) %>% as.numeric(),
+    ola_s = as.numeric(scale(ola, center = TRUE, scale = TRUE)),
+   income_decile,
+    ola,
+    nivel_educ   = forcats::fct_drop(factor(nivel_educ)),
+    pos_politica = forcats::fct_drop(factor(pos_politica)),
+    sexo         = forcats::fct_drop(factor(sexo)),
+    pais         = forcats::fct_drop(factor(pais)),
+    country_wave = forcats::fct_drop(factor(country_wave))
+  ) %>% 
+    select(cohesion_horizontal,
+      cohesion_vertical,
+      cohesion_general,
+      gini_index,wid_gini_disp,
+      pib_per_capita_ppa,
+      log_pib_per_capita_ppa,
+      percent_pob_migrante,
+      indice_v_dem,
+      regulatory_quality,
+      voice_and_accountability,wgi,frhouse,
+      income_decile,escolaridad,
+         nivel_educ, sexo, edad_c, ola_s,ola, pos_politica,iso2c,
+         country_wave, pais, wt)
+
+# dim(datos_macro);dim(na.omit(datos_macro))
+datos_macro$yr2<- substr(datos_macro$ola, 3, 4)
+
+df_sum <- datos_macro %>%
+  group_by(iso2c, yr2) %>%
+  summarise(across(
+    c(cohesion_horizontal,
+      cohesion_vertical,
+      cohesion_general,
+      gini_index,wid_gini_disp,
+      pib_per_capita_ppa,
+      log_pib_per_capita_ppa,
+      percent_pob_migrante,
+      indice_v_dem,frhouse,
+      wgi),
+    mean,
+    na.rm = TRUE
+  )) %>%
+  ungroup() 
+df_sum <- 
+ df_sum %>% 
+  group_by(iso2c) %>%
+  mutate(across(
+    c(cohesion_horizontal,
+      cohesion_vertical,
+      cohesion_general,
+      gini_index,wid_gini_disp,
+      pib_per_capita_ppa,
+      log_pib_per_capita_ppa,
+      percent_pob_migrante,
+      indice_v_dem,frhouse,
+      wgi),
+    mean,
+    na.rm = TRUE,
+    .names = "mid_{.col}"
+  )) %>%
+  ungroup()
+
+df_sum$ctyear <- paste0(df_sum$iso2c,df_sum$yr2)
+```
+
+##
+
+:::{.notes}
+Longitudinal descriptive
+:::
+
+```{r}
+#| label: fig-cs
+#| fig-cap: Evolution of vertical and horizontal cohesion (2004-2023)
+#| fig-cap-location: bottom
+#| echo: false
+
+library(ggbreak)
+
+load("../../input/proc/micro-macro-merge.rdata")
+load("../../input/proc/datos-fit.rdata")
+
+datos_fit <- datos_fit |>
+  select(-escolaridad) |> na.omit()
+
+olas <- datos_fit |>
+  filter(!pais %in% c("Canada", "United States")) |>
+   group_by(ola) |>
+  summarise(horizontal_prom = mean(`cohesion_horizontal_ind`, na.rm=T),
+            vertical_prom = mean(`cohesion_vertical_ind`, na.rm=T)) |>
+  pivot_longer(
+    cols = c(horizontal_prom, vertical_prom),
+    names_to = "indicador",
+    values_to = "promedio"
+  ) |>
+  mutate(indicador = dplyr::recode(indicador,
+                            horizontal_prom = "Horizontal Cohesion",
+                            vertical_prom = "Vertical Cohesion"))
+
+ # dif <- datos_fit |>
+ #  filter(!pais %in% c("Canada", "United States")) |>
+ #  group_by(ola) |>
+ #  summarise(
+ #    horizontal_prom = mean(cohesion_horizontal_ind, na.rm = TRUE),
+ #    vertical_prom   = mean(cohesion_vertical_ind,   na.rm = TRUE),
+ #    diferencia_h_v  = horizontal_prom - vertical_prom,
+ #    .groups = "drop"
+ #  ) |>
+ #   summarise(mean(diferencia_h_v))
+ # 
+ # dif
+
+olas$ola <- factor(olas$ola)
+p<- olas |>
+  ggplot(aes(x = ola, y = promedio, color = indicador,group = indicador)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  scale_y_continuous(limits = c(0,10))+
+  labs(x = "Wave", y = "Social cohesion (1-10)", color = NULL) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+#plot_cs <- p + scale_y_cut(breaks=c(3.5), which= c(1,2), scales=c(3, 0.5))
+#plot_cs
+p
+```
+
+##
+
+:::{.notes}
+Associations
+:::
+
+```{r}
+#| echo: false
+#| fig-cap: "Association between GDP per capita (PPP) and horizontal cohesion. Red line represents the association including Canada and United States."
+#| fig-cap-location: bottom
+#| label: fig-hor-cor
+
+library(ggrepel)
+
+df_sum_la <-  df_sum %>% filter(!iso2c %in% c("US","CA"))
+df_sum <- df_sum %>% filter(!iso2c=="TT")
+
+fig_gdp_h <-
+  ggplot() +
+  geom_smooth(data = df_sum, method = lm, se = FALSE,
+              aes(mid_pib_per_capita_ppa, y = mid_cohesion_horizontal),
+              color = "red", size = 0.5,fullrange = TRUE) +
+  geom_smooth(data = df_sum_la, method = lm, se = FALSE, fullrange = TRUE,
+              aes(mid_pib_per_capita_ppa, y = mid_cohesion_horizontal),
+              color = "black") +
+  geom_smooth(data = df_sum,
+              aes(x = pib_per_capita_ppa,
+                  y = cohesion_horizontal,
+                  color = iso2c,
+                  shape = iso2c),
+              method = "lm", se = FALSE,
+              color = "black", size = 0.1) +
+  geom_label(data = df_sum,
+             aes(x = mid_pib_per_capita_ppa,
+                 y = mid_cohesion_horizontal,
+                 label = iso2c),
+             size = 2.5) +
+  scale_y_continuous(limits = c(2, 8)) +
+  labs(x = "GDP per Capita (PPP)", y = " ", title = "") +
+  annotate("label",
+           x = Inf, y = -Inf,
+           hjust = 1.08, vjust = -1,
+           label = paste0("r = ",
+                          round(cor(df_sum$mid_pib_per_capita_ppa,
+                                    df_sum$mid_cohesion_horizontal,
+                                    use = "complete.obs"), 2)),
+           fill = "white", color = "red",
+           label.size = 0.25, family = "serif", size = 3.5) +
+  annotate("label",
+           x = Inf, y = -Inf,
+           hjust = 1.08, vjust = -3,
+           label = paste0("r = ",
+                          round(cor(df_sum_la$mid_pib_per_capita_ppa,
+                                    df_sum_la$mid_cohesion_horizontal,
+                                    use = "complete.obs"), 2)),
+           fill = "white", color = "black",
+           label.size = 0.25, family = "serif", size = 3.5)
+
+fig_gdp_h
+```
+
+##
+
+```{r}
+#| echo: false
+#| fig-cap: "Association between GDP per capita (PPP) and vertical cohesion. Red line represents the association including Canada and United States."
+#| fig-cap-location: bottom
+#| label: fig-ver-cor
+
+fig_gdp_v <-
+  ggplot() +
+  geom_smooth(data = df_sum, method = lm, se = FALSE, fullrange = TRUE,
+              aes(mid_pib_per_capita_ppa, y = mid_cohesion_vertical),
+              color = "red", size = 0.5) +
+  geom_smooth(data = df_sum_la, method = lm, se = FALSE, fullrange = TRUE,
+              aes(mid_pib_per_capita_ppa, y = mid_cohesion_vertical),
+              color = "black") +
+  geom_smooth(data = df_sum, method = "lm", se = FALSE,
+              aes(x = pib_per_capita_ppa, y = cohesion_vertical,
+                  color = iso2c, shape = iso2c),
+              color = "black", size = 0.1) +
+  geom_label(data = df_sum,
+             aes(x = mid_pib_per_capita_ppa,
+                 y = mid_cohesion_vertical,
+                 label = iso2c),
+             size = 2.5) +
+  scale_y_continuous(limits = c(2, 8)) +
+  labs(x = "GDP per Capita (PPP)", y = " ", title = "") +
+  annotate("label", x = Inf, y = -Inf, hjust = 1.08, vjust = -1,
+           label = paste0("r = ",
+                          round(cor(df_sum$mid_pib_per_capita_ppa,
+                                    df_sum$mid_cohesion_vertical,
+                                    use = "complete.obs"), 2)),
+           fill = "white", color = "red",
+           label.size = 0.25, family = "serif", size = 3.5) +
+  annotate("label", x = Inf, y = -Inf, hjust = 1.08, vjust = -3,
+           label = paste0("r = ",
+                          round(cor(df_sum_la$mid_pib_per_capita_ppa,
+                                    df_sum_la$mid_cohesion_vertical,
+                                    use = "complete.obs"), 2)),
+           fill = "white", color = "black",
+           label.size = 0.25, family = "serif", size = 3.5)
+
+fig_gdp_v
+```
+
+##
+
+:::{.notes}
+models level 1
+:::
+
+```{r data-model-fit}
+#| echo: false
+
+set1 <-  RColorBrewer::brewer.pal(n = 8, name = "Set1")
+options(ggplot2.discrete.fill = set1)
+options(ggplot2.discrete.colour = set1)
+ggplot2::theme_set(ggplot2::theme_bw())
+ggplot2::theme_update(text=ggplot2::element_text(size=15,  family="serif"))    
+options(scipen=999)
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(dplyr,ggplot2,haven,ggrepel,gridExtra,grid)  
+rm(list=ls())
+
+load("../../input/proc/micro-macro-merge.rdata")
+
+datos_merge <- datos_merge |>
+  mutate(across(where(haven::is.labelled), ~ vctrs::vec_data(.)),
+         pais= as.factor(pais))
+
+datos_merge$country_wave = do.call(paste, c(datos_merge[c("pais", "ola")], sep = "_"))
+
+wid_data <- haven::read_dta(file = "../../input/proc/wid_data.dta")
+wid_data <- wid_data %>% mutate(yr2=substr(year, 3, 4)) %>% rename(iso2c=country)
+datos_merge$iso2c<- countrycode::countrycode(sourcevar = datos_merge$pais,origin = "country.name",destination = "iso2c")
+wid_data$iso2c <- as.character(wid_data$iso2c)
+datos_merge$yr2<- substr(datos_merge$ola, 3, 4)
+
+frhouse <- read.csv("../../input/orig/freedom-score-fh.csv")
+frhouse<- 
+frhouse %>% select(country=Entity,iso3c=Code,year=Year,frhouse=Total.democracy.score) %>% 
+  mutate(iso2c =countrycode::countrycode(sourcevar = iso3c,origin = "iso3c",destination = "iso2c")) %>% 
+  mutate(yr2 = substr(year, 3, 4)) %>% 
+  filter(iso2c %in% datos_merge$iso2c)
+  
+datos_merge<- 
+left_join(x = datos_merge,y = wid_data[,c("iso2c","yr2","wid_gini_disp")],
+          by =c("iso2c","yr2"))
+
+datos_merge<- 
+left_join(x = datos_merge,y = frhouse[,c("iso2c","yr2","frhouse")],
+          by =c("iso2c","yr2"))
+
+
+# Separar los efectos
+datos_merge <- datos_merge |>
+  group_by(pais) |>
+ mutate(pib_be = mean(log_pib_per_capita_ppa, na.rm=T),
+         # gini_be = mean(gini_index, na.rm=T),
+         gini_be = mean(wid_gini_disp, na.rm=T),
+         mig_be = mean(percent_pob_migrante, na.rm=T),
+         dem_be = mean(indice_v_dem, na.rm=T),
+         wgi_be = mean(wgi, na.rm=T),
+         fho_be = mean(frhouse, na.rm=T),
+         # edu_be = mean(edu_terciaria, na.rm=T)
+        ) |>
+  ungroup() |>
+  mutate(pib_we = log_pib_per_capita_ppa - pib_be,
+          # gini_we = gini_index - gini_be,
+          gini_we = wid_gini_disp - gini_be,
+          mig_we = percent_pob_migrante - mig_be,
+          dem_we = indice_v_dem - dem_be,
+          wgi_we = wgi- wgi_be,
+          fho_we = frhouse- fho_be,
+          # edu_we = edu_terciaria-edu_be
+         )
+
+# Centrado y limpieza
+
+z <- function(x) as.numeric(scale(x))
+
+datos_fit <- datos_merge %>%
+  filter(!pais %in% c("Canada","United States")) %>% 
+  mutate(
+    # pib_we  = z(pib_we),   gini_we = z(gini_we), wgi_we = z(wgi_we), dem_we = z(dem_we),
+    # mig_we  = z(mig_we),   edu_we = z(edu_we),
+    # pib_be  = z(pib_be),   gini_be = z(gini_be), wgi_be = z(wgi_be), dem_be = z(dem_be),
+    # mig_be  = z(mig_be),   edu_be = z(edu_be),
+    edad_c = scale(edad) %>% as.numeric(),
+    ola_s = as.numeric(scale(ola, center = TRUE, scale = TRUE)),
+    ola,
+    nivel_educ   = forcats::fct_drop(factor(nivel_educ)),
+    pos_politica = forcats::fct_drop(factor(pos_politica)),
+    sexo         = forcats::fct_drop(factor(sexo)),
+    pais         = forcats::fct_drop(factor(pais)),
+    country_wave = forcats::fct_drop(factor(country_wave)),
+
+    # --- cambiar categoría de referencia ---
+    nivel_educ   = forcats::fct_relevel(nivel_educ, "Primary"),   # ejemplo
+    pos_politica = forcats::fct_relevel(pos_politica, "Not declared")         # ejemplo
+  ) |>
+  select(id_row, cohesion_general_ind, cohesion_vertical_ind, cohesion_horizontal_ind,
+         nivel_educ, sexo, edad_c, ola_s, pos_politica,ola,
+         income_decile,escolaridad,
+         pib_we, gini_we, dem_we, wgi_we, mig_we,fho_we,
+         pib_be, gini_be, dem_be, wgi_be, mig_be,fho_be, 
+         country_wave, pais, wt) 
+library(haven)
+save(datos_fit, file="../../input/proc/datos-fit.rdata")
+```
+
+```{r}
+#| echo: false
+load("../../input/proc/datos-fit.rdata")
+m0_ch = lmer(cohesion_horizontal_ind ~ 1 + (1 | country_wave) + (1 |pais), data=datos_fit, weights=wt)
+#icc(m0_ch, by_group=TRUE) # 2.3% y 5.6%
+m0_cv = lmer(cohesion_vertical_ind ~ 1 + (1 | country_wave) + (1 |pais), data=datos_fit, weights=wt)
+#icc(m0_cv, by_group=TRUE) # 6.3% y 6.3%
+m0_cs = lmer(cohesion_general_ind ~ 1 + (1 | country_wave) + (1 |pais), data=datos_fit, weights=wt)
+#icc(m0_cs, by_group=TRUE) # 4.9% y 7.5%
+save(m0_ch, file="../../output/modelo_nulo_horizontal.rdata")
+save(m0_cv, file="../../output/modelo_nulo_vertical.rdata")
+save(m0_cs, file= "../../output/modelo_nulo_completo.rdata")
+```
+
+```{r}
+#| echo: false
+
+isced_labels <- c(
+  "Early education/none",
+  "Primary",
+  "Lower secondary",
+  "Upper secondary",
+  "Postsecondary non-terciary",
+  "Terciary (short-cycle)",
+  "Universitary"
+)
+
+datos_fit$isced11 <- car::recode(datos_fit$escolaridad, 
+"0 = 0;1:6 = 1;7:9 = 2;10:12 = 3;13:14 = 4;15:16 = 5;17:18 = 6")
+
+datos_fit$isced11 <- factor(
+  datos_fit$isced11,
+  levels = 0:6,
+  labels = isced_labels
+)
+datos_fit$ola <- as.numeric(haven::as_factor(datos_fit$ola))
+datos_fit$nivel_educ <- relevel(datos_fit$nivel_educ,ref = "Secondary")
+
+datos_fit <- 
+datos_fit %>% 
+  select(cohesion_general_ind, cohesion_vertical_ind, cohesion_horizontal_ind,
+         nivel_educ, sexo, edad_c, ola_s, pos_politica,ola,
+         income_decile,nivel_educ,
+         pib_we, gini_we, dem_we, wgi_we, mig_we,fho_we,
+         pib_be, gini_be, dem_be, wgi_be, mig_be,fho_be, 
+         country_wave, pais, wt) %>% na.omit() %>% 
+  filter(!pais %in% c("Canada","United States")) %>% as.data.frame()
+
+micro_h2 <- lmer(cohesion_horizontal_ind ~ 1 + income_decile + nivel_educ + sexo + edad_c + I(edad_c^2) +  ola +  (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+micro_h <- lmer(cohesion_horizontal_ind ~ 1 + income_decile + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola +  (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+
+micro_v2 <- lmer(cohesion_vertical_ind ~ 1 + income_decile + nivel_educ + sexo + edad_c + I(edad_c^2) +  ola +  (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+micro_v <- lmer(cohesion_vertical_ind ~ 1 + income_decile + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola +  (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+
+coef_names<- list("(Intercept)"="(Intercept)",
+"income_decile" ="Income decile",                  
+"nivel_educPrimary" = "Primary",
+"nivel_educTertiary" = "Tertiary",
+"pos_politicaLeft"="Left",    
+"pos_politicaCenter"="Center",  
+"pos_politicaRight"="Right",
+"ola"="Time",
+"sexoMale"="Male (ref.=Female)",            
+"edad_c"="Age",              
+"I(edad_c^2)"="Age2"
+) 
+```
+
+```{r}
+library(broom.mixed)
+library(dplyr)
+
+# Extraer coeficientes (solo efectos fijos)
+tidy_h <- tidy(micro_h, effects = "fixed", conf.int = TRUE) %>%
+  mutate(model = "Horizontal")
+
+tidy_v <- tidy(micro_v, effects = "fixed", conf.int = TRUE) %>%
+  mutate(model = "Vertical")
+
+# Unir
+coef_data <- bind_rows(tidy_h, tidy_v)
+
+coef_data <- coef_data %>%
+  mutate(term = recode(term, !!!coef_names))
+
+coef_data <- coef_data %>%
+  filter(term != "(Intercept)")
+```
+
+```{r}
+#| echo: false
+#| label: fig-coef-individual
+#| fig-cap: Multilevel regression for individual level factors and social cohesion
+#| fig-cap-location: bottom
+
+ggplot(coef_data, aes(x = estimate, y = term, color = model)) +
+  geom_point(position = position_dodge(width = 0.5)) +
+  geom_errorbarh(aes(xmin = conf.low, xmax = conf.high),
+                 position = position_dodge(width = 0.5),
+                 height = 0.2) +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  labs(
+    x = "Coefficient estimate",
+    y = "",
+    color = "Model"
+  ) +
+  theme_minimal()
+```
+
+## {.scrollable}
+
+:::{.notes}
+Models level 2
+:::
+
+```{r modelo-cohesion-full}
+#| cache: true
+#| results: asis
+load("../../input/proc/datos-fit.rdata")
+library(lme4)
+library(texreg)
+library(dplyr)
+library(correlation)
+
+isced_labels <- c(
+  "Early education/none",
+  "Primary",
+  "Lower secondary",
+  "Upper secondary",
+  "Postsecondary non-terciary",
+  "Terciary (short-cycle)",
+  "Universitary"
+)
+
+datos_fit$isced11 <- car::recode(datos_fit$escolaridad, 
+"0 = 0;1:6 = 1;7:9 = 2;10:12 = 3;13:14 = 4;15:16 = 5;17:18 = 6")
+
+datos_fit$isced11 <- factor(
+  datos_fit$isced11,
+  levels = 0:6,
+  labels = isced_labels
+)
+
+datos_fit <- 
+datos_fit %>% 
+  select(cohesion_general_ind, cohesion_vertical_ind, cohesion_horizontal_ind,
+         nivel_educ, sexo, edad_c, ola_s, pos_politica,ola,
+         income_decile,
+         pib_we, gini_we, dem_we, wgi_we, mig_we,fho_we,
+         pib_be, gini_be, dem_be, wgi_be, mig_be,fho_be, 
+         country_wave, pais, wt) %>% na.omit() %>% 
+  filter(!pais %in% c("Canada","United States"))
+
+datos_fit$ola <- as.numeric(haven::as_factor(datos_fit$ola))
+datos_fit$nivel_educ <- relevel(datos_fit$nivel_educ,ref = "Secondary")
+
+coef_names <- list(
+  ola = "Time",
+  gini_be = "Gini (BE)",
+  gini_we = "Gini (WE)",
+  pib_be = "GDP (BE)",
+  pib_we = "GDP (WE)",
+  dem_be = "Democracy (BE)",
+  dem_we = "Democracy (WE)",
+  wgi_be = "Governace (BE)",
+  wgi_we = "Governace (WE)",
+  mig_be = "Migration (BE)",
+  mig_we = "Migration (WE)"
+)
+
+micro <- lmer(cohesion_horizontal_ind ~ 1 + income_decile + nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+macro_econ <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we)
+macro_econ_polit <- update(macro_econ,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we)
+macro_econ_polit_dem <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we)
+
+h_demo <- list(macro_econ,macro_econ_polit,macro_econ_polit_dem)
+
+micro <- lmer(cohesion_vertical_ind ~ 1 + income_decile+ nivel_educ + sexo + edad_c + I(edad_c^2) + pos_politica + ola + (1 | country_wave) + (1 | pais), data= datos_fit, weights= wt)
+macro_econ <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we)
+macro_econ_polit <- update(macro_econ,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we)
+macro_econ_polit_dem <- update(micro,. ~ . + gini_be+gini_we+pib_be+pib_we+dem_be+dem_we+wgi_be+wgi_we+mig_be+mig_we)
+
+v_demo <- list(macro_econ,macro_econ_polit,macro_econ_polit_dem)
+
+hv_demo<- c(h_demo,v_demo)
+# screenreg(hv_demo,digits=3,custom.coef.map = coef_names)
+```
+
+```{r}
+#| label: tbl-table004
+#| results: asis
+#| cache: false
+#| tbl-cap: Multilevel regression for country level factors and social cohesion
+#| tbl-cap-location: bottom
+ 
+knitreg(hv_demo, digits=3,custom.coef.map = coef_names,caption = NULL,
+        custom.header = list("Horizontal"=1:3,"Vertical"=4:6)
+        )
+```
+
+## 
+
+:::{.notes}
+Interactions
+:::
+
+```{r modelo-cohesion-int}
+#| cache: true
+#| results: asis
+#| eval: false
+
+#Please run this code independently - it takes around 1 hour 
+source("../../proc/proc_interactions.R")
+# the output saves two objects "hz_ola.RData" and "vt_ola.RData"
+```
+
+```{r coefplot}
+#| cache: true
+#| results: asis
+#| eval: true
+#| fig-width: 10
+#| fig-height: 8 
+#| fig-cap: Interactions
+library(ggplot2)
+library(tidyr)
+library(ggtext)
+
+load(file = "../../output/hz_ola.RData") # horizontal cohesion
+load(file = "../../output/vt_ola.RData") # vertical cohesion
+
+hz_gini<- broom.mixed::tidy(hz_ola[[1]],conf.int = T)# gini
+hz_gdp <- broom.mixed::tidy(hz_ola[[2]],conf.int = T)# gdp 
+hz_demo<- broom.mixed::tidy(hz_ola[[3]],conf.int = T)# democracy
+hz_gove<- broom.mixed::tidy(hz_ola[[4]],conf.int = T)# governance
+hz_migr<- broom.mixed::tidy(hz_ola[[5]],conf.int = T)# migration
+
+data_hz_plot <- 
+bind_rows(
+hz_gini %>%filter(term %in%c("ola:gini_be","ola:gini_we"))%>%
+  tidyr::extract(term,into = c("ola", "macro", "effect"),regex = "^([^:]+):([^_]+)_([^_]+)$",remove = FALSE),
+hz_gdp  %>%filter(term%in%c("ola:pib_be","ola:pib_we")) %>% 
+  tidyr::extract(term,into = c("ola", "macro", "effect"),regex = "^([^:]+):([^_]+)_([^_]+)$",remove = FALSE),
+hz_demo %>%filter(term%in%c("ola:dem_be","ola:dem_we")) %>%
+  tidyr::extract(term,into = c("ola", "macro", "effect"),regex = "^([^:]+):([^_]+)_([^_]+)$",remove = FALSE),
+hz_gove %>%filter(term%in%c("ola:wgi_be","ola:wgi_we")) %>% 
+  tidyr::extract(term,into = c("ola", "macro", "effect"),regex = "^([^:]+):([^_]+)_([^_]+)$",remove = FALSE),
+hz_migr %>%filter(term%in%c("ola:mig_be","ola:mig_we")) %>% 
+  tidyr::extract(term,into = c("ola", "macro", "effect"),regex = "^([^:]+):([^_]+)_([^_]+)$",remove = FALSE)
+)
+
+data_hz_plot$cohesion <-"Horizontal" 
+
+vt_gini<- broom.mixed::tidy(vt_ola[[1]],conf.int = T)# gini
+vt_gdp <- broom.mixed::tidy(vt_ola[[2]],conf.int = T)# gdp
+vt_demo<- broom.mixed::tidy(vt_ola[[3]],conf.int = T)# democracy
+vt_gove<- broom.mixed::tidy(vt_ola[[4]],conf.int = T)# governance
+vt_migr<- broom.mixed::tidy(vt_ola[[5]],conf.int = T)# migration
+
+data_vt_plot <-
+bind_rows(
+vt_gini %>%filter(term%in%c("ola:gini_be","ola:gini_we"))%>%
+  tidyr::extract(term,into = c("ola", "macro", "effect"),regex = "^([^:]+):([^_]+)_([^_]+)$",remove = FALSE),
+vt_gdp  %>%filter(term%in%c("ola:pib_be","ola:pib_we")) %>%
+  tidyr::extract(term,into = c("ola", "macro", "effect"),regex = "^([^:]+):([^_]+)_([^_]+)$",remove = FALSE),
+vt_demo %>%filter(term%in%c("ola:dem_be","ola:dem_we")) %>%
+  tidyr::extract(term,into = c("ola", "macro", "effect"),regex = "^([^:]+):([^_]+)_([^_]+)$",remove = FALSE),
+vt_gove %>%filter(term%in%c("ola:wgi_be","ola:wgi_we")) %>%
+  tidyr::extract(term,into = c("ola", "macro", "effect"),regex = "^([^:]+):([^_]+)_([^_]+)$",remove = FALSE),
+vt_migr %>%filter(term%in%c("ola:mig_be","ola:mig_we")) %>%
+  tidyr::extract(term,into = c("ola", "macro", "effect"),regex = "^([^:]+):([^_]+)_([^_]+)$",remove = FALSE)
+)
+data_vt_plot$cohesion <-"Vertical" 
+
+data_coes_plot <- bind_rows(data_vt_plot,data_hz_plot)
+data_coes_plot$macro<- factor(data_coes_plot$macro,levels = rev(c("gini","pib","dem","wgi","mig")),ordered = T) 
+
+data_coes_plot %>% 
+  ggplot( aes(
+  x = estimate,
+  y = effect,
+  shape = macro,
+  group = macro
+)) + geom_vline(xintercept = 0,
+                color = "red",
+                size = 1) + geom_errorbarh(
+                  aes(xmin = conf.low, xmax = conf.high),
+                  height = 0.2,
+                  color = "black",
+                  size = 0.5,
+                  position = position_dodge(width = 0.5)
+                ) + geom_point(size = 2, position = position_dodge(width = 0.5)) + labs(
+                  # title = "Interaction of country-level factors with wave on horiztontal social cohesion",
+                  # subtitle = "lower cohesion ←         → higher cohesion",
+                  x = "Coefficient",
+                  caption = stringr::str_wrap("*Note*: Multilevel hybrid model regression (95% CIs). Include country-level factor and wave random slopes within country. Each coefficient corresponds to an independent estimate (see supplementary material).",),
+                  y = NULL
+                ) + scale_x_continuous(limits = c(-1, 3)) +
+                    scale_y_discrete(labels=c("BE\n×Wave","WE\n× Wave "))+
+                    scale_shape_manual(labels=rev(c("Gini","GDP","Democracy","Governance","Migration")),
+                                         values = c(15, 10, 17, 16, 5))+
+                  facet_wrap(facets = "cohesion")+
+                  theme(
+                  panel.grid.minor = element_blank(),
+                  plot.title = element_text(face = "bold",size = 13),
+                  legend.title = element_blank(),
+                  strip.text = element_text(face = "bold"),
+                  axis.title = element_text(face = "bold"),
+                  axis.title.x = element_text(margin = margin(t = 10), hjust = 0),
+                  axis.title.y = element_text(margin = margin(r = 10), hjust = 1),
+                  plot.subtitle = element_text(hjust = 0.5),
+                  legend.position = "bottom",
+                  axis.text.y = element_markdown(hjust = 1, size = 16),
+                  plot.caption = element_textbox_simple(hjust = 0,size = 13)
+                )
+
+```
+
+## Discusions
+
+
+
+
+
+:::{.notes}
+Para cerrar, solo volver a recalcar la relevancia de este estudio, que con sus limitaciones y con lo que falta por hacer ya muestran resultados prometedores. Hay pocos estudios que se enfocan en comprender la cohesión social desde una perspectiva longitudinal y multinivel, menos para América Latina, y creemos que los hallazgos que esta investigación pueda entregar son importante para aportar, desde los datos, a la discusión académica y política de la cohesión social. 
+:::
+
+## References
+

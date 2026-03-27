@@ -1,0 +1,56 @@
+---
+format:
+  revealjs:
+    theme: ocs.scss
+    transition: fade
+    transition-speed: slow
+    slide-number: true
+    show-slide-number: print
+    fig-cap-location: top
+editor: source  
+---
+
+
+
+# Project context {data-background-color="#1b241f"}
+
+## 
+
+::::: columns
+::: {.column width="35%"}
+
+<br>
+
+![](images/ocs-transparent2.png){width="100%" fig-align="right"}
+:::
+
+:::{.column width="10%"}
+
+:::
+
+::: {.column width="55%" style="font-size: 25px; text-align: center; margin: 0 auto;"}
+
+<br>
+
+-   <div style="margin-bottom: 1.5em;">[Social Cohesion Observatory (OCS)](https://ocs-coes.com/){target="_blank"} was a project funded under [Center for the Study of Conflict and Social Cohesion (COES 2013-2025)](https://coes.cl/){target="_blank"}</div>
+
+-   <div style="margin-bottom: 1.5em;">Launched in 2020 with the aim of contributing to the analysis of social cohesion in Chile and Latin America</div>
+
+-  <div style="margin-bottom: 1.5em;">It is based on experience gained from international projects focused on conceptualizing and measuring social cohesion</div>
+
+- <div style="margin-bottom: 1.5em;">This study: based on data from VISLATAM (N = 179,377, nested within 174 country waves across 25 countries)</div>
+
+:::
+:::::
+
+
+
+## {data-background-color="#1b241f"}
+
+::: {.highlight-last style="font-size:45px; text-align:center; display:flex; flex-direction:column; justify-content:center; height:80vh; gap:2em;"}
+
+*What have been the regional and national trends over the past two decades in the area of social cohesion in Latin America?*  
+
+*What are the main factors associated with these changes?*
+
+:::
