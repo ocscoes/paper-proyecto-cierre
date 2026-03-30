@@ -61,11 +61,8 @@ Universität Bremen
 :::
 ::::
 
-{{< include context.qmd >}}
+{{< include paper-la.qmd >}}
 
-{{< include bg-methods.qmd >}}
-
-{{< include results.qmd >}}
 
 
 
