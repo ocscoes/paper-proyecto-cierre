@@ -4,6 +4,8 @@ Este repositorio contiene el artículo "Dos décadas de cambios en la cohesión 
 
 [Presentación Conferencia COES](https://ocscoes.github.io/paper-proyecto-cierre/presentations/conferencia-coes/pres-conferencia-coes.html#/section)
 
+[Presentación Universität Bremen 2026](https://ocscoes.github.io/paper-proyecto-cierre/presentations/bremen-meeting/bremen-meeting.html#/section)
+
 ## Resultados Prelimianares
 
 Los resultados preliminares de esta investigación fueron presentados en el marco del [I Foro de Cohesión Social 2025: "Desafíos de la Cohesión Social en América Latina"](https://coes.cl/2025/07/31/coes-y-cepal-abordan-los-desafios-de-la-cohesion-social-en-america-latina/). 
