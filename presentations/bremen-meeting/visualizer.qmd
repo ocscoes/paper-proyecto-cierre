@@ -3,7 +3,7 @@ format:
   revealjs:
     theme: ocs.scss
     transition: fade
-    transition-speed: slow
+    transition-speed: default
     slide-number: true
     fig-cap-location: bottom
 editor: source  
