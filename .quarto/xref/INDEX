@@ -38,5 +38,8 @@
   },
   "presentations/bremen-meeting/visualizer.qmd": {
     "visualizer.html": "182108a4"
+  },
+  "presentations/bremen-meeting/paper-la.qmd": {
+    "paper-la.html": "7797b85a"
   }
 }
