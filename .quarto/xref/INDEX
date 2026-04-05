@@ -35,5 +35,8 @@
   },
   "presentations/bremen-meeting/bremen-meeting.qmd": {
     "bremen-meeting.html": "61b1932d"
+  },
+  "presentations/bremen-meeting/visualizer.qmd": {
+    "visualizer.html": "182108a4"
   }
 }

@@ -37,3 +37,18 @@ $code-block-border-color: #93a1a1 !default;
 .hide-logo .slide-logo {
   display: none !important;
 }
+
+.highlight-last  {
+  color: #a3aaae;
+  .current-fragment {
+    color: #272828;
+  }
+}
+
+
+.highlight-last2  {
+  color: #a3aaae;
+  .current-fragment {
+    color: #ffffff;
+  }
+}
