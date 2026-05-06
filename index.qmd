@@ -32,6 +32,11 @@ author:
     orcid: https://orcid.org/0000-0003-1993-3479
     affiliations:
       - ref: 3
+  - name: René Canales-Sellés
+    email: renecanales@uc.cl
+    orcid: https://orcid.org/0009-0002-4299-2725
+    affiliations:
+      - ref: 1
 affiliations: 
   - id: 1
     name: Universidad de Chile

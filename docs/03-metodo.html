@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.23">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>metodo</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="03-metodo_files/libs/clipboard/clipboard.min.js"></script>
+<script src="03-metodo_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="03-metodo_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="03-metodo_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="03-metodo_files/libs/quarto-html/popper.min.js"></script>
+<script src="03-metodo_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="03-metodo_files/libs/quarto-html/anchor.min.js"></script>
+<link href="03-metodo_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="03-metodo_files/libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="03-metodo_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="03-metodo_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="03-metodo_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="03-metodo_files/libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="03-metodo_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<section id="methodology" class="level1">
+<h1>Methodology</h1>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>The main source of data for this study is the AmericasBarometer of the <a href="https://ropercenter.cornell.edu/latin-american-public-opinion-project-lapop">Latin American Public Opinion Project</a>, also known as the LAPOP Survey. The survey aims to collect data on public opinion about democracy and governance in the Americas. The survey design is probabilistic and representative of the adult population in each country <span class="citation" data-cites="lapoplab_americasbarometer_2023">(<a href="#ref-lapoplab_americasbarometer_2023" role="doc-biblioref">LAPOP LAb 2023</a>)</span>.</p>
+<p>The survey has been conducted regularly since 2004. To date, nine waves have been carried out, covering between 11 and 23 countries, with a total of over 400,000 interviews in two decades. The questionnaire is administered through face-to-face surveys, with the exception of Canada and the United States.</p>
+<p>As a criterion, this study included only those countries in the region that had data available for the main indicators of the study at least five points in time. As summarized in <a href="#tbl-paises" class="quarto-xref">Table&nbsp;1</a>, this study includes a total of 238,257 individuals nested in 174 country waves in 25 countries in the Americas.</p>
+<div class="cell">
+<div id="tbl-paises" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-paises-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Data availability by waves and countries
+</figcaption>
+<div aria-describedby="tbl-paises-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Country</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2004</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2006</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2008</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2010</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2012</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2014</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2016</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2018</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2023</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Argentina</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1231</td>
+<td style="text-align: right;">1235</td>
+<td style="text-align: right;">689</td>
+<td style="text-align: right;">1249</td>
+<td style="text-align: right;">2816</td>
+<td style="text-align: right;">2884</td>
+<td style="text-align: right;">1469</td>
+<td style="text-align: right;">11573</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belize</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1096</td>
+<td style="text-align: right;">1341</td>
+<td style="text-align: right;">715</td>
+<td style="text-align: right;">1380</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1411</td>
+<td style="text-align: right;">5943</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bolivia</td>
+<td style="text-align: right;">2802</td>
+<td style="text-align: right;">2563</td>
+<td style="text-align: right;">2590</td>
+<td style="text-align: right;">2603</td>
+<td style="text-align: right;">2605</td>
+<td style="text-align: right;">2848</td>
+<td style="text-align: right;">2900</td>
+<td style="text-align: right;">3060</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">21971</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Brazil</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1203</td>
+<td style="text-align: right;">2112</td>
+<td style="text-align: right;">681</td>
+<td style="text-align: right;">1390</td>
+<td style="text-align: right;">2906</td>
+<td style="text-align: right;">2782</td>
+<td style="text-align: right;">1407</td>
+<td style="text-align: right;">12481</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Chile</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1412</td>
+<td style="text-align: right;">1358</td>
+<td style="text-align: right;">1723</td>
+<td style="text-align: right;">699</td>
+<td style="text-align: right;">1268</td>
+<td style="text-align: right;">2900</td>
+<td style="text-align: right;">2978</td>
+<td style="text-align: right;">1525</td>
+<td style="text-align: right;">13863</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Colombia</td>
+<td style="text-align: right;">1304</td>
+<td style="text-align: right;">1268</td>
+<td style="text-align: right;">1318</td>
+<td style="text-align: right;">1272</td>
+<td style="text-align: right;">624</td>
+<td style="text-align: right;">1353</td>
+<td style="text-align: right;">2886</td>
+<td style="text-align: right;">1530</td>
+<td style="text-align: right;">1400</td>
+<td style="text-align: right;">12955</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Costa Rica</td>
+<td style="text-align: right;">1386</td>
+<td style="text-align: right;">1422</td>
+<td style="text-align: right;">1350</td>
+<td style="text-align: right;">1373</td>
+<td style="text-align: right;">674</td>
+<td style="text-align: right;">1425</td>
+<td style="text-align: right;">2758</td>
+<td style="text-align: right;">2806</td>
+<td style="text-align: right;">1447</td>
+<td style="text-align: right;">14641</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dominican Republic</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1312</td>
+<td style="text-align: right;">1265</td>
+<td style="text-align: right;">1292</td>
+<td style="text-align: right;">656</td>
+<td style="text-align: right;">1400</td>
+<td style="text-align: right;">1288</td>
+<td style="text-align: right;">1360</td>
+<td style="text-align: right;">2974</td>
+<td style="text-align: right;">11547</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ecuador</td>
+<td style="text-align: right;">2644</td>
+<td style="text-align: right;">2657</td>
+<td style="text-align: right;">2768</td>
+<td style="text-align: right;">2589</td>
+<td style="text-align: right;">628</td>
+<td style="text-align: right;">1315</td>
+<td style="text-align: right;">1388</td>
+<td style="text-align: right;">2934</td>
+<td style="text-align: right;">1414</td>
+<td style="text-align: right;">18337</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">El Salvador</td>
+<td style="text-align: right;">1407</td>
+<td style="text-align: right;">1573</td>
+<td style="text-align: right;">1468</td>
+<td style="text-align: right;">1500</td>
+<td style="text-align: right;">620</td>
+<td style="text-align: right;">1448</td>
+<td style="text-align: right;">1450</td>
+<td style="text-align: right;">1353</td>
+<td style="text-align: right;">1457</td>
+<td style="text-align: right;">12276</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guatemala</td>
+<td style="text-align: right;">1237</td>
+<td style="text-align: right;">1133</td>
+<td style="text-align: right;">1157</td>
+<td style="text-align: right;">1217</td>
+<td style="text-align: right;">643</td>
+<td style="text-align: right;">1309</td>
+<td style="text-align: right;">1355</td>
+<td style="text-align: right;">1362</td>
+<td style="text-align: right;">1425</td>
+<td style="text-align: right;">10838</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guyana</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1151</td>
+<td style="text-align: right;">2069</td>
+<td style="text-align: right;">1267</td>
+<td style="text-align: right;">654</td>
+<td style="text-align: right;">1315</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6456</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Haiti</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1363</td>
+<td style="text-align: right;">1351</td>
+<td style="text-align: right;">1596</td>
+<td style="text-align: right;">845</td>
+<td style="text-align: right;">1318</td>
+<td style="text-align: right;">1681</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8154</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Honduras</td>
+<td style="text-align: right;">1220</td>
+<td style="text-align: right;">1366</td>
+<td style="text-align: right;">1275</td>
+<td style="text-align: right;">1437</td>
+<td style="text-align: right;">717</td>
+<td style="text-align: right;">1452</td>
+<td style="text-align: right;">1349</td>
+<td style="text-align: right;">1328</td>
+<td style="text-align: right;">1385</td>
+<td style="text-align: right;">11529</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Jamaica</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1219</td>
+<td style="text-align: right;">1272</td>
+<td style="text-align: right;">1297</td>
+<td style="text-align: right;">706</td>
+<td style="text-align: right;">1202</td>
+<td style="text-align: right;">1180</td>
+<td style="text-align: right;">1151</td>
+<td style="text-align: right;">1209</td>
+<td style="text-align: right;">9236</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mexico</td>
+<td style="text-align: right;">1366</td>
+<td style="text-align: right;">1351</td>
+<td style="text-align: right;">1402</td>
+<td style="text-align: right;">1385</td>
+<td style="text-align: right;">697</td>
+<td style="text-align: right;">1320</td>
+<td style="text-align: right;">1374</td>
+<td style="text-align: right;">1387</td>
+<td style="text-align: right;">1545</td>
+<td style="text-align: right;">11827</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nicaragua</td>
+<td style="text-align: right;">1098</td>
+<td style="text-align: right;">1491</td>
+<td style="text-align: right;">1278</td>
+<td style="text-align: right;">1373</td>
+<td style="text-align: right;">1573</td>
+<td style="text-align: right;">1402</td>
+<td style="text-align: right;">1383</td>
+<td style="text-align: right;">1376</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10974</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Panama</td>
+<td style="text-align: right;">1528</td>
+<td style="text-align: right;">1374</td>
+<td style="text-align: right;">1405</td>
+<td style="text-align: right;">1435</td>
+<td style="text-align: right;">706</td>
+<td style="text-align: right;">1414</td>
+<td style="text-align: right;">2868</td>
+<td style="text-align: right;">2924</td>
+<td style="text-align: right;">1454</td>
+<td style="text-align: right;">15108</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Paraguay</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1065</td>
+<td style="text-align: right;">1300</td>
+<td style="text-align: right;">676</td>
+<td style="text-align: right;">1240</td>
+<td style="text-align: right;">1170</td>
+<td style="text-align: right;">1346</td>
+<td style="text-align: right;">1310</td>
+<td style="text-align: right;">8107</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peru</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1340</td>
+<td style="text-align: right;">1385</td>
+<td style="text-align: right;">1382</td>
+<td style="text-align: right;">670</td>
+<td style="text-align: right;">1337</td>
+<td style="text-align: right;">2478</td>
+<td style="text-align: right;">1449</td>
+<td style="text-align: right;">1481</td>
+<td style="text-align: right;">11522</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trinidad &amp; Tobago</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1444</td>
+<td style="text-align: right;">1444</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Uruguay</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1068</td>
+<td style="text-align: right;">1359</td>
+<td style="text-align: right;">1321</td>
+<td style="text-align: right;">671</td>
+<td style="text-align: right;">1342</td>
+<td style="text-align: right;">2720</td>
+<td style="text-align: right;">2866</td>
+<td style="text-align: right;">1383</td>
+<td style="text-align: right;">12730</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Venezuela</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1386</td>
+<td style="text-align: right;">1330</td>
+<td style="text-align: right;">1340</td>
+<td style="text-align: right;">686</td>
+<td style="text-align: right;">1377</td>
+<td style="text-align: right;">2794</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8913</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Total</td>
+<td style="text-align: right;">15992</td>
+<td style="text-align: right;">26449</td>
+<td style="text-align: right;">31995</td>
+<td style="text-align: right;">33390</td>
+<td style="text-align: right;">17835</td>
+<td style="text-align: right;">31104</td>
+<td style="text-align: right;">41644</td>
+<td style="text-align: right;">36876</td>
+<td style="text-align: right;">27140</td>
+<td style="text-align: right;">262425</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>For contextual data on countries, various data sources were used, including:</p>
+<ol type="1">
+<li><p>Open data from the World Bank. This contains various indicators on social and economic development for most countries in the world. The data portal is accessible at: <a href="https://datos.bancomundial.org/">https://datos.bancomundial.org/</a>.</p></li>
+<li><p>The World Bank’s Worldwide Governance Indicators. This is a survey of experts that collects data on various governance indicators, covering multiple countries with information updated between 1996 and 2003. The data is available at: <a href="https://www.worldbank.org/en/publication/worldwide-governance-indicators">https://www.worldbank.org/en/publication/worldwide-governance-indicators</a>.</p></li>
+<li><p>The V-Dem Dataset. It collects a multidimensional set of data that seeks to measure the quality of democracy around the world. The database is accessible through the R package <code>vdemdata</code> <span class="citation" data-cites="maerz_vdemdata_2025">(<a href="#ref-maerz_vdemdata_2025" role="doc-biblioref">Maerz et al. 2025</a>)</span>.</p></li>
+</ol>
+</section>
+<section id="variables" class="level2">
+<h2 class="anchored" data-anchor-id="variables">Variables</h2>
+<section id="dependent-variables" class="level3">
+<h3 class="anchored" data-anchor-id="dependent-variables">Dependent Variables</h3>
+<p>A Social Cohesion Index was constructed, comprising two dimensions which, in turn, are summary indices constructed from LAPOP indicators. The selection of indicators, sub-dimensions, and dimensions is based on previous work at the aggregate level by the Social Cohesion Observatory, accessible here: <a href="https://ocscoes.github.io/medicion-cohesion-LA/">https://ocscoes.github.io/medicion-cohesion-LA/</a>.</p>
+<p>The <strong>Horizontal Cohesion Index</strong> consists of two sub-dimensions: Urban Safety and Interpersonal Trust. Urban Safety includes indicators of objective safety and subjective safety. Interpersonal Trust, meanwhile, is a single indicator of how trustworthy people are in general.</p>
+<p>The <strong>Vertical Cohesion Index</strong> consists of two dimensions: Trust in Institutions and Attitudes toward Democracy. Trust in Institutions includes indicators related to citizens’ trust in Congress, the judiciary, and political parties. Attitudes toward Democracy consists of two indicators on support for the democratic system and satisfaction with the functioning of democracy in one’s country.</p>
+<p>The indicators were standardized so that all sub-dimensions and dimensions of the indices have a range from 0 to 10, with 0 indicating low levels of social cohesion and 10 indicating high levels of cohesion.</p>
+<section id="item-level-descriptives" class="level4">
+<h4 class="anchored" data-anchor-id="item-level-descriptives">Item-level descriptives</h4>
+<p>Before presenting the aggregated indices by dimension, <a href="#tbl-items" class="quarto-xref">Table&nbsp;2</a> describes the original items composing each sub-dimension of the social cohesion index. All items were standardized to a 0–10 scale prior to index construction, with higher values indicating greater cohesion.</p>
+<p><strong>Horizontal Cohesion</strong> is built from two sub-dimensions. The <em>Interpersonal Trust</em> sub-dimension is measured with a single item (<code>it1</code>): the general perception of how trustworthy people are, originally on a 1–4 scale and reversed so that higher values indicate greater trust. The <em>Urban Safety</em> sub-dimension combines a subjective indicator (<code>aoj11</code>) — perceived safety in the neighborhood (1–4, reversed) — and an objective victimization indicator (<code>vic1ext</code>): whether the respondent was the victim of a crime in the past year (dichotomous).</p>
+<p><strong>Vertical Cohesion</strong> is likewise built from two sub-dimensions. <em>Institutional Trust</em> aggregates trust in Congress (<code>b13</code>), in political parties (<code>b21</code>), and in the judiciary (<code>b31</code>), all on a 1–7 scale. <em>Attitudes toward Democracy</em> combines support for the political system (<code>ing4</code>, 1–7 scale) and satisfaction with the functioning of democracy in the country (<code>pn4</code>, 1–4 scale, reversed).</p>
+<div class="cell">
+<div id="tbl-items" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-items-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Descriptive statistics for social cohesion items (scale 0–10)
+</figcaption>
+<div aria-describedby="tbl-items-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Dimension</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Item</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SD</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Min</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Max</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Interpersonal Trust</td>
+<td style="text-align: left;">Interpersonal trust</td>
+<td style="text-align: right;">5.85</td>
+<td style="text-align: right;">3.05</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">282940</td>
+</tr>
+<tr class="even">
+<td rowspan="2" style="text-align: left; vertical-align: top !important;">Urban Safety</td>
+<td style="text-align: left;">Subjective neighborhood safety</td>
+<td style="text-align: right;">5.62</td>
+<td style="text-align: right;">3.20</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">282940</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Objective victimization</td>
+<td style="text-align: right;">7.94</td>
+<td style="text-align: right;">4.04</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">282940</td>
+</tr>
+<tr class="even">
+<td rowspan="3" style="text-align: left; vertical-align: top !important;">Institutional Trust</td>
+<td style="text-align: left;">Trust in Congress</td>
+<td style="text-align: right;">4.31</td>
+<td style="text-align: right;">3.05</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">280324</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trust in political parties</td>
+<td style="text-align: right;">3.26</td>
+<td style="text-align: right;">2.90</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">281849</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trust in the judiciary</td>
+<td style="text-align: right;">4.65</td>
+<td style="text-align: right;">3.01</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">204849</td>
+</tr>
+<tr class="odd">
+<td rowspan="2" style="text-align: left; vertical-align: top !important;">Attitudes toward Democracy</td>
+<td style="text-align: left;">Support for the political system</td>
+<td style="text-align: right;">6.82</td>
+<td style="text-align: right;">2.89</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">282940</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Satisfaction with democracy (pn4)</td>
+<td style="text-align: right;">4.86</td>
+<td style="text-align: right;">2.53</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">282940</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><a href="#fig-likert" class="quarto-xref">Figure&nbsp;1</a> displays the regional average for each item, allowing a comparison of cohesion levels across sub-dimensions.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-likert" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-likert-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-metodo_files/figure-html/fig-likert-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-likert-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Distribution of social cohesion items by dimension (regional average, scale 0–10)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="independent-variables" class="level3">
+<h3 class="anchored" data-anchor-id="independent-variables">Independent Variables</h3>
+<p>Economic, institutional, and cultural factors were included as independent variables. Recognizing the hierarchical structure of the data, predictors were considered at the individual level, at the wave-country level, and at the country level.</p>
+<section id="individual-level-variables" class="level4">
+<h4 class="anchored" data-anchor-id="individual-level-variables">Individual-level variables</h4>
+<p>The analytical sample comprises a total of 238,257 individuals distributed across 174 country-wave combinations in 25 countries of the Americas. The main individual predictor in this study is <strong>educational level</strong>, operationalized from the years of schooling reported by respondents. This variable was recoded into three categories: primary education (up to 6 years of schooling), secondary education (7 to 12 years), and tertiary education (more than 12 years). When the years-of-schooling variable was unavailable, alternative educational level variables reported in different LAPOP questionnaire waves (<code>edr</code>, <code>edre</code>) were used, unified under the same three-category scheme. Educational level serves as the main individual predictor and as an indicator of socioeconomic status (SES).</p>
+<p><strong>Political position</strong> was measured originally on a continuous 1–10 scale (1 = left, 10 = right), available across variables <code>l1</code>, <code>l1b</code>, and <code>l1n</code> depending on the wave. This scale was recoded into three categories: left (1–4), center (5–6), and right (7–10). Respondents who did not declare any position were recorded as a separate category (“Not declared”) and treated as missing values in the regression models.</p>
+<p><strong>Income decile</strong> was constructed from different versions of the household income variable available in each wave (<code>q10</code>, <code>q10new_12</code>, <code>q10new_14</code>, <code>q10new_16</code>, <code>q10new_18</code>, <code>q10inc</code>). Given that income scales vary across countries and waves, for waves from 2012 onward the variable was transformed into deciles within each country-wave combination using the <code>ntile()</code> function, where 1 corresponds to the lowest income decile and 10 to the highest. For waves prior to 2012, the original scale of variable <code>q10</code> was used directly.</p>
+<p><strong>Sex</strong> was recoded as a dichotomous variable (0 = woman, 1 = man) from variables <code>q1</code>, <code>q1tb</code>, or <code>q1tc_r</code> depending on availability. <strong>Age</strong> was calculated directly from variable <code>q2</code> or, when unavailable, as the difference between the wave year and the birth year (<code>q2y</code>). Both sex and age are included as control variables in the models.</p>
+<p><a href="#tbl-vars-individuales" class="quarto-xref">Table&nbsp;3</a> presents the distribution of categorical individual variables, and <a href="#tbl-continuas" class="quarto-xref">Table&nbsp;4</a> reports descriptive statistics for the continuous ones.</p>
+<div class="cell">
+<div id="tbl-vars-individuales" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vars-individuales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Distribution of categorical individual variables
+</figcaption>
+<div aria-describedby="tbl-vars-individuales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variable</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Category</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td rowspan="4" style="text-align: left; vertical-align: top !important;">Educational level</td>
+<td style="text-align: left;">Primary</td>
+<td style="text-align: right;">71411</td>
+<td style="text-align: right;">25.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Secondary</td>
+<td style="text-align: right;">132757</td>
+<td style="text-align: right;">46.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tertiary</td>
+<td style="text-align: right;">62077</td>
+<td style="text-align: right;">21.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">16695</td>
+<td style="text-align: right;">5.9</td>
+</tr>
+<tr class="odd">
+<td rowspan="3" style="text-align: left; vertical-align: top !important;">Political position</td>
+<td style="text-align: left;">Left</td>
+<td style="text-align: right;">74233</td>
+<td style="text-align: right;">31.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Center</td>
+<td style="text-align: right;">87435</td>
+<td style="text-align: right;">36.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Right</td>
+<td style="text-align: right;">77433</td>
+<td style="text-align: right;">32.4</td>
+</tr>
+<tr class="even">
+<td rowspan="3" style="text-align: left; vertical-align: top !important;">Sex</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">140058</td>
+<td style="text-align: right;">49.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">142573</td>
+<td style="text-align: right;">50.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">309</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-continuas" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-continuas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Descriptive statistics for continuous individual variables
+</figcaption>
+<div aria-describedby="tbl-continuas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variable</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SD</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Min</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Max</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: right;">39.75</td>
+<td style="text-align: right;">16.07</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">282505</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Income decile</td>
+<td style="text-align: right;">5.02</td>
+<td style="text-align: right;">2.71</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">233060</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Years of schooling</td>
+<td style="text-align: right;">9.69</td>
+<td style="text-align: right;">4.32</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">233273</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="contextual-variables" class="level4">
+<h4 class="anchored" data-anchor-id="contextual-variables">Contextual variables</h4>
+<p>Contextual variables are incorporated into the model at two levels: variation between countries (<span class="math inline">\(\bar{Z}_j\)</span>) and variation within each country over time (<span class="math inline">\(Z_{jt} - \bar{Z}_j\)</span>), following the decomposition of the hybrid model described in the methods section. All macro-level variables are described below, including their conceptual definition and measurement scale.</p>
+<p><strong>Economic prosperity</strong> was measured using GDP per capita at purchasing power parity (PPP), expressed in constant international dollars and log-transformed to reduce distributional skewness. Higher values indicate greater economic development. Data come from the World Bank and are available for the 2004–2023 period.</p>
+<p><strong>Economic inequality</strong> was operationalized through the Gini index, which measures dispersion in the income distribution. Its scale ranges from 0 (perfect equality) to 100 (perfect inequality). Data come from World Bank estimates.</p>
+<p><strong>Democratic quality</strong> was measured using the Electoral Democracy Index (polyarchy, <code>v2x_polyarchy</code>) from the V-Dem dataset. This index captures the degree to which electoral democracy is achieved in practice, considering dimensions such as freedom of expression, clean elections, universal suffrage, and the existence of elected officials. Its scale ranges from 0 to 1, where 1 indicates the highest democratic quality. Data come from the <code>vdemdata</code> R package <span class="citation" data-cites="maerz_vdemdata_2025">(<a href="#ref-maerz_vdemdata_2025" role="doc-biblioref">Maerz et al. 2025</a>)</span>.</p>
+<p><strong>Governance quality</strong> was measured through a composite index constructed from the six indicators of the World Bank’s Worldwide Governance Indicators (WGI): control of corruption, government effectiveness, political stability, rule of law, regulatory quality, and voice and accountability. The six indicators show high internal consistency (<span class="math inline">\(\alpha\)</span> = 0.96) and were averaged into a single index <span class="citation" data-cites="kaufmann_worldwide_2024">(<a href="#ref-kaufmann_worldwide_2024" role="doc-biblioref">Kaufmann and Kraay 2024</a>)</span>. Each original indicator is expressed in standard deviation units with a mean of zero, so the composite index is interpreted on the same scale, with higher values indicating better governance.</p>
+<p><strong>Migration</strong> was used as a proxy for cultural diversity, measured as the percentage of the migrant population relative to the total population. Data come from the World Bank, available every five years; intermediate years were imputed using logistic interpolation to construct a continuous annual series. The variable is expressed as a percentage (0–100).</p>
+<p><strong>Ethnic fractionalization</strong> understood as a measure of cultural and ethnic diversity was measured using the ethnic fractionalization index (fe_etfra) from the Quality of Government (QoG) dataset. This index captures the probability that two randomly selected individuals in a country belong to different ethnic groups, ranging from 0 (no fractionalization) to 1 (maximum fractionalization). Higher values indicate greater ethnic diversity.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "0,25" "0,25" "0,25" "0,25" "0,25" "0,25"</code></pre>
+</div>
+<div id="tbl-vars-macro" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vars-macro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: Descriptive statistics for contextual variables (country-wave level)
+</figcaption>
+<div aria-describedby="tbl-vars-macro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variable</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SD</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Min</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Log GDP per capita (PPP)</td>
+<td style="text-align: right;">9.42</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">7.83</td>
+<td style="text-align: right;">11.26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gini index</td>
+<td style="text-align: right;">46.68</td>
+<td style="text-align: right;">5.51</td>
+<td style="text-align: right;">32.50</td>
+<td style="text-align: right;">58.10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">V-Dem index (polyarchy)</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">0.91</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Governance index (WGI)</td>
+<td style="text-align: right;">-0.10</td>
+<td style="text-align: right;">0.69</td>
+<td style="text-align: right;">-1.51</td>
+<td style="text-align: right;">1.65</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Migrant population (%)</td>
+<td style="text-align: right;">3.87</td>
+<td style="text-align: right;">5.16</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">22.27</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ethnic fractionalization</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.74</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="note-on-the-analytical-n" class="level3">
+<h3 class="anchored" data-anchor-id="note-on-the-analytical-n">Note on the Analytical N</h3>
+<p>The number of cases entering the multilevel models differs from the total observations available in the dataset. The N reported in <a href="#tbl-paises" class="quarto-xref">Table&nbsp;1</a> corresponds to cases with complete information on all items composing the overall cohesion index, and also excludes the 2021 wave, which was collected via telephone and presents methodological differences with the remaining waves. Cases with missing values on any individual or contextual variable are excluded through listwise deletion when estimating the models.</p>
+</section>
+</section>
+<section id="method" class="level2">
+<h2 class="anchored" data-anchor-id="method">Method</h2>
+<section id="confirmatory-factor-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="confirmatory-factor-analysis">Confirmatory Factor Analysis</h3>
+<p>A confirmatory factor analysis was performed to test the model constructed by the Social Cohesion Observatory <span class="citation" data-cites="observatoriodecohesionsocial_medicion_2025">(<a href="#ref-observatoriodecohesionsocial_medicion_2025" role="doc-biblioref">2025</a>)</span> and the theoretical proposal by <span class="citation" data-cites="chan_reconsidering_2006">Chan, To, and Chan (<a href="#ref-chan_reconsidering_2006" role="doc-biblioref">2006</a>)</span>. As can be seen in <a href="#fig-modelo" class="quarto-xref">Figure&nbsp;2</a>, social cohesion is understood as a latent construct consisting of two latent dimensions: vertical cohesion and horizontal cohesion.</p>
+<div id="fig-modelo" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-modelo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="input/esquema.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-modelo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Conceptual Framework for Social Cohesion
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="multilevel-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="multilevel-analysis">Multilevel Analysis</h3>
+<p>Given the hierarchical structure of the data, hybrid multilevel regression models were estimated. This technique allows individual-level data to be used to decompose country-level effects into their components between countries (between effects) and within a country over time (within effects) <span class="citation" data-cites="schmidt-catran_random_2016 fairbrother_two_2014">(<a href="#ref-schmidt-catran_random_2016" role="doc-biblioref">Schmidt-Catran and Fairbrother 2016</a>; <a href="#ref-fairbrother_two_2014" role="doc-biblioref">Fairbrother 2014</a>)</span>. The models were estimated using the R package <code>lme4</code> <span class="citation" data-cites="bates_fitting_2015">(<a href="#ref-bates_fitting_2015" role="doc-biblioref">Bates et al. 2015</a>)</span>.</p>
+<p>The proposed model could be formally expressed as:</p>
+<p><span class="math display">\[
+y_{jti} = \beta_{0}(t) + \beta_{1}X_{jti} + \gamma_{we}(Z_{jt}-\bar{Z}_{j}) + \gamma_{be}\bar{Z}_{j} + v_j + u_{jt} + e_{jti}
+\]</span></p>
+<p>The model integrates three levels with individuals <span class="math inline">\(i\)</span> nested in wave-countries <span class="math inline">\(t\)</span> nested in countries <span class="math inline">\(j\)</span>. <span class="math inline">\(X_{jti}\)</span> represents individual-level variables, while <span class="math inline">\(Z_{jt}\)</span> are contextual variables at the wave-country level. Given that <span class="math inline">\(Z_{jt}\)</span> contains variance at both level 2 and level 3, it was decomposed into the average of the variable across all its waves (<span class="math inline">\(\bar{Z}_{j}\)</span>) and the intra-country deviation in a given wave (<span class="math inline">\(Z_{jt}-\bar{Z}_{j}\)</span>). Thus, <span class="math inline">\(\gamma_{we}\)</span> represents the within effect — the effect of change in a country over time — while <span class="math inline">\(\gamma_{be}\)</span> represents the between effect — structural differences between countries. In addition, <span class="math inline">\(\beta_{0}(t)\)</span> controls for changes over time not explained by the model. Finally, <span class="math inline">\(v_j\)</span>, <span class="math inline">\(u_{jt}\)</span>, and <span class="math inline">\(e_{jti}\)</span> represent the errors at the country, wave-country, and individual levels.</p>
+
+</section>
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-bates_fitting_2015" class="csl-entry" role="listitem">
+Bates, Douglas, Martin Mächler, Ben Bolker, and Steve Walker. 2015. <span>“Fitting <span>Linear Mixed-Effects Models Using</span> <span><strong>Lme4</strong></span>.”</span> <em>Journal of Statistical Software</em> 67 (1). <a href="https://doi.org/10.18637/jss.v067.i01">https://doi.org/10.18637/jss.v067.i01</a>.
+</div>
+<div id="ref-chan_reconsidering_2006" class="csl-entry" role="listitem">
+Chan, Joseph, Ho-Pong To, and Elaine Chan. 2006. <span>“Reconsidering Social Cohesion: <span>Developing</span> a Definition and Analytical Framework for Empirical Research.”</span> <em>Social Indicators Research</em>. <a href="https://doi.org/10.1007/s11205-005-2118-1">https://doi.org/10.1007/s11205-005-2118-1</a>.
+</div>
+<div id="ref-fairbrother_two_2014" class="csl-entry" role="listitem">
+Fairbrother, Malcolm. 2014. <span>“Two <span>Multilevel Modeling Techniques</span> for <span>Analyzing Comparative Longitudinal Survey Datasets</span>.”</span> <em>Political Science Research and Methods</em> 2 (1): 119–40. <a href="https://doi.org/10.1017/psrm.2013.24">https://doi.org/10.1017/psrm.2013.24</a>.
+</div>
+<div id="ref-kaufmann_worldwide_2024" class="csl-entry" role="listitem">
+Kaufmann, Daniel, and Aart Kraay. 2024. <span>“The <span>Worldwide Governance Indicators</span>.”</span> Policy {{Research Working Paper}} WPS10952. Washington D.C.: World Bank.
+</div>
+<div id="ref-lapoplab_americasbarometer_2023" class="csl-entry" role="listitem">
+LAPOP LAb. 2023. <span>“<span>AmericasBarometer</span>.”</span>
+</div>
+<div id="ref-maerz_vdemdata_2025" class="csl-entry" role="listitem">
+Maerz, Seraphine F., Amanda B. Esgell, Sebastian Hellemeier, Nina Illchenko, and Linnea Fox. 2025. <span>“Vdemdata: <span>An R</span> Package to Load, Explore and Work with the Most Recent <span>V-Dem</span> (<span>Varieties</span> of <span>Democracy</span>) Dataset.”</span>
+</div>
+<div id="ref-observatoriodecohesionsocial_medicion_2025" class="csl-entry" role="listitem">
+Observatorio de Cohesión Social. 2025. <span>“Medición <span>Cohesión Social América Latina</span>.”</span> Santiago: COES.
+</div>
+<div id="ref-schmidt-catran_random_2016" class="csl-entry" role="listitem">
+Schmidt-Catran, Alexander W., and Malcolm Fairbrother. 2016. <span>“The <span>Random Effects</span> in <span>Multilevel Models</span>: <span>Getting Them Wrong</span> and <span>Getting Them Right</span>.”</span> <em>European Sociological Review</em> 32 (1): 23–38. <a href="https://doi.org/10.1093/esr/jcv090">https://doi.org/10.1093/esr/jcv090</a>.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
